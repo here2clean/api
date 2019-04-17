@@ -35,7 +35,6 @@ public class Event {
 	@Column(name="description")
 	private String description;
 	
-	
 	@Column(name="location")
 	private String location;
 	
@@ -45,5 +44,9 @@ public class Event {
 	@ManyToOne
 	@JoinColumn
 	private Association association;
+	
+	@ManyToOne
+	@JoinColumn
+	private Volunteer volunteer;
 	
 }
