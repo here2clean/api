@@ -19,7 +19,7 @@ public class Gift {
 
 	@Id
 	@GeneratedValue
-	private long id;
+	private Long id;
 	
 	@Column(name="amount")
 	private float amount;

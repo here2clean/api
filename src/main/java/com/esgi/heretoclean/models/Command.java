@@ -25,7 +25,7 @@ public class Command {
 	
 	@Id
 	@GeneratedValue
-	private long id;
+	private Long id;
 	
 	@Column(name="orderStatus")
 	private String orderStatus;
