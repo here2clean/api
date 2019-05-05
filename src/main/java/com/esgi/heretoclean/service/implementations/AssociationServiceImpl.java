@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import com.esgi.heretoclean.dao.AssociationRepository;
 import com.esgi.heretoclean.models.Association;
+import com.esgi.heretoclean.models.Event;
+import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.interfaces.AssociationService;
 
 @Service("AssociationService")
@@ -58,5 +60,6 @@ public class AssociationServiceImpl implements AssociationService{
 	public List<Association> findAllAssociation() {
 		return assoRepository.findAll();
 	}
+
 
 }

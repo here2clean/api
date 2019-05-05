@@ -7,8 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,26 +25,46 @@ public class Association {
 
 	@Id
 	@GeneratedValue
+	@NotNull
 	private Long id;
 
 	@Column(name="name")
+	@NotNull
 	private String name;
 
 	@Email
 	@Column(name="email")
+	@NotNull
 	private String email;
 
 	@Column(name="numberRna")
+	@NotNull
 	private int numberRna;
-
-	//	@OneToMany(mappedBy="association")
-	//	private List<Event> events = new ArrayList<Event>();
 
     @OneToMany(mappedBy = "association")
 	private List<AssociationVolunteer> associationVolunteers;
     
+	public List<AssociationVolunteer> getAssociationVolunteers() {
+		return associationVolunteers;
+	}
+
+	public void setAssociationVolunteers(List<AssociationVolunteer> associationVolunteers) {
+		this.associationVolunteers = associationVolunteers;
+	}
+
+	public Volunteer getZoneManager() {
+		return zoneManager;
+	}
+
+	public void setZoneManager(Volunteer zoneManager) {
+		this.zoneManager = zoneManager;
+	}
+
 	@OneToMany(mappedBy="association")
 	private List<Product> products = new ArrayList<Product>();
+	
+	@OneToOne(mappedBy="association")
+	private Volunteer zoneManager;
 
 	public Association() {
 	}

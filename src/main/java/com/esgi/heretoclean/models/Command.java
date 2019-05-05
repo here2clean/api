@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,16 +26,20 @@ public class Command {
 	
 	@Id
 	@GeneratedValue
+	@NotNull
 	private Long id;
 	
 	@Column(name="orderStatus")
+	@NotNull
 	private String orderStatus;
 	
 	@Column(name="dateCommand")
+	@NotNull
 	private LocalDate dateCommand; 
 	
 	@ManyToOne
 	@JoinColumn
+	@NotNull
 	private Volunteer volunteer ;
 	
 	@ManyToMany(targetEntity=Product.class)

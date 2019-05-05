@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 
 @Entity(name="CommandCompo")
@@ -18,11 +19,13 @@ public class CommandCompo implements Serializable {
 	@Id
     @ManyToOne
     @JoinColumn
+    @NotNull
 	private Command command;
     
     @Id
     @ManyToOne
     @JoinColumn
+    @NotNull
     private Product product;
 
 }
