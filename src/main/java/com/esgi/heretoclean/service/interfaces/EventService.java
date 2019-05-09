@@ -31,8 +31,6 @@ public interface EventService {
 	
 	Optional<Event> findById(Long id);
 	
-	
-	
 	void delete(Event event);
 
 }

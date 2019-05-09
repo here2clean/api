@@ -8,18 +8,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
 
 @Entity
 public class Gift {
 
 	@Id
 	@GeneratedValue
-	@NotNull
 	private Long id;
 	
 	@Column(name="amount")
@@ -28,10 +23,11 @@ public class Gift {
 	
 	@ManyToOne
 	@JoinColumn
-	@NotNull
 	private Volunteer volunteer;
 	
-	
+	@ManyToOne
+    @JoinColumn
+    private Association association;
 	
 	public Gift() {
 	}
@@ -60,6 +56,13 @@ public class Gift {
 		this.volunteer = volunteer;
 	}
 
+	public Association getAssociation() {
+		return association;
+	}
+
+	public void setAssociation(Association association) {
+		this.association = association;
+	}
 	
 	
 }

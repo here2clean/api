@@ -2,6 +2,7 @@ package com.esgi.heretoclean.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -21,12 +22,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter @Setter @AllArgsConstructor @NoArgsConstructor @ToString
 public class Command {
 	
 	@Id
 	@GeneratedValue
-	@NotNull
 	private Long id;
 	
 	@Column(name="orderStatus")
@@ -35,7 +34,7 @@ public class Command {
 	
 	@Column(name="dateCommand")
 	@NotNull
-	private LocalDate dateCommand; 
+	private Date dateCommand; 
 	
 	@ManyToOne
 	@JoinColumn
@@ -47,6 +46,59 @@ public class Command {
 	
     @OneToMany(mappedBy = "command")
 	private List<CommandCompo> commandCompos = new ArrayList<CommandCompo>();
+    
+    
+    public Command() {}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public Date getDateCommand() {
+		return dateCommand;
+	}
+
+	public void setDateCommand(Date dateCommand) {
+		this.dateCommand = dateCommand;
+	}
+
+	public Volunteer getVolunteer() {
+		return volunteer;
+	}
+
+	public void setVolunteer(Volunteer volunteer) {
+		this.volunteer = volunteer;
+	}
+
+	public List<Product> getProducts() {
+		return products;
+	}
+
+	public void setProducts(List<Product> products) {
+		this.products = products;
+	}
+
+	public List<CommandCompo> getCommandCompos() {
+		return commandCompos;
+	}
+
+	public void setCommandCompos(List<CommandCompo> commandCompos) {
+		this.commandCompos = commandCompos;
+	}
+    
+    
 	
 
 }

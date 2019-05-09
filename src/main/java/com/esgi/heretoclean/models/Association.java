@@ -25,7 +25,6 @@ public class Association {
 
 	@Id
 	@GeneratedValue
-	@NotNull
 	private Long id;
 
 	@Column(name="name")
@@ -40,32 +39,19 @@ public class Association {
 	@Column(name="numberRna")
 	@NotNull
 	private int numberRna;
+	
+    @OneToMany(mappedBy = "association")
+	private List<Gift> gifts = new ArrayList<Gift>();
+    
+    @OneToOne(mappedBy="association")
+    private Manager manager;
 
     @OneToMany(mappedBy = "association")
 	private List<AssociationVolunteer> associationVolunteers;
     
-	public List<AssociationVolunteer> getAssociationVolunteers() {
-		return associationVolunteers;
-	}
-
-	public void setAssociationVolunteers(List<AssociationVolunteer> associationVolunteers) {
-		this.associationVolunteers = associationVolunteers;
-	}
-
-	public Volunteer getZoneManager() {
-		return zoneManager;
-	}
-
-	public void setZoneManager(Volunteer zoneManager) {
-		this.zoneManager = zoneManager;
-	}
-
 	@OneToMany(mappedBy="association")
 	private List<Product> products = new ArrayList<Product>();
 	
-	@OneToOne(mappedBy="association")
-	private Volunteer zoneManager;
-
 	public Association() {
 	}
 
@@ -116,6 +102,30 @@ public class Association {
 		this.products = products;
 	}
 
+	public List<Gift> getGifts() {
+		return gifts;
+	}
 
+	public void setGifts(List<Gift> gifts) {
+		this.gifts = gifts;
+	}
+
+	public Manager getManager() {
+		return manager;
+	}
+
+	public void setManager(Manager manager) {
+		this.manager = manager;
+	}
+
+	public List<AssociationVolunteer> getAssociationVolunteers() {
+		return associationVolunteers;
+	}
+
+	public void setAssociationVolunteers(List<AssociationVolunteer> associationVolunteers) {
+		this.associationVolunteers = associationVolunteers;
+	}
+
+	
 }
 

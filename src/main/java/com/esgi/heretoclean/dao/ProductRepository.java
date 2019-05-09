@@ -8,4 +8,6 @@ import com.esgi.heretoclean.models.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
+	Product findByName(String name);
+	void deleteByName(String name);
 }
