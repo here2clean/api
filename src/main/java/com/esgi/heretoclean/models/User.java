@@ -27,6 +27,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @MappedSuperclass
 public abstract class User {
 	@Id
+	@GeneratedValue
 	private Long id;
 	private String firstName;
 	private String lastName;

@@ -23,7 +23,8 @@ public class ManagerServiceImpl implements ManagerService {
 
 	@Override
 	public Manager createManager(Manager manager, String emailAssociation) {
-		manager.setAssociation(assoRepo.findByEmail(emailAssociation).get());
+		Association a = assoRepo.findByEmail(emailAssociation).get();
+		manager.setAssociation(a);
 		return managerRepo.save(manager);
 	}
 

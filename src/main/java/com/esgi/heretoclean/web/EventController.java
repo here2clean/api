@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,43 +31,47 @@ public class EventController {
 	
     private static final Logger LOGGER = LoggerFactory.getLogger(EventController.class);
     
-    @Autowired
-    private EventService eventService;
+    private final EventService eventService;
     
-    @PostMapping("/register")
-    public Response registerEvent(@RequestBody @Valid Event event) throws URISyntaxException {
+    @Autowired
+    public EventController(EventService eventService) {
+		this.eventService = eventService;
+	}
+
+	@PostMapping("/register")
+    public ResponseEntity registerEvent(@RequestBody @Valid Event event) throws URISyntaxException {
     	Event newEevent = eventService.registerEvent(event);
-    	return Response.status(HttpStatus.CREATED.value()).entity(newEevent).build();
+    	return ResponseEntity.status(HttpStatus.CREATED.value()).build();
     }
     
     @GetMapping("/all")
-    public Response getEvents() {
-        return Response.status(HttpStatus.OK.value()).entity(eventService.findAllEvent()).build();
+    public ResponseEntity getEvents() {
+        return ResponseEntity.status(HttpStatus.OK.value()).body(eventService.findAllEvent());
     }
     
-    @GetMapping("/volunteer/all")
-    public Response getVolunteers(@QueryParam("idEvent") Long idEvent) {
-        return Response.status(HttpStatus.OK.value()).entity(eventService.findVolunteer(idEvent)).build();
-    }
+//    @GetMapping("/volunteer/all")
+//    public ResponseEntity getVolunteers(@QueryParam("idEvent") Long idEvent) {
+//        return ResponseEntity.status(HttpStatus.OK.value()).body(eventService.findVolunteer(idEvent));
+//    }
     
     @GetMapping("/research/name")
-    public Response getEventByName(@QueryParam("name") String name) {
+    public ResponseEntity getEventByName(@QueryParam("name") String name) {
     	Optional<Event> optionalEvent = eventService.findByName(name);
     	if(!optionalEvent.isPresent()) {
-            return Response.status(HttpStatus.NOT_FOUND.value()).build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
     	}
-    	return Response.status(HttpStatus.FOUND.value()).entity(optionalEvent.get()).build();
+    	return ResponseEntity.status(HttpStatus.FOUND.value()).body(optionalEvent.get());
     }
     
     @PutMapping("/update")
-    public Response updateEvent(@RequestBody Event event){
-    	return Response.status(HttpStatus.OK.value()).entity(eventService.updateEvent(event)).build();
+    public ResponseEntity updateEvent(@RequestBody Event event){
+    	return ResponseEntity.status(HttpStatus.OK.value()).body(eventService.updateEvent(event));
     }
     
     @DeleteMapping("/delete")
-    public Response deleteEvent(@RequestBody @Valid Event event) {
+    public ResponseEntity deleteEvent(@RequestBody @Valid Event event) {
     	eventService.delete(event);
-    	return Response.status(HttpStatus.OK.value()).build();
+    	return ResponseEntity.status(HttpStatus.OK.value()).build();
     }
     
 }

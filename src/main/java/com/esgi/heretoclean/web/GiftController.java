@@ -35,35 +35,38 @@ import com.esgi.heretoclean.service.interfaces.VolunteerService;
 @RestController
 @RequestMapping("/api/gift")
 public class GiftController {
-	
-	 private static final Logger LOGGER = LoggerFactory.getLogger(GiftController.class);
-	    
-	    @Autowired
-	    private GiftService giftService;
-	    
-	    @PostMapping("/register")
-	    public ResponseEntity registerGift(@Email @QueryParam("emailAssociaiton") String emailAssociaiton,@Email @QueryParam("emailVolunteer") String emailVolunteer,@RequestBody @Valid Gift gift ) throws URISyntaxException {
-	    	if( emailAssociaiton == null || emailVolunteer == null) {
-	    		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).build();
-	    	}
-	    	Gift newGift = giftService.createGift(gift,emailAssociaiton,emailVolunteer);
-	    	return ResponseEntity.status(HttpStatus.CREATED).build();
-	    }
-	    
-	    @PutMapping("/update")
-	    public ResponseEntity update(@Email @QueryParam("emailAssociaiton") String emailAssociaiton,@Email @QueryParam("emailVolunteer") String emailVolunteer,@Valid @RequestBody Gift gift){
-	    	if( emailAssociaiton == null || emailVolunteer == null) {
-	    		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).build();
-	    	}
-	    	giftService.update(gift,emailAssociaiton,emailVolunteer);
-	    	return ResponseEntity.status(HttpStatus.OK.value()).build();
-	    }
-	    
-	    @DeleteMapping("/delete")
-	    public ResponseEntity delete(@QueryParam("id") long id) {
-	    	
-	    	giftService.deleteById(id);
-	    	return ResponseEntity.status(HttpStatus.OK.value()).build();
-	    }
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(GiftController.class);
+
+	private final GiftService giftService;
+
+	@Autowired
+	public GiftController(GiftService giftService) {
+		this.giftService = giftService;
+	}
+
+	@PostMapping("/register")
+	public ResponseEntity registerGift(@Email @QueryParam("emailAssociaiton") String emailAssociaiton,@Email @QueryParam("emailVolunteer") String emailVolunteer,@RequestBody @Valid Gift gift ) throws URISyntaxException {
+		if( emailAssociaiton == null || emailVolunteer == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).build();
+		}
+		Gift newGift = giftService.createGift(gift,emailAssociaiton,emailVolunteer);
+		return ResponseEntity.status(HttpStatus.CREATED).build();
+	}
+
+	@PutMapping("/update")
+	public ResponseEntity update(@Email @QueryParam("emailAssociaiton") String emailAssociaiton,@Email @QueryParam("emailVolunteer") String emailVolunteer,@Valid @RequestBody Gift gift){
+		if( emailAssociaiton == null || emailVolunteer == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).build();
+		}
+		giftService.update(gift,emailAssociaiton,emailVolunteer);
+		return ResponseEntity.status(HttpStatus.OK.value()).build();
+	}
+
+	@DeleteMapping("/delete")
+	public ResponseEntity delete(@QueryParam("id") long id) {
+		giftService.deleteById(id);
+		return ResponseEntity.status(HttpStatus.OK.value()).build();
+	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,10 +36,14 @@ import com.google.firebase.auth.UserRecord.CreateRequest;
 @RequestMapping("/api/volunteer")
 public class VolunteerController {
 	
+	private final VolunteerServiceImpl volunteerService;
+	
 	@Autowired
-	private VolunteerServiceImpl volunteerService;
+    public VolunteerController(VolunteerServiceImpl volunteerService) {
+		this.volunteerService = volunteerService;
+	}
 
-    @GetMapping("/user/signUp")
+	@PostMapping("/user/signUp")
 	public ResponseEntity createUser(@RequestBody @Valid Volunteer v) throws IOException, FirebaseAuthException {
 		FirebaseAuth auth = this.initFirebase();
 		String fullName = v.getFirstName() + " " + v.getLastName();
@@ -60,37 +65,34 @@ public class VolunteerController {
     
     @PutMapping("/update")
     public ResponseEntity update(@Valid @RequestBody Volunteer volunteer){
-    
     	volunteerService.update(volunteer);
     	return ResponseEntity.status(HttpStatus.OK.value()).build();
     }
     
     @GetMapping("/allEvent")
     public ResponseEntity getEvents(@Email @QueryParam("email") String emailVolunteer) {
-    	
     	if(volunteerService.findAllEvent(emailVolunteer) == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     	}
-    	
     	return ResponseEntity.status(HttpStatus.FOUND).body(volunteerService.findAllEvent(emailVolunteer));
     }
     
-    @GetMapping("/allEvent")
+    @GetMapping("/allAssocaition")
     public ResponseEntity getAssociations(@Email @QueryParam("email") String emailVolunteer) {
     	if(volunteerService.findAllAssociation(emailVolunteer) == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     	}
-    	return ResponseEntity.status(HttpStatus.FOUND).body(volunteerService.findAllEvent(emailVolunteer));
+    	return ResponseEntity.status(HttpStatus.FOUND).body(volunteerService.findAllAssociation(emailVolunteer));
     }
     
-    @GetMapping("/allEvent")
+    @GetMapping("/allGift")
     public ResponseEntity getGifs(@Email @QueryParam("email") String emailVolunteer) {
     	
     	if(volunteerService.findAllGift(emailVolunteer) == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     	}
     	
-    	return ResponseEntity.status(HttpStatus.FOUND).body(volunteerService.findAllEvent(emailVolunteer));
+    	return ResponseEntity.status(HttpStatus.FOUND).body(volunteerService.findAllGift(emailVolunteer));
     }
     
     @DeleteMapping("/delete")

@@ -7,7 +7,6 @@ import java.io.IOException;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esgi.heretoclean.models.Gift;
@@ -36,11 +36,16 @@ import com.google.firebase.auth.UserRecord.CreateRequest;
 @RequestMapping("/api/manager")
 public class ManagerController {
 	
+	
+	private final ManagerServiceImpl managerService;
+	
 	@Autowired
-	private ManagerServiceImpl managerService;
+    public ManagerController(ManagerServiceImpl managerService) {
+		this.managerService = managerService;
+	}
 
-    @PostMapping("/signUp")
-	public ResponseEntity createUser(@Email @QueryParam("email") String emailAssociaiton, @RequestBody @Valid Manager m) throws IOException, FirebaseAuthException {
+	@PostMapping("/signUp")
+	public ResponseEntity createUser(@Email @RequestParam("email") String email, @RequestBody @Valid Manager m) throws IOException, FirebaseAuthException {
 		FirebaseAuth auth = this.initFirebase();
 		String fullName = m.getFirstName() + " " + m.getLastName();
 		CreateRequest request = new CreateRequest()
@@ -52,11 +57,11 @@ public class ManagerController {
 		UserRecord userRecord = auth.createUser(request);
 		
 		if(userRecord != null) {
-			managerService.createManager(m, emailAssociaiton);
+			managerService.createManager(m, email);
 		}
 		
 		System.out.println("Successfully created new user: " + userRecord.getUid());
-		return ResponseEntity.status(HttpStatus.CREATED.value()).build();
+		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
     
     @PutMapping("/update")
