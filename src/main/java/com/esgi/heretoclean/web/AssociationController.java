@@ -1,18 +1,14 @@
 package com.esgi.heretoclean.web;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import javax.ws.rs.QueryParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -40,41 +37,40 @@ public class AssociationController {
 	}
     
     @PostMapping("/register")
-    public Association registerAssociation(@RequestBody @Valid Association asso) throws URISyntaxException {
-    	Association association = associationService.registerAssociation(asso);
-    	return association;
+    public ResponseEntity  registerAssociation(@RequestBody @Valid Association asso) throws URISyntaxException {
+    	associationService.registerAssociation(asso);
+    	return ResponseEntity.ok().build();
     }
     
     @GetMapping("/all")
-    public List<Association> getAssociations() {
-        return associationService.findAllAssociation();
+    public ResponseEntity  getAssociations() {
+        return ResponseEntity.ok(associationService.findAllAssociation());
     }
     
     @GetMapping("/research/email")
-    public Optional<Association> getAssociationByEmail(@QueryParam("email") String email) {
-        return associationService.findAssociationByEmail(email);
+    public ResponseEntity getAssociationByEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok(associationService.findAssociationByEmail(email));
     }
     
     @GetMapping("/research/name")
-    public Optional<List<Association>> getAssociationBynalme(@QueryParam("name") String name) {
-    	return associationService.findAssociationByName(name);
+    public ResponseEntity getAssociationBynalme(@RequestParam("name") String name) {
+    	return ResponseEntity.ok(associationService.findAssociationByName(name));
     }
     
     @PostMapping("/update")
-    public Association updateAssociation(@QueryParam("email") String email,@RequestBody Association asso){
+    public ResponseEntity updateAssociation(@RequestParam("email") String email,@RequestBody Association asso){
     	Optional<Association> optionalAssociation = associationService.findAssociationByEmail(email);
 
     	if(!optionalAssociation.isPresent()) {
-    		return null;
+    		return ResponseEntity.badRequest().build();
     	}
-    	return associationService.updateAssociation(asso);
+    	return ResponseEntity.ok(associationService.updateAssociation(asso));
     }
     
     @DeleteMapping("/delete")
-    public Association deleteAssociation(@QueryParam("email") String email) {
-    	
+    public ResponseEntity deleteAssociation(@RequestParam("email") String email) {
     	associationService.deleteAssociationByEmail(email);
-    	return null;
+    	return ResponseEntity.ok().build();
     	
     }
     

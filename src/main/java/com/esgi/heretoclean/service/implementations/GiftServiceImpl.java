@@ -14,14 +14,20 @@ import com.esgi.heretoclean.service.interfaces.GiftService;
 @Service
 public class GiftServiceImpl implements GiftService {
 
-	@Autowired
-	private GiftRepository giftRepo;
+	private final GiftRepository giftRepo;
 
-	@Autowired
-	private VolunteerRepository volunteerRepo;
+	private final VolunteerRepository volunteerRepo;
 
+	private final AssociationRepository associationRepo;
+	
 	@Autowired
-	private AssociationRepository associationRepo;
+	public GiftServiceImpl(GiftRepository giftRepo, VolunteerRepository volunteerRepo,
+			AssociationRepository associationRepo) {
+		this.giftRepo = giftRepo;
+		this.volunteerRepo = volunteerRepo;
+		this.associationRepo = associationRepo;
+	}
+
 
 	@Override
 	public Gift createGift(Gift gift,String emailAssociation,String emailVolunteer) {
@@ -29,34 +35,4 @@ public class GiftServiceImpl implements GiftService {
 		gift.setAssociation(associationRepo.findByEmail(emailAssociation).get());
 		return giftRepo.save(gift);
 	}
-
-	@Override
-	public List<Gift> findByVolunteer(String email) {
-		return giftRepo.findByVolunteer(email);
-	}
-
-
-	@Override
-	public Gift findById(Long id) {
-		return giftRepo.getOne(id);
-	}
-
-	@Override
-	public List<Gift> findByAssociation(Long idAssociation) {
-		return giftRepo.findByAssociation(idAssociation);
-	}
-
-
-	@Override
-	public void deleteById(Long id) {
-		giftRepo.deleteById(id);
-	}
-
-	@Override
-	public Gift update(Gift g, String emailAssociation, String emailVolunteer) {
-		g.setVolunteer(volunteerRepo.findOneByEmailIgnoreCase(emailVolunteer).get());
-		g.setAssociation(associationRepo.findByEmail(emailAssociation).get());
-		return giftRepo.saveAndFlush(g);	
-	}
-
 }

@@ -18,13 +18,16 @@ import com.esgi.heretoclean.service.interfaces.EventService;
 @Service("EventService")
 @Transactional
 public class EventServiceImpl implements EventService {
+	private final EventRepository eventRepository;
+	
+	private final AssociationRepository assoRepo;
+	
+	@Autowired
+	public EventServiceImpl(EventRepository eventRepository, AssociationRepository assoRepo) {
+		this.eventRepository = eventRepository;
+		this.assoRepo = assoRepo;
+	}
 
-	@Autowired
-	private EventRepository eventRepository;
-	
-	@Autowired
-	private AssociationRepository assoRepo;
-	
 	@Override
 	public Event registerEvent(Event event) {
 		return eventRepository.save(event);
@@ -56,8 +59,8 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void delete(Event event) {
-		eventRepository.delete(event);
+	public void delete(String name) {
+		eventRepository.deleteByName(name);
 	}
 
 	@Override

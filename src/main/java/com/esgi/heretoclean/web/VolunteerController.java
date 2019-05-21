@@ -7,8 +7,6 @@ import java.io.IOException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,9 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esgi.heretoclean.models.Manager;
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.implementations.VolunteerServiceImpl;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -70,7 +68,7 @@ public class VolunteerController {
     }
     
     @GetMapping("/allEvent")
-    public ResponseEntity getEvents(@Email @QueryParam("email") String emailVolunteer) {
+    public ResponseEntity getEvents(@Email @RequestParam("email") String emailVolunteer) {
     	if(volunteerService.findAllEvent(emailVolunteer) == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     	}
@@ -78,7 +76,7 @@ public class VolunteerController {
     }
     
     @GetMapping("/allAssocaition")
-    public ResponseEntity getAssociations(@Email @QueryParam("email") String emailVolunteer) {
+    public ResponseEntity getAssociations(@Email @RequestParam("email") String emailVolunteer) {
     	if(volunteerService.findAllAssociation(emailVolunteer) == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     	}
@@ -86,7 +84,7 @@ public class VolunteerController {
     }
     
     @GetMapping("/allGift")
-    public ResponseEntity getGifs(@Email @QueryParam("email") String emailVolunteer) {
+    public ResponseEntity getGifs(@Email @RequestParam("email") String emailVolunteer) {
     	
     	if(volunteerService.findAllGift(emailVolunteer) == null) {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -96,7 +94,7 @@ public class VolunteerController {
     }
     
     @DeleteMapping("/delete")
-    public ResponseEntity delete(@Email @QueryParam("email") String email   ) {
+    public ResponseEntity delete(@Email @RequestParam("email") String email   ) {
     	volunteerService.deleteByEmail(email);
     	return ResponseEntity.status(HttpStatus.OK.value()).build();
     }

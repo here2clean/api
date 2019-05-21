@@ -63,7 +63,6 @@ public class Event {
 	
 	@ManyToMany
 	@JoinTable(name="event_volunteers")
-	@NotNull
 	private List<Volunteer> volunteers = new ArrayList<Volunteer>();
 	
 	@ManyToOne

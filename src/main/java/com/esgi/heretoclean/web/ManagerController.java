@@ -6,13 +6,11 @@ import java.io.IOException;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
-import javax.ws.rs.QueryParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esgi.heretoclean.models.Gift;
 import com.esgi.heretoclean.models.Manager;
 import com.esgi.heretoclean.service.implementations.ManagerServiceImpl;
-import com.esgi.heretoclean.service.implementations.VolunteerServiceImpl;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
@@ -65,7 +61,7 @@ public class ManagerController {
 	}
     
     @PutMapping("/update")
-    public ResponseEntity update(@Email @QueryParam("emailAssociaiton") String emailAssociaiton,@Valid @RequestBody Manager manager){
+    public ResponseEntity update(@Email @RequestParam("emailAssociaiton") String emailAssociaiton,@Valid @RequestBody Manager manager){
     	if( emailAssociaiton == null) {
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).build();
     	}
@@ -74,7 +70,7 @@ public class ManagerController {
     }
     
     @DeleteMapping("/delete")
-    public ResponseEntity delete(@Email @QueryParam("email") String email   ) {
+    public ResponseEntity delete(@Email @RequestParam("email") String email   ) {
     	managerService.deleteByEmail(email);
     	return ResponseEntity.status(HttpStatus.OK.value()).build();
     }

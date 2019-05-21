@@ -15,9 +15,13 @@ import com.esgi.heretoclean.service.interfaces.VolunteerService;
 
 @Service
 public class VolunteerServiceImpl implements VolunteerService {
-
+	
+	private final VolunteerRepository volunteerRepo;
+	
 	@Autowired
-	private VolunteerRepository volunteerRepo;
+	public VolunteerServiceImpl(VolunteerRepository volunteerRepo) {
+		this.volunteerRepo = volunteerRepo;
+	}
 
 	@Override
 	public Volunteer findVolunteerById(Long id) {

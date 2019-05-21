@@ -14,12 +14,15 @@ import com.esgi.heretoclean.service.interfaces.CommandService;
 @Service
 public class CommandServiceImpl implements CommandService{
 	
-	@Autowired
-	private CommandRepository commandRepo;
+	private final CommandRepository commandRepo;
+	
+	private final VolunteerRepository volunteerRepo;
 	
 	@Autowired
-	private VolunteerRepository volunteerRepo;
-	
+	public CommandServiceImpl(CommandRepository commandRepo, VolunteerRepository volunteerRepo) {
+		this.commandRepo = commandRepo;
+		this.volunteerRepo = volunteerRepo;
+	}
 
 	@Override
 	public Command createCommand(Command c) {

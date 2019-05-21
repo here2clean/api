@@ -14,15 +14,19 @@ import com.esgi.heretoclean.service.interfaces.ProductService;
 @Service
 public class ProductServiceImpl implements ProductService{
 	
-	@Autowired
-	private ProductRepository productRepo;
+	private final ProductRepository productRepo;
+	
+	private final AssociationRepository assoRepo;
+	
+	private final CommandRepository commandRepo;
 	
 	@Autowired
-	private AssociationRepository assoRepo;
-	
-	@Autowired
-	private CommandRepository commandRepo;
-	
+	public ProductServiceImpl(ProductRepository productRepo, AssociationRepository assoRepo,
+			CommandRepository commandRepo) {
+		this.productRepo = productRepo;
+		this.assoRepo = assoRepo;
+		this.commandRepo = commandRepo;
+	}
 
 	@Override
 	public Product addProduct(Product p) {

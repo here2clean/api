@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esgi.heretoclean.models.Event;
@@ -49,13 +50,8 @@ public class EventController {
         return ResponseEntity.status(HttpStatus.OK.value()).body(eventService.findAllEvent());
     }
     
-//    @GetMapping("/volunteer/all")
-//    public ResponseEntity getVolunteers(@QueryParam("idEvent") Long idEvent) {
-//        return ResponseEntity.status(HttpStatus.OK.value()).body(eventService.findVolunteer(idEvent));
-//    }
-    
     @GetMapping("/research/name")
-    public ResponseEntity getEventByName(@QueryParam("name") String name) {
+    public ResponseEntity getEventByName(@RequestParam("name") String name) {
     	Optional<Event> optionalEvent = eventService.findByName(name);
     	if(!optionalEvent.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
@@ -64,13 +60,13 @@ public class EventController {
     }
     
     @PutMapping("/update")
-    public ResponseEntity updateEvent(@RequestBody Event event){
+    public ResponseEntity updateEvent(@RequestParam("name") String name, @RequestBody Event event){
     	return ResponseEntity.status(HttpStatus.OK.value()).body(eventService.updateEvent(event));
     }
     
     @DeleteMapping("/delete")
-    public ResponseEntity deleteEvent(@RequestBody @Valid Event event) {
-    	eventService.delete(event);
+    public ResponseEntity deleteEvent(@RequestParam("name") String name) {
+    	eventService.delete(name);
     	return ResponseEntity.status(HttpStatus.OK.value()).build();
     }
     

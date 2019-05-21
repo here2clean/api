@@ -18,7 +18,7 @@ import com.esgi.heretoclean.service.interfaces.AssociationService;
 @Transactional
 public class AssociationServiceImpl implements AssociationService{
 
-	private AssociationRepository assoRepository;
+	private final AssociationRepository assoRepository;
 
 	@Autowired
 	public AssociationServiceImpl(AssociationRepository assoRepository) {

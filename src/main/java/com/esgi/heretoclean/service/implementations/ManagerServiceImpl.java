@@ -15,11 +15,15 @@ import com.esgi.heretoclean.service.interfaces.ManagerService;
 @Service
 public class ManagerServiceImpl implements ManagerService {
 	
-	@Autowired
-	private ManagerRepository managerRepo;
+	private final ManagerRepository managerRepo;
+	
+	private final AssociationRepository assoRepo;
 	
 	@Autowired
-	private AssociationRepository assoRepo;
+	public ManagerServiceImpl(ManagerRepository managerRepo, AssociationRepository assoRepo) {
+		this.managerRepo = managerRepo;
+		this.assoRepo = assoRepo;
+	}
 
 	@Override
 	public Manager createManager(Manager manager, String emailAssociation) {
