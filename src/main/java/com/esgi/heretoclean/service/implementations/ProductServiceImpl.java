@@ -1,5 +1,8 @@
 package com.esgi.heretoclean.service.implementations;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +32,13 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public Product addProduct(Product p) {
+	public Product addProduct(String emailAssociation,Product p) {
+		 Optional<Association> associationOp = assoRepo.findByEmail(emailAssociation);
+		 
+		 if(!associationOp.isPresent()) {
+			 return null;
+		 }
+		p.setAssociation(associationOp.get());
 		return productRepo.save(p);
 	}
 
@@ -39,7 +48,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public Product findByName(String name) {
+	public Optional<Product> findByName(String name) {
 		return productRepo.findByName(name);
 	}
 
@@ -49,20 +58,59 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void addAssociation(String name, String emailAsso) {
-		Product p = productRepo.findByName(name);
-		Association a = assoRepo.findByEmail(emailAsso).get();
+	public void addAssociation(String name, String emailAsso) throws Exception {
+		Optional<Product> productOp = productRepo.findByName(name);
+		if(!productOp.isPresent()) {
+			 throw new Exception("Product not find");
+		}
+		Optional<Association> associationOp = assoRepo.findByEmail(emailAsso);
+		
+		if(!associationOp.isPresent()) {
+			 throw new Exception("Association not find");
+		}
+		Product p = productOp.get();
+		Association a = associationOp.get();
+		
 		p.setAssociation(a);
 		productRepo.saveAndFlush(p);
 		
 	}
 
 	@Override
-	public void addCommand(String nameProduct, Long idCommand) {
-		Command c = commandRepo.findById(idCommand).get();
-		Product p = productRepo.findByName(nameProduct);
+	public void addCommand(String nameProduct, Long idCommand) throws Exception {
+		Optional<Command> commandOp = commandRepo.findById(idCommand);
+		
+		if(!commandOp.isPresent()) {
+			 throw new Exception("Command not find");
+		}
+		
+		
+		Optional<Product> productOp = productRepo.findByName(nameProduct);
+		
+		if(!productOp.isPresent()) {
+			throw new Exception("Product not find");
+		}
+		Command c = commandOp.get();
+		Product p = productOp.get();
 		p.setCommand(c);
 		productRepo.saveAndFlush(p);
+	}
+
+	@Override
+	public List<Product> findAll() {
+		return productRepo.findAll();
+	}
+
+	@Override
+	public List<Product> findAllByAssociation(String name) throws Exception {
+		
+		Optional<Association> associationOp = assoRepo.findByName(name);
+		
+		if(!associationOp.isPresent()) {
+			 throw new Exception("Association not find");
+		}
+		List<Product> products = productRepo.findByAssociation(associationOp.get());		
+		return products;
 	}
 
 

@@ -29,8 +29,6 @@ import com.esgi.heretoclean.service.interfaces.EventService;
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
-	
-    private static final Logger LOGGER = LoggerFactory.getLogger(EventController.class);
     
     private final EventService eventService;
     

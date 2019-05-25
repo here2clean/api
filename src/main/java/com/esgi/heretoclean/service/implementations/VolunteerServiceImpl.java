@@ -39,8 +39,15 @@ public class VolunteerServiceImpl implements VolunteerService {
 	}
 
 	@Override
-	public Volunteer update(Volunteer v) {
-		return volunteerRepo.saveAndFlush(v);
+	public Volunteer update(String email,Volunteer v) {
+		
+		if(!volunteerRepo.findOneByEmailIgnoreCase(email).isPresent()) {
+			return null;
+		}
+		
+		Volunteer updateVolunteer = volunteerRepo.findOneByEmailIgnoreCase(email).get();
+		updateVolunteer = v;
+		return volunteerRepo.saveAndFlush(updateVolunteer);
 	}
 
 	@Override

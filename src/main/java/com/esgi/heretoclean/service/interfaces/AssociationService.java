@@ -16,7 +16,7 @@ public interface AssociationService {
 	
 	 Optional<Association> findAssociationByEmail(String email);
 	
-	 Optional<List<Association>> findAssociationByName(String name);
+	 Optional<Association> findAssociationByName(String name);
 	 
 	 List<Association> findAllAssociation();
 	

@@ -43,7 +43,7 @@ public class AssociationServiceImpl implements AssociationService{
 	}
 
 	@Override
-	public Optional<List<Association>> findAssociationByName(String name) {
+	public Optional<Association> findAssociationByName(String name) {
 		return assoRepository.findByName(name);
 	}
 

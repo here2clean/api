@@ -20,7 +20,7 @@ public interface VolunteerService {
 	
 	Optional<Volunteer> findVolunteerByEmail(String email);
 	
-	Volunteer update(Volunteer v);
+	Volunteer update(String email,Volunteer v);
 	
 	void deleteByEmail(String eamil);
 	

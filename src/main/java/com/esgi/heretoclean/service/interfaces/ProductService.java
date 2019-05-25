@@ -1,5 +1,8 @@
 package com.esgi.heretoclean.service.interfaces;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.esgi.heretoclean.models.Association;
@@ -8,10 +11,12 @@ import com.esgi.heretoclean.models.Product;
 
 @Service
 public interface ProductService {
-	Product addProduct(Product p);
+	Product addProduct(String emailAssociation,Product p);
 	void deleteByName(String name);
-	Product findByName(String name);
+	Optional<Product> findByName(String name);
 	Product update(Long id, Product p);
-	void addAssociation(String name , String emailAsso);
-	void addCommand(String nameProduct, Long idCommand);
+	List<Product> findAll();
+	List<Product> findAllByAssociation(String name) throws Exception;
+	void addAssociation(String name , String emailAsso) throws Exception;
+	void addCommand(String nameProduct, Long idCommand) throws Exception;
 }

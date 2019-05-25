@@ -62,8 +62,8 @@ public class VolunteerController {
 	}
     
     @PutMapping("/update")
-    public ResponseEntity update(@Valid @RequestBody Volunteer volunteer){
-    	volunteerService.update(volunteer);
+    public ResponseEntity update(@RequestParam("email") String email , @Valid @RequestBody Volunteer volunteer){
+    	volunteerService.update(email,volunteer);
     	return ResponseEntity.status(HttpStatus.OK.value()).build();
     }
     
