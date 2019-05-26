@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -39,6 +40,13 @@ public class Association {
 	@Column(name="numberRna")
 	@NotNull
 	private int numberRna;
+	
+	@Transient
+	private String password;
+	
+	@NotNull
+	@Column(name="description")
+	private String description;
 	
     @OneToMany(mappedBy = "association")
 	private List<Gift> gifts = new ArrayList<Gift>();
@@ -115,6 +123,21 @@ public class Association {
 		this.associationVolunteers = associationVolunteers;
 	}
 
-	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }
 

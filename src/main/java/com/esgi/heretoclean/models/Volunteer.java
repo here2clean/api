@@ -2,6 +2,7 @@ package com.esgi.heretoclean.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -19,10 +20,41 @@ import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 @Entity
-public class Volunteer extends User {
+public class Volunteer {
 	
+	@Id
+	@GeneratedValue
+	private Long id;
+	
+	@NotNull
+	@Column(name="firstName")
+	private String firstName;
+	
+	@NotNull
+	@Column(name="firstName")
+	private String lastName;
+	
+	@NotNull
+	@Column(name="birthday")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
+	private Date birthday;
+	
+	@NotNull
+	@Column(name="address")
+	private String address;
+	
+	@NotNull
+	@Column(name="city")
+	private String city;
+	
+	@NotNull
+	@Column(name="cityCode")
+	private int cityCode;
+
 	@Email
 	@NotNull
 	@Column(unique=true)
@@ -31,13 +63,6 @@ public class Volunteer extends User {
 	@Transient
 	private String password;
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
 
 	@OneToMany(mappedBy="volunteer")
 	private List<Command> commands = new ArrayList<Command>();
@@ -54,6 +79,14 @@ public class Volunteer extends User {
 	
 	public Volunteer() {}
 
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	public List<Command> getCommands() {
 		return commands;
 	}
@@ -93,5 +126,62 @@ public class Volunteer extends User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public int getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(int cityCode) {
+		this.cityCode = cityCode;
+	}
+	
 	
 }
