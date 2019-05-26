@@ -42,9 +42,6 @@ public class Association {
 	
     @OneToMany(mappedBy = "association")
 	private List<Gift> gifts = new ArrayList<Gift>();
-    
-    @OneToOne(mappedBy="association")
-    private Manager manager;
 
     @OneToMany(mappedBy = "association")
 	private List<AssociationVolunteer> associationVolunteers;
@@ -108,14 +105,6 @@ public class Association {
 
 	public void setGifts(List<Gift> gifts) {
 		this.gifts = gifts;
-	}
-
-	public Manager getManager() {
-		return manager;
-	}
-
-	public void setManager(Manager manager) {
-		this.manager = manager;
 	}
 
 	public List<AssociationVolunteer> getAssociationVolunteers() {

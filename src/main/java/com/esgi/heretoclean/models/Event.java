@@ -65,10 +65,6 @@ public class Event {
 	@JoinTable(name="event_volunteers")
 	private List<Volunteer> volunteers = new ArrayList<Volunteer>();
 	
-	@ManyToOne
-    @JoinColumn
-	private Manager manager;
-	
 	public Event() {
 	}
 
@@ -136,12 +132,5 @@ public class Event {
 		this.volunteers = volunteers;
 	}
 
-	public Manager getZoneManager() {
-		return manager;
-	}
-
-	public void setZoneManager(Manager manager) {
-		this.manager = manager;
-	}
 	
 }
