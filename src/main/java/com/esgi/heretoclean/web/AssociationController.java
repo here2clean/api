@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,8 +39,14 @@ public class AssociationController {
     
     @PostMapping("/register")
     public ResponseEntity  registerAssociation(@RequestBody @Valid Association asso) throws URISyntaxException {
-    	associationService.registerAssociation(asso);
-    	return ResponseEntity.ok().build();
+    	try {
+			associationService.registerAssociation(asso);
+			return ResponseEntity.ok().build();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
     }
     
     @GetMapping("/all")

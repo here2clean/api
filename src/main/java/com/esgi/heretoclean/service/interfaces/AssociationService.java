@@ -12,7 +12,7 @@ import com.esgi.heretoclean.models.Volunteer;
 @Service
 public interface AssociationService {
 	
-	 Association registerAssociation(Association asso);
+	 Association registerAssociation(Association asso) throws Exception;
 	
 	 Optional<Association> findAssociationByEmail(String email);
 	

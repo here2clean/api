@@ -35,7 +35,7 @@ public class Volunteer {
 	private String firstName;
 	
 	@NotNull
-	@Column(name="firstName")
+	@Column(name="lastName")
 	private String lastName;
 	
 	@NotNull
