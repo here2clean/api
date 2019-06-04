@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -97,6 +98,16 @@ public class VolunteerController {
     public ResponseEntity delete(@Email @RequestParam("email") String email   ) {
     	volunteerService.deleteByEmail(email);
     	return ResponseEntity.status(HttpStatus.OK.value()).build();
+    }
+    
+    @GetMapping("/findByEmail")
+    public ResponseEntity getVolunteer(@Email @RequestParam("email") String email) {
+    	Optional<Volunteer> volunteerOptional = volunteerService.findVolunteerByEmail(email);
+    	if(!volunteerOptional.isPresent()) {
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    	}
+    	
+    	return ResponseEntity.status(HttpStatus.FOUND).body(volunteerOptional.get());
     }
     
     private FirebaseAuth initFirebase() throws IOException {
