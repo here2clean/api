@@ -111,7 +111,7 @@ public class VolunteerController {
     }
     
     private FirebaseAuth initFirebase() throws IOException {
-    	FileInputStream serviceAccount = new FileInputStream(new File("D://jeand/Documents/Cours2018-2019/S2/PA/API/heretoclean/src/main/resources/heretoclean-config.json"));
+    	FileInputStream serviceAccount = new FileInputStream(new File("C:\\Sources\\api\\src\\main\\resources\\heretoclean-config.json"));
 		FirebaseOptions options = new FirebaseOptions.Builder()
 				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
 				.setDatabaseUrl("https://heretoclean-876f4.firebaseio.com")
