@@ -1,7 +1,5 @@
 package com.esgi.heretoclean.security;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +16,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.auth.FirebaseAuth;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private FirebaseAuthenticationProvider authenticationProvider;
@@ -33,8 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManager() throws Exception {
-//		Firebase
-		
 		return new ProviderManager(Arrays.asList(authenticationProvider));
 	}
 
@@ -60,23 +53,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity
 		.cors()
 		.and()
+		// we don't need CSRF because our token is invulnerable
 		.csrf().disable()
+		// All urls must be authenticated (filter for token always fires (/**)
 		.authorizeRequests()
 		.antMatchers(HttpMethod.OPTIONS).permitAll()
-		.antMatchers("/api/authentification").permitAll()
-		.antMatchers("/api/**").authenticated()
+		.antMatchers("/authent/**").authenticated()
 		.and()
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+		// don't create session
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //.and()
+		// Custom JWT based security filter
+		httpSecurity
+		.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+
+
+		// disable page caching
+		 httpSecurity.headers().cacheControl();
 	}
-	
-	 private FirebaseAuth initFirebase() throws IOException {
-	    	FileInputStream serviceAccount = new FileInputStream(new File("D://jeand/Documents/Cours2018-2019/S2/PA/API/heretoclean/src/main/resources/heretoclean-config.json"));
-			FirebaseOptions options = new FirebaseOptions.Builder()
-					.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-					.setDatabaseUrl("https://heretoclean-876f4.firebaseio.com")
-					.build();
-			FirebaseApp app = FirebaseApp.initializeApp(options);
-			return FirebaseAuth.getInstance(app);
-	    }
 }

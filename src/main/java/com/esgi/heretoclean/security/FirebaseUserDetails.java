@@ -1,11 +1,13 @@
 package com.esgi.heretoclean.security;
+
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class FirebaseUserDetails implements UserDetails {
-	
+	private static final long serialVersionUID = 1L;
+
 	private final boolean enabled = true;
 	private final boolean credentialsNonExpired = true;
 	private final boolean accountNonLocked = true;
@@ -60,6 +62,5 @@ public class FirebaseUserDetails implements UserDetails {
 	public String getPassword() {
 		return password;
 	}
-
 
 }
