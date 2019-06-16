@@ -7,18 +7,24 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.google.api.client.util.Strings;
 
-public class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter {
+public class FirebaseAuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter  {
 
 	private final static String TOKEN_HEADER = "Token";
+	
+	private  AuthenticationManager authenticationManager;
+	
 
 	public FirebaseAuthenticationTokenFilter() {
-		super("/authent/**");
+//		this.authenticationManager = authenticationManager;
+		setFilterProcessesUrl("/api/login/test");
 	}
 
 	@Override
@@ -27,19 +33,10 @@ public class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationPro
 		if (Strings.isNullOrEmpty(authToken)) {
 			throw new RuntimeException("Invaild auth token");
 		}
+
 		return getAuthenticationManager().authenticate(new FirebaseAuthenticationToken(authToken));
 	}
 
-	/**
-	 * Make sure the rest of the filterchain is satisfied
-	 *
-	 * @param request
-	 * @param response
-	 * @param chain
-	 * @param authResult
-	 * @throws IOException
-	 * @throws ServletException
-	 */
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult)
 			throws IOException, ServletException {
@@ -48,6 +45,7 @@ public class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationPro
 		// As this authentication is in HTTP header, after success we need to continue the request normally
 		// and return the response as if the resource was not secured at all
 		chain.doFilter(request, response);
+		
 	}
 
 }

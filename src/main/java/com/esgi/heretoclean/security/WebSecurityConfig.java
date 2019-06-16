@@ -2,41 +2,84 @@ package com.esgi.heretoclean.security;
 
 import java.util.Arrays;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private FirebaseAuthenticationProvider authenticationProvider;
+	private final FirebaseAuthenticationProvider authenticationProvider;
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManager() throws Exception {
-		return new ProviderManager(Arrays.asList(authenticationProvider));
+	private final AuthenticationManagerBuilder authenticationManagerBuilder;
+
+//	@Autowired
+//	private UserDetailsService userDetailsService;
+
+
+
+	//	private final UserDetailsService userDetailsService;
+	//
+	//
+	//	public WebSecurityConfig(FirebaseAuthenticationProvider authenticationProvider,
+	//			AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService) {
+	//		this.authenticationProvider = authenticationProvider;
+	//		this.authenticationManagerBuilder = authenticationManagerBuilder;
+	//		this.userDetailsService = userDetailsService;
+	//	}
+	//
+
+	//	@Bean
+	//	@Override
+	//	public AuthenticationManager authenticationManager() throws Exception {
+	//		return new ProviderManager(Arrays.asList(authenticationProvider));
+	//	}
+
+
+	//	public FirebaseAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+	//		FirebaseAuthenticationTokenFilter authenticationTokenFilter = new FirebaseAuthenticationTokenFilter();
+	//		authenticationTokenFilter.setAuthenticationManager(authenticationManager());
+	//		authenticationTokenFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {});
+	//		return authenticationTokenFilter;
+	//	}
+	//
+
+	public WebSecurityConfig(FirebaseAuthenticationProvider authenticationProvider,	AuthenticationManagerBuilder authenticationManagerBuilder) {
+		this.authenticationProvider = authenticationProvider;
+		this.authenticationManagerBuilder = authenticationManagerBuilder;
 	}
 
-
-	public FirebaseAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-		FirebaseAuthenticationTokenFilter authenticationTokenFilter = new FirebaseAuthenticationTokenFilter();
-		authenticationTokenFilter.setAuthenticationManager(authenticationManager());
-		authenticationTokenFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {});
-		return authenticationTokenFilter;
+	@PostConstruct
+	public void init() {
+//			try {
+//				authenticationManagerBuilder
+//				.authenticationProvider(authenticationProvider).inMemoryAuthentication().
+//				} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 	}
 
 
@@ -49,25 +92,37 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 
 	@Override
-	protected void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity
-		.cors()
-		.and()
-		// we don't need CSRF because our token is invulnerable
+	protected void configure(HttpSecurity http) throws Exception {
+
+		http.cors().and()
 		.csrf().disable()
-		// All urls must be authenticated (filter for token always fires (/**)
 		.authorizeRequests()
-		.antMatchers(HttpMethod.OPTIONS).permitAll()
-		.antMatchers("/authent/**").authenticated()
+		.antMatchers("/api/login/test").permitAll()
+		.anyRequest().authenticated()
 		.and()
-		// don't create session
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //.and()
-		// Custom JWT based security filter
-		httpSecurity
-		.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+		.addFilter(new JwtAuthorizationFilter(authenticationManager()))
+		.sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+	}
 
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication()
+		.withUser("user")
+		.password(passwordEncoder().encode("password"))
+		.authorities("ROLE_USER");
+	}
 
-		// disable page caching
-		 httpSecurity.headers().cacheControl();
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+
+		return source;
 	}
 }
