@@ -35,54 +35,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-//	@Autowired
-//	private UserDetailsService userDetailsService;
 
-
-
-	//	private final UserDetailsService userDetailsService;
-	//
-	//
-	//	public WebSecurityConfig(FirebaseAuthenticationProvider authenticationProvider,
-	//			AuthenticationManagerBuilder authenticationManagerBuilder, UserDetailsService userDetailsService) {
-	//		this.authenticationProvider = authenticationProvider;
-	//		this.authenticationManagerBuilder = authenticationManagerBuilder;
-	//		this.userDetailsService = userDetailsService;
-	//	}
-	//
-
-	//	@Bean
-	//	@Override
-	//	public AuthenticationManager authenticationManager() throws Exception {
-	//		return new ProviderManager(Arrays.asList(authenticationProvider));
-	//	}
-
-
-	//	public FirebaseAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
-	//		FirebaseAuthenticationTokenFilter authenticationTokenFilter = new FirebaseAuthenticationTokenFilter();
-	//		authenticationTokenFilter.setAuthenticationManager(authenticationManager());
-	//		authenticationTokenFilter.setAuthenticationSuccessHandler((request, response, authentication) -> {});
-	//		return authenticationTokenFilter;
-	//	}
-	//
 
 	public WebSecurityConfig(FirebaseAuthenticationProvider authenticationProvider,	AuthenticationManagerBuilder authenticationManagerBuilder) {
 		this.authenticationProvider = authenticationProvider;
 		this.authenticationManagerBuilder = authenticationManagerBuilder;
 	}
-
-	@PostConstruct
-	public void init() {
-//			try {
-//				authenticationManagerBuilder
-//				.authenticationProvider(authenticationProvider).inMemoryAuthentication().
-//				} catch (Exception e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-	}
-
-
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {

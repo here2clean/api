@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.service.interfaces.EventService;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 
 @RestController
 @RequestMapping("/api/event")
@@ -54,6 +57,8 @@ public class EventController {
     	if(!optionalEvent.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
     	}
+    	
+ 
     	return ResponseEntity.status(HttpStatus.FOUND.value()).body(optionalEvent.get());
     }
     

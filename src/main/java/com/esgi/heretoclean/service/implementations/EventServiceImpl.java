@@ -79,5 +79,15 @@ public class EventServiceImpl implements EventService {
 		return null;
 	}
 
+	@Override
+	public int getCountForEvent(String name) {
+		Optional<Event> event = eventRepository.findByName(name);
+		
+		if(event.isPresent()) {
+			return event.get().getVolunteers().size();
+		}
+
+		return 0;
+	}
 	
 }
