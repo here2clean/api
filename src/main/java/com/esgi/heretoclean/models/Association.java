@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
+import javax.transaction.Transactional;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -22,6 +23,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+@Transactional
 public class Association {
 
 	@Id

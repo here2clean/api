@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+@Transactional
 public class Command {
 	
 	@Id

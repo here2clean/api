@@ -25,20 +25,6 @@ public class HeretocleanApplication {
 		SpringApplication.run(HeretocleanApplication.class, args);
 	}
 	
-	@Bean
-	public CorsFilter corsFilter() {
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true); // you USUALLY want this
-		config.addAllowedOrigin("*");
-		config.addAllowedHeader("*");
-		config.addAllowedMethod("GET");
-		config.addAllowedMethod("PUT");
-		config.addAllowedMethod("POST");
-		config.addAllowedHeader("Token");
-		source.registerCorsConfiguration("/**", config);
-		return new CorsFilter(source);
-	}
 
 	@Bean
 	public FirebaseAuth firebaseAuth() throws IOException {
@@ -52,7 +38,6 @@ public class HeretocleanApplication {
 				.build();
 
 		FirebaseApp.initializeApp(options);
-		
 		return FirebaseAuth.getInstance();
 	}
 

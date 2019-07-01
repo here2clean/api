@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,6 +29,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
+@Transactional
 public class Event {
 	
 	@Id
@@ -131,6 +133,19 @@ public class Event {
 	public void setVolunteers(List<Volunteer> volunteers) {
 		this.volunteers = volunteers;
 	}
+	
+	public int getNumberOfParticipant() {
+		return volunteers.size();
+	}
+
+	@Override
+	public String toString() {
+		return "Event [id=" + id + ", name=" + name + ", beginDate=" + beginDate + ", endDate=" + endDate
+				+ ", description=" + description + ", location=" + location + ", urlImage=" + urlImage + ", volunteers="
+				+ volunteers +" Nombre de participant="+ volunteers.size() +"]";
+	}
+	
+	
 
 	
 }

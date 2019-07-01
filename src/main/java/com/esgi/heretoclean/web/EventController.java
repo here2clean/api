@@ -57,8 +57,6 @@ public class EventController {
     	if(!optionalEvent.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
     	}
-    	
- 
     	return ResponseEntity.status(HttpStatus.FOUND.value()).body(optionalEvent.get());
     }
     
@@ -72,5 +70,6 @@ public class EventController {
     	eventService.delete(name);
     	return ResponseEntity.status(HttpStatus.OK.value()).build();
     }
+    
     
 }

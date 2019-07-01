@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
+import javax.transaction.Transactional;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
+@Transactional
 public class Volunteer {
 	
 	@Id

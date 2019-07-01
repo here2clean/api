@@ -15,16 +15,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.google.api.client.util.Strings;
 
-public class FirebaseAuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter  {
+public class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter   {
 
 	private final static String TOKEN_HEADER = "Token";
 	
-	private  AuthenticationManager authenticationManager;
+//	private  AuthenticationManager authenticationManager;
 	
 
 	public FirebaseAuthenticationTokenFilter() {
-//		this.authenticationManager = authenticationManager;
-		setFilterProcessesUrl("/api/login/test");
+		//this.authenticationManager = authenticationManager;
+		super("/api/**");
 	}
 
 	@Override
@@ -42,8 +42,6 @@ public class FirebaseAuthenticationTokenFilter extends UsernamePasswordAuthentic
 			throws IOException, ServletException {
 		super.successfulAuthentication(request, response, chain, authResult);
 
-		// As this authentication is in HTTP header, after success we need to continue the request normally
-		// and return the response as if the resource was not secured at all
 		chain.doFilter(request, response);
 		
 	}

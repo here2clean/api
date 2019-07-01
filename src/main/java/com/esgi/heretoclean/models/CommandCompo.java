@@ -7,10 +7,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
 
 @Entity(name="CommandCompo")
+@Transactional
 public class CommandCompo implements Serializable {
 	
 	@Column(name="quantity")

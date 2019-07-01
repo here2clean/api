@@ -31,8 +31,8 @@ public interface EventService {
 	
 	Optional<Event> findById(Long id);
 	
-	int getCountForEvent(String name);
-	
 	void delete(String email);
+	
+	void addVolunteer(String nameEvent);
 
 }
