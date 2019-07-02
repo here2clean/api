@@ -13,7 +13,7 @@ import com.esgi.heretoclean.models.Volunteer;
 @Service
 public interface EventService {
 
-	Event registerEvent(Event event);
+	int registerEvent(Event event);
 
 	Optional<Event> findByName(String name);
 
@@ -22,8 +22,6 @@ public interface EventService {
 	Optional<List<Event>> findByDate(LocalDate date);
 
 	Optional<List<Event>> findByLocation(String location);
-	
-	Optional<List<Event>> findAllEventByZoneManager(Long idZManager);
 
 	List<Event> findAllEvent();
 

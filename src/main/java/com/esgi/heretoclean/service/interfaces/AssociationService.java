@@ -18,7 +18,7 @@ public interface AssociationService {
 	
 	 Optional<Association> findAssociationByName(String name);
 	 
-	 List<Association> findAllAssociation();
+	List<Association> findAllAssociation();
 	
 	 void deleteAssociationByName(String name);
 	

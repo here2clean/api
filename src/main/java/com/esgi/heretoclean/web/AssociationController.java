@@ -31,79 +31,101 @@ import io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
 @RestController
 @RequestMapping("/api/association")
 public class AssociationController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AssociationController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(AssociationController.class);
 
-    private final AssociationService associationService;
+	private final AssociationService associationService;
 
-    @Autowired
+	@Autowired
 	public AssociationController(AssociationService associationService) {
 		this.associationService = associationService;
 	}
-    
-    @PostMapping("/register")
-    public ResponseEntity  registerAssociation(@RequestBody @Valid Association asso) throws HereToCleanException {
-    	try {
+
+	@PostMapping("/register")
+	public ResponseEntity  registerAssociation(@RequestBody @Valid Association asso) throws HereToCleanException {
+		try {
 			associationService.registerAssociation(asso);
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new HereToCleanException(HttpStatus.BAD_REQUEST.value() , "");
+			throw new HereToCleanException(HttpStatus.BAD_REQUEST.value() , "L'association n'a pas été enregistré");
 		}
-    }
-    
-    @GetMapping("/all")
-    public ResponseEntity  getAssociations() {
-        return ResponseEntity.ok(associationService.findAllAssociation());
-    }
-    
-    @GetMapping("/research/email")
-    public ResponseEntity getAssociationByEmail(@RequestParam("email") String email) throws HereToCleanException {
-    	
-    	if(StringUtil.isNullOrEmpty(email) ) {
-    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Il manque un paramètre");
-    	}
-    	
-        return ResponseEntity.ok(associationService.findAssociationByEmail(email));
-    }
-    
-    @GetMapping("/research/name")
-    public ResponseEntity getAssociationBynalme(@RequestParam("name") String name)throws HereToCleanException {
-    	
-    	if(StringUtil.isNullOrEmpty(name) ) {
-    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Il manque un paramètre");
-    	}
-    	return ResponseEntity.ok(associationService.findAssociationByName(name));
-    }
-    
-    @PostMapping("/update")
-    public ResponseEntity updateAssociation(@RequestParam("email") String email,@RequestBody Association asso) throws HereToCleanException {
-    	
-       	if(StringUtil.isNullOrEmpty(email) || asso == null ) {
-    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Des paramètres sont manquants");
-    	}
-       	
-    	Optional<Association> optionalAssociation = associationService.findAssociationByEmail(email);
+	}
 
-    	if(!optionalAssociation.isPresent()) {
-    		//return ResponseEntity.badRequest().build();
-    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association n'a pas été mis à jour");
+	@GetMapping("/all")
+	public ResponseEntity  getAssociations() throws HereToCleanException {
 
-    	}
-    	return ResponseEntity.ok(associationService.updateAssociation(asso));
-    }
-    
-    @DeleteMapping("/delete")
-    public ResponseEntity deleteAssociation(@RequestParam("email") String email) throws HereToCleanException {
-    	
-     	if(StringUtil.isNullOrEmpty(email)  ) {
-    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Veuillez renseigner l'email de votre association");
-    	}
-       	
-    	associationService.deleteAssociationByEmail(email);
-    	return ResponseEntity.ok().build();
-    	
-    }
-    
-    
+		List<Association> associations =   associationService.findAllAssociation();
+
+		if(!associations.isEmpty()) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value() , "Associations non trouvé");
+		}
+		return ResponseEntity.ok(associations);
+	}
+
+	@GetMapping("/research/email")
+	public ResponseEntity getAssociationByEmail(@RequestParam("email") String email) throws HereToCleanException {
+
+		if(StringUtil.isNullOrEmpty(email) ) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Il manque un paramètre");
+		}
+
+		Optional<Association> asso = associationService.findAssociationByEmail(email);
+
+		if(!asso.isPresent()) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association ayant comme email : " + email + " n'a pas été trouvé");
+
+		}
+
+		return ResponseEntity.ok(asso.get());
+	}
+
+	@GetMapping("/research/name")
+	public ResponseEntity getAssociationBynalme(@RequestParam("name") String name)throws HereToCleanException {
+
+		if(StringUtil.isNullOrEmpty(name) ) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Il manque un paramètre");
+		}
+		
+		
+		Optional<Association> asso = associationService.findAssociationByName(name);
+
+		
+		if(!asso.isPresent()) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association " + name + " n'a pas été trouvé");
+
+		}
+		return ResponseEntity.ok(asso.get());
+	}
+
+	@PostMapping("/update")
+	public ResponseEntity updateAssociation(@RequestParam("email") String email,@RequestBody Association asso) throws HereToCleanException {
+
+		if(StringUtil.isNullOrEmpty(email) || asso == null ) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Des paramètres sont manquants");
+		}
+
+		Optional<Association> optionalAssociation = associationService.findAssociationByEmail(email);
+
+		if(!optionalAssociation.isPresent()) {
+			//return ResponseEntity.badRequest().build();
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association n'a pas été mis à jour");
+
+		}
+		return ResponseEntity.ok(associationService.updateAssociation(asso));
+	}
+
+	@DeleteMapping("/delete")
+	public ResponseEntity deleteAssociation(@RequestParam("email") String email) throws HereToCleanException {
+
+		if(StringUtil.isNullOrEmpty(email)  ) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Veuillez renseigner l'email de votre association");
+		}
+
+		associationService.deleteAssociationByEmail(email);
+		return ResponseEntity.ok().build();
+
+	}
+
+
 }
