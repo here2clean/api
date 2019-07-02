@@ -18,12 +18,9 @@ import com.google.api.client.util.Strings;
 public class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter   {
 
 	private final static String TOKEN_HEADER = "Token";
-	
-//	private  AuthenticationManager authenticationManager;
-	
+		
 
 	public FirebaseAuthenticationTokenFilter() {
-		//this.authenticationManager = authenticationManager;
 		super("/api/**");
 	}
 

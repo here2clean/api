@@ -33,20 +33,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final FirebaseAuthenticationProvider authenticationProvider;
 
-<<<<<<< HEAD
-	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-
-
-=======
 	@Autowired
->>>>>>> Update security
-	public WebSecurityConfig(FirebaseAuthenticationProvider authenticationProvider,	AuthenticationManagerBuilder authenticationManagerBuilder) {
+	public WebSecurityConfig(FirebaseAuthenticationProvider authenticationProvider) {
 		this.authenticationProvider = authenticationProvider;
 	}
 
-<<<<<<< HEAD
-=======
+
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManager() throws Exception {
@@ -62,7 +55,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 
->>>>>>> Update security
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		web.ignoring()
@@ -77,28 +69,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.cors()
 		.and()
 		.csrf().disable()
-		//.addFilterBefore(authentification, beforeFilter)
 		.authorizeRequests()
 		.antMatchers(HttpMethod.OPTIONS).permitAll()
-		.antMatchers("/api/login/test").permitAll()
+		//.antMatchers("/api/login/test").permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 	}
-
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//		auth.inMemoryAuthentication()
-//		.withUser("user")
-//		.password(passwordEncoder().encode("password"))
-//		.authorities("ROLE_USER");
-//	}
-
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
 
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
