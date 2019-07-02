@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.esgi.heretoclean.dao.AssociationRepository;
 import com.esgi.heretoclean.dao.GiftRepository;
@@ -12,6 +13,7 @@ import com.esgi.heretoclean.models.Gift;
 import com.esgi.heretoclean.service.interfaces.GiftService;
 
 @Service
+@Transactional
 public class GiftServiceImpl implements GiftService {
 
 	private final GiftRepository giftRepo;

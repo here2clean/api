@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Gift;
 import com.esgi.heretoclean.service.interfaces.GiftService;
+
+import io.netty.util.internal.StringUtil;
 
 @RestController
 @RequestMapping("/api/gift")
@@ -35,11 +38,18 @@ public class GiftController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity registerGift(@Email @RequestParam("emailAssociaiton") String emailAssociaiton,@Email @RequestParam("emailVolunteer") String emailVolunteer,@RequestBody @Valid Gift gift ) throws URISyntaxException {
-		if( emailAssociaiton == null || emailVolunteer == null) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST.value()).build();
+	public ResponseEntity registerGift(@Email @RequestParam("emailAssociaiton") String emailAssociaiton,@Email @RequestParam("emailVolunteer") String emailVolunteer,@RequestBody @Valid Gift gift ) throws HereToCleanException {
+		
+		if(StringUtil.isNullOrEmpty(emailAssociaiton) || StringUtil.isNullOrEmpty(emailVolunteer) || gift == null ) {
+			throw new HereToCleanException(HttpStatus.BAD_REQUEST.value(), "Des paramètres sont manquants dans la requête");
 		}
+	
 		Gift newGift = giftService.createGift(gift,emailAssociaiton,emailVolunteer);
-		return ResponseEntity.status(HttpStatus.CREATED).build();
+		
+		if(newGift == null) {
+			throw new HereToCleanException(HttpStatus.NOT_IMPLEMENTED.value(), "Une erreur s'est produite dans la création d'un don");
+		}
+
+		return ResponseEntity.status(HttpStatus.CREATED).build();			
 	}
 }

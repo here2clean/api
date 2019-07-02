@@ -35,15 +35,17 @@ import com.google.firebase.auth.UserRecord.CreateRequest;
 public class VolunteerController {
 	
 	private final VolunteerServiceImpl volunteerService;
+	private final FirebaseAuth auth;
 	
 	@Autowired
-    public VolunteerController(VolunteerServiceImpl volunteerService) {
+    public VolunteerController(VolunteerServiceImpl volunteerService,FirebaseAuth auth) {
 		this.volunteerService = volunteerService;
+		this.auth = auth;
 	}
 
 	@PostMapping("/user/signUp")
 	public ResponseEntity createUser(@RequestBody @Valid Volunteer v) throws IOException, FirebaseAuthException {
-		FirebaseAuth auth = this.initFirebase();
+//		FirebaseAuth auth = this.initFirebase();
 		String fullName = v.getFirstName() + " " + v.getLastName();
 		CreateRequest request = new CreateRequest()
 				.setEmail(v.getEmail())
@@ -99,14 +101,14 @@ public class VolunteerController {
     	return ResponseEntity.status(HttpStatus.OK.value()).build();
     }
     
-    private FirebaseAuth initFirebase() throws IOException {
-    	FileInputStream serviceAccount = new FileInputStream(new File("D://jeand/Documents/Cours2018-2019/S2/PA/API/heretoclean/src/main/resources/heretoclean-config.json"));
-		FirebaseOptions options = new FirebaseOptions.Builder()
-				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-				.setDatabaseUrl("https://heretoclean-876f4.firebaseio.com")
-				.build();
-		FirebaseApp app = FirebaseApp.initializeApp(options);
-		return FirebaseAuth.getInstance(app);
-    }
+//    private FirebaseAuth initFirebase() throws IOException {
+//    	FileInputStream serviceAccount = new FileInputStream(new File("D://jeand/Documents/Cours2018-2019/S2/PA/API/heretoclean/src/main/resources/heretoclean-config.json"));
+//		FirebaseOptions options = new FirebaseOptions.Builder()
+//				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
+//				.setDatabaseUrl("https://heretoclean-876f4.firebaseio.com")
+//				.build();
+//		FirebaseApp app = FirebaseApp.initializeApp(options);
+//		return FirebaseAuth.getInstance(app);
+//    }
 
 }

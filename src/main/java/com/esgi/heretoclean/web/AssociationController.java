@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Association;
 import com.esgi.heretoclean.service.interfaces.AssociationService;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.UserRecord;
+import com.google.firebase.auth.UserRecord.CreateRequest;
 
 import antlr.StringUtils;
 import io.grpc.netty.shaded.io.netty.util.internal.StringUtil;
@@ -34,16 +37,24 @@ public class AssociationController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AssociationController.class);
 
 	private final AssociationService associationService;
+	private final FirebaseAuth auth;
 
 	@Autowired
-	public AssociationController(AssociationService associationService) {
+	public AssociationController(AssociationService associationService, FirebaseAuth auth) {
 		this.associationService = associationService;
+		this.auth = auth;
 	}
 
 	@PostMapping("/register")
 	public ResponseEntity  registerAssociation(@RequestBody @Valid Association asso) throws HereToCleanException {
 		try {
 			associationService.registerAssociation(asso);
+			String fullName = asso.getName();
+			CreateRequest request = new CreateRequest()
+					.setEmail(asso.getEmail())
+				    .setPassword(asso.getPassword())
+				    .setDisplayName(fullName);
+			UserRecord userRecord = auth.createUser(request);
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

@@ -3,7 +3,9 @@ package com.esgi.heretoclean.models;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,9 +48,13 @@ public class Command {
 	@ManyToMany(targetEntity=Product.class)
 	private List<Product> products = new ArrayList<Product>();
 	
-    @OneToMany(mappedBy = "command")
-	private List<CommandCompo> commandCompos = new ArrayList<CommandCompo>();
-    
+	@Column(name="amount")
+	private double amount;
+	
+//    @OneToMany(mappedBy = "command")
+//	private List<CommandCompo> commandCompos = new ArrayList<CommandCompo>();
+    @Column(name="Compo")
+    private Map<Product,Integer> compoCommand = new HashMap<Product, Integer>();
     
     public Command() {}
 
@@ -92,13 +98,34 @@ public class Command {
 		this.products = products;
 	}
 
-	public List<CommandCompo> getCommandCompos() {
-		return commandCompos;
+	public Map<Product, Integer> getCompoCommand() {
+		return compoCommand;
 	}
 
-	public void setCommandCompos(List<CommandCompo> commandCompos) {
-		this.commandCompos = commandCompos;
+	public double getAmount() {
+		return amount;
 	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public void setCompoCommand(Map<Product, Integer> compoCommand) {
+		this.compoCommand = compoCommand;
+	}
+	
+	
+	
+
+//	public List<CommandCompo> getCommandCompos() {
+//		return commandCompos;
+//	}
+//
+//	public void setCommandCompos(List<CommandCompo> commandCompos) {
+//		this.commandCompos = commandCompos;
+//	}
+	
+	
     
     
 	

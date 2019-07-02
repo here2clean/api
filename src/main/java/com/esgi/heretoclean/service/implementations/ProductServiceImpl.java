@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.esgi.heretoclean.dao.AssociationRepository;
 import com.esgi.heretoclean.dao.CommandRepository;
@@ -15,6 +16,7 @@ import com.esgi.heretoclean.models.Product;
 import com.esgi.heretoclean.service.interfaces.ProductService;
 
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductService{
 	
 	private final ProductRepository productRepo;
@@ -48,6 +50,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Optional<Product> findByName(String name) {
 		return productRepo.findByName(name);
 	}
@@ -97,11 +100,13 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Product> findAll() {
 		return productRepo.findAll();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Product> findAllByAssociation(String name) throws Exception {
 		
 		Optional<Association> associationOp = assoRepo.findByName(name);

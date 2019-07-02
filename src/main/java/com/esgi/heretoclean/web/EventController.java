@@ -22,6 +22,8 @@ import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.service.interfaces.EventService;
 
+import io.netty.util.internal.StringUtil;
+
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
@@ -50,7 +52,13 @@ public class EventController {
     }
     
     @GetMapping("/research/name")
-    public ResponseEntity getEventByName(@RequestParam("name") String name) {
+    public ResponseEntity getEventByName(@RequestParam("name") String name)throws HereToCleanException {
+    	
+    	if(StringUtil.isNullOrEmpty(name)) {
+    		throw new HereToCleanException(HttpStatus.BAD_GATEWAY.value(),"Il manque un paramètre");
+    	}
+    	
+    	
     	Optional<Event> optionalEvent = eventService.findByName(name);
     	if(!optionalEvent.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();

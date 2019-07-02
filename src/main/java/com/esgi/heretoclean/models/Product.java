@@ -14,11 +14,6 @@ import javax.persistence.OneToMany;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Transactional
@@ -53,9 +48,6 @@ public class Product {
 	@ManyToMany(mappedBy = "products")
 	private List<Command> commands = new ArrayList<Command>();
 	
-    @OneToMany(mappedBy = "product")
-	private List<CommandCompo> commandCompo = new ArrayList<CommandCompo>();
-    
     public Product() {
     }
 
@@ -115,13 +107,7 @@ public class Product {
 		this.commands = commands;
 	}
 
-	public List<CommandCompo> getCommandCompo() {
-		return commandCompo;
-	}
-
-	public void setCommandCompo(List<CommandCompo> commandCompo) {
-		this.commandCompo = commandCompo;
-	}
+	
     
     
 }

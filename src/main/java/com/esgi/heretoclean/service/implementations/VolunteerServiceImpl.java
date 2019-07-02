@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.esgi.heretoclean.dao.VolunteerRepository;
 import com.esgi.heretoclean.models.Association;
@@ -12,7 +13,7 @@ import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.models.Gift;
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.interfaces.VolunteerService;
-
+@Transactional
 @Service
 public class VolunteerServiceImpl implements VolunteerService {
 	
@@ -24,6 +25,7 @@ public class VolunteerServiceImpl implements VolunteerService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Volunteer findVolunteerById(Long id) {
 		return volunteerRepo.getOne(id);
 	}
@@ -34,6 +36,7 @@ public class VolunteerServiceImpl implements VolunteerService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Optional<Volunteer> findVolunteerByEmail(String email) {
 		return volunteerRepo.findOneByEmailIgnoreCase(email);
 	}
@@ -56,6 +59,7 @@ public class VolunteerServiceImpl implements VolunteerService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Gift> findAllGift(String email) {
 		return 	volunteerRepo.findOneByEmailIgnoreCase(email).get().getGifts();
 	}
