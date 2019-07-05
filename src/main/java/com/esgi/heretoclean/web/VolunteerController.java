@@ -100,6 +100,16 @@ public class VolunteerController {
     	volunteerService.deleteByEmail(email);
     	return ResponseEntity.status(HttpStatus.OK.value()).build();
     }
+	
+	   @GetMapping("/findByEmail")
+    public ResponseEntity getVolunteer(@Email @RequestParam("email") String email) {
+    	Optional<Volunteer> volunteerOptional = volunteerService.findVolunteerByEmail(email);
+    	if(!volunteerOptional.isPresent()) {
+    		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    	}
+    	
+    	return ResponseEntity.status(HttpStatus.FOUND).body(volunteerOptional.get());
+    }
     
 //    private FirebaseAuth initFirebase() throws IOException {
 //    	FileInputStream serviceAccount = new FileInputStream(new File("D://jeand/Documents/Cours2018-2019/S2/PA/API/heretoclean/src/main/resources/heretoclean-config.json"));
