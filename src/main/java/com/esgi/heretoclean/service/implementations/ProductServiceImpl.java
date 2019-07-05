@@ -109,12 +109,12 @@ public class ProductServiceImpl implements ProductService{
 	@Transactional(readOnly = true)
 	public List<Product> findAllByAssociation(String name) throws Exception {
 		
-		Optional<Association> associationOp = assoRepo.findByName(name);
+		List<Association> associationOp = assoRepo.findByNameContaining(name);
 		
-		if(!associationOp.isPresent()) {
+		if(associationOp.isEmpty()) {
 			 throw new Exception("Association not find");
 		}
-		List<Product> products = productRepo.findByAssociation(associationOp.get());		
+		List<Product> products = productRepo.findByAssociation(associationOp.get(0));
 		return products;
 	}
 

@@ -68,7 +68,7 @@ public class AssociationController {
 
 		List<Association> associations =   associationService.findAllAssociation();
 
-		if(!associations.isEmpty()) {
+		if(associations.isEmpty()) {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value() , "Associations non trouvé");
 		}
 		return ResponseEntity.ok(associations);
@@ -99,14 +99,13 @@ public class AssociationController {
 		}
 		
 		
-		Optional<Association> asso = associationService.findAssociationByName(name);
+		List<Association> asso = associationService.findAssociationByName(name);
 
 		
-		if(!asso.isPresent()) {
+		if(asso.isEmpty()) {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association " + name + " n'a pas été trouvé");
-
 		}
-		return ResponseEntity.ok(asso.get());
+		return ResponseEntity.ok(asso);
 	}
 
 	@PostMapping("/update")

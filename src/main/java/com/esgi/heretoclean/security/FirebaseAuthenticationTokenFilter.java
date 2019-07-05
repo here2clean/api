@@ -17,8 +17,7 @@ import com.google.api.client.util.Strings;
 
 public class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationProcessingFilter   {
 
-	private final static String TOKEN_HEADER = "Token";
-		
+	private final static String TOKEN_HEADER = "token";
 
 	public FirebaseAuthenticationTokenFilter() {
 		super("/api/**");
@@ -28,7 +27,7 @@ public class FirebaseAuthenticationTokenFilter extends AbstractAuthenticationPro
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) {
 		final String authToken = request.getHeader(TOKEN_HEADER);
 		if (Strings.isNullOrEmpty(authToken)) {
-			throw new RuntimeException("Invaild auth token");
+			throw new RuntimeException("Invalid auth token");
 		}
 
 		return getAuthenticationManager().authenticate(new FirebaseAuthenticationToken(authToken));

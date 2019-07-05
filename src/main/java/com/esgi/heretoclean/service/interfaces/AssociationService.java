@@ -6,8 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.esgi.heretoclean.models.Association;
-import com.esgi.heretoclean.models.Event;
-import com.esgi.heretoclean.models.Volunteer;
 
 @Service
 public interface AssociationService {
@@ -16,7 +14,7 @@ public interface AssociationService {
 	
 	 Optional<Association> findAssociationByEmail(String email);
 	
-	 Optional<Association> findAssociationByName(String name);
+	 List<Association> findAssociationByName(String name);
 	 
 	List<Association> findAllAssociation();
 	

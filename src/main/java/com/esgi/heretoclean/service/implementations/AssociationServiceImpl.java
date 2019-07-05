@@ -67,8 +67,8 @@ public class AssociationServiceImpl implements AssociationService{
 
 	@Transactional(readOnly = true)
 	@Override
-	public Optional<Association> findAssociationByName(String name) {
-		return assoRepository.findByName(name);
+	public List<Association> findAssociationByName(String name) {
+		return assoRepository.findByNameContaining(name);
 	}
 
 	@Override
