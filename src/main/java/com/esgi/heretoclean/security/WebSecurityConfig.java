@@ -72,8 +72,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.authorizeRequests()
 		.antMatchers(HttpMethod.OPTIONS).permitAll()
 		.antMatchers("/api/association/register").permitAll()
-		.antMatchers("/api/volunteer/user/signUp").permitAll()
-		.anyRequest().authenticated()
+		.antMatchers("/api/volunteer/signUp").permitAll()
+		.antMatchers("/api/**").authenticated()
 		.and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
