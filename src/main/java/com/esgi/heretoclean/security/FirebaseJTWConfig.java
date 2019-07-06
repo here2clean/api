@@ -23,7 +23,7 @@ public class FirebaseJTWConfig extends SecurityConfigurerAdapter<DefaultSecurity
 	    @Override
 	    public void configure(HttpSecurity http) {
 	    	FirebaseTokenFilter customFilter = new FirebaseTokenFilter(tokenProvider);
-	        http.addFilterBefore(customFilter,  (Class<? extends Filter>) UsernamePasswordCredentials.class);
+	        http.addFilterBefore(customFilter,  UsernamePasswordAuthenticationFilter.class);
 	    }
 
 	

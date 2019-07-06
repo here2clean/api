@@ -23,18 +23,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final NewFilter corsFilter;
-	
-	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-	private final FirebaseUserDetails userDetail;
 
 	private final FirebaseAuthenticationProvider tokenProvider;
 
-	public WebSecurityConfig(NewFilter corsFilter, AuthenticationManagerBuilder authenticationManagerBuilder,
-			FirebaseUserDetails userDetail, FirebaseAuthenticationProvider tokenProvider) {
+	public WebSecurityConfig(NewFilter corsFilter, FirebaseAuthenticationProvider tokenProvider) {
 		this.corsFilter = corsFilter;
-		this.authenticationManagerBuilder = authenticationManagerBuilder;
-		this.userDetail = userDetail;
 		this.tokenProvider = tokenProvider;
 	}
 
@@ -50,35 +44,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-		.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
+		.addFilterAfter(corsFilter, UsernamePasswordAuthenticationFilter.class)
 		.exceptionHandling()
-        .and()
-        .csrf()
-        .disable()
-        .headers()
-        .frameOptions()
-        .disable()
-        .and()
-        .sessionManagement()
-        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-        .authorizeRequests()
+		.and()
+		.csrf()
+		.disable()
+		.headers()
+		.frameOptions()
+		.disable()
+		.and()
+		.sessionManagement()
+		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
+		.authorizeRequests()
 		.antMatchers(HttpMethod.OPTIONS).permitAll()
 		.antMatchers("/api/association/register").permitAll()
 		.antMatchers("/api/volunteer/signUp").permitAll()
 		.antMatchers("/api/**").authenticated()
-		.and()
+		.and() 
 		.apply(securityConfigurerAdapter());
-		}
-	
+	}
+
 	private FirebaseJTWConfig securityConfigurerAdapter() {
 		return new FirebaseJTWConfig(tokenProvider);
 	}
-	
-	  @Bean
-	    @Override
-	    public AuthenticationManager authenticationManagerBean() throws Exception {
-	        return super.authenticationManagerBean();
-	    }
+
+	//	  @Bean
+	//	    @Override
+	//	    public AuthenticationManager authenticationManagerBean() throws Exception {
+	//	        return super.authenticationManagerBean();
+	//	    }
 
 }
