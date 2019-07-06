@@ -28,11 +28,11 @@ resource "aws_security_group" "aws-secgrp-allow-ssh" {
 }
 
 resource "aws_security_group" "aws-secgrp-mysql-allow-querry" {
-  name = "mydb1"
+  name = "allo-mysql"
 
   ingress {
-    from_port = 3036
-    to_port = 5432
+    from_port = 3066
+    to_port = 3066
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
