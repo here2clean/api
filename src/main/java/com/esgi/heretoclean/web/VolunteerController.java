@@ -1,8 +1,5 @@
 package com.esgi.heretoclean.web;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -17,9 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.implementations.VolunteerServiceImpl;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
