@@ -115,7 +115,7 @@ resource "aws_db_instance" "aws-rds-mysql-instance" {
   vpc_security_group_ids = ["${aws_security_group.aws-secgrp-allow-ssh.id}","${aws_security_group.aws-secgrp-mysql-allow-querry.id}"]
 
     provisioner "local-exec" {
-    command = "mysql -u ${aws_db_instance.aws-rds-mysql-instance.username} -p ${aws_db_instance.aws-rds-mysql-instance.password} heretoclean < heretoclean.sql"
+    command = "mysql --user=${aws_db_instance.aws-rds-mysql-instance.username} --password=${aws_db_instance.aws-rds-mysql-instance.password} --host=${aws_db_instance.aws-rds-mysql-instance.address} heretoclean < heretoclean.sql"
   }
 }
 
