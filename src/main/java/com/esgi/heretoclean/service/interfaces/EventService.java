@@ -31,6 +31,6 @@ public interface EventService {
 	
 	void delete(String email);
 	
-	void addVolunteer(String nameEvent);
+	void addVolunteer(String nameEvent,String emailVolunteer);
 
 }
