@@ -53,12 +53,12 @@ public class CommandServiceImpl implements CommandService{
 	public void addPanier(Long id,Product p, int quantity) {
 		Optional<Command> command = Optional.of(commandRepo.getOne(id));
 		
-		if(command.isPresent()) {
-			Map m = command.get().getCompoCommand();
-			m.put(p, quantity);
-			command.get().setCompoCommand(m);
-			commandRepo.saveAndFlush(command.get());
-		}
+//		if(command.isPresent()) {
+//			Map m = command.get().getCompoCommand();
+//			m.put(p, quantity);
+//			command.get().setCompoCommand(m);
+//			commandRepo.saveAndFlush(command.get());
+//		}
 	}
 	
 	
@@ -74,21 +74,21 @@ public class CommandServiceImpl implements CommandService{
 		
 	Optional<Command> command = Optional.of(commandRepo.getOne(id));
 		
-		if(command.isPresent()) {
-			double amount = command.get().getAmount();
-
-			Map m = command.get().getCompoCommand();
-			
-		      Set<Entry<Product, Integer>> setHm = m.entrySet();
-		      Iterator<Entry<Product, Integer>> it = setHm.iterator();
-		      
-		      while(it.hasNext()) {
-		    	  Entry<Product, Integer> e = it.next();
-		    	  amount = amount + e.getKey().getPrice() * e.getValue();
-		      }
-		      
-		      return amount;
-		}
+//		if(command.isPresent()) {
+//			double amount = command.get().getAmount();
+//
+//			Map m = command.get().getCompoCommand();
+//			
+//		      Set<Entry<Product, Integer>> setHm = m.entrySet();
+//		      Iterator<Entry<Product, Integer>> it = setHm.iterator();
+//		      
+//		      while(it.hasNext()) {
+//		    	  Entry<Product, Integer> e = it.next();
+//		    	  amount = amount + e.getKey().getPrice() * e.getValue();
+//		      }
+//		      
+//		      return amount;
+//		}
 		
 		return 0;
 	}

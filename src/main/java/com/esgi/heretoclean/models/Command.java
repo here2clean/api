@@ -46,9 +46,9 @@ public class Command {
 	
 //    @OneToMany(mappedBy = "command")
 //	private List<CommandCompo> commandCompos = new ArrayList<CommandCompo>();
-	@ElementCollection
-    @Column(name="Compo")
-    private Map<Product,Integer> compoCommand = new HashMap<Product, Integer>();
+//	@ElementCollection
+//    @Column(name="Compo")
+//    private Map<Product,Integer> compoCommand = new HashMap<Product, Integer>();
     
     public Command() {}
 
@@ -92,9 +92,9 @@ public class Command {
 		this.products = products;
 	}
 
-	public Map<Product, Integer> getCompoCommand() {
-		return compoCommand;
-	}
+//	public Map<Product, Integer> getCompoCommand() {
+//		return compoCommand;
+//	}
 
 	public double getAmount() {
 		return amount;
@@ -104,9 +104,9 @@ public class Command {
 		this.amount = amount;
 	}
 
-	public void setCompoCommand(Map<Product, Integer> compoCommand) {
-		this.compoCommand = compoCommand;
-	}
+//	public void setCompoCommand(Map<Product, Integer> compoCommand) {
+//		this.compoCommand = compoCommand;
+//	}
 	
 	
 	
