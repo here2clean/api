@@ -15,7 +15,7 @@ public interface EventService {
 
 	int registerEvent(Event event);
 
-	Optional<Event> findByName(String name);
+	Optional<List<Event>> findByName(String name);
 
 	Optional<List<Volunteer>> findVolunteer(Long id);
 

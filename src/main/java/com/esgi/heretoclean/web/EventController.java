@@ -1,6 +1,7 @@
 package com.esgi.heretoclean.web;
 
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -59,11 +60,11 @@ public class EventController {
     	}
     	
     	
-    	Optional<Event> optionalEvent = eventService.findByName(name);
+    	Optional<List<Event>> optionalEvent = eventService.findByName(name);
     	if(!optionalEvent.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
     	}
-    	return ResponseEntity.status(HttpStatus.FOUND.value()).body(optionalEvent.get());
+    	return ResponseEntity.status(HttpStatus.FOUND.value()).body(optionalEvent);
     }
     
     @PutMapping("/update")

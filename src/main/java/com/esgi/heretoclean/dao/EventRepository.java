@@ -14,7 +14,7 @@ import com.esgi.heretoclean.models.Volunteer;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 	
-	Optional<Event> findByName(String name);
+	Optional<List<Event>> findByNameContaining(String name);
 	Optional<List<Event>> findByLocation(String location);
 	Optional<List<Event>> findByBeginDate(LocalDate date);
 	void deleteByName(String name);

@@ -40,8 +40,8 @@ public class EventServiceImpl implements EventService {
 
 	@Transactional(readOnly = true)
 	@Override
-	public Optional<Event> findByName(String name) {
-		return eventRepository.findByName(name);
+	public Optional<List<Event>> findByName(String name) {
+		return eventRepository.findByNameContaining(name);
 	}
 
 	@Transactional(readOnly = true)
@@ -90,14 +90,14 @@ public class EventServiceImpl implements EventService {
 	public void addVolunteer(String nameEvent) {
 		// TODO Auto-generated method stub
 		
-		Optional<Event> event = eventRepository.findByName(nameEvent);
+		List<Event> event = eventRepository.findByNameContaining(nameEvent).get();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User principal = (User) auth.getPrincipal();
 		Optional<Volunteer> volunteer = volunteerRepo.findOneByEmailIgnoreCase(principal.getUsername());
 		
-		if(event.isPresent() && volunteer.isPresent()) {
-			event.get().getVolunteers().add(volunteer.get());
-			eventRepository.saveAndFlush(event.get());
+		if(!event.isEmpty() && volunteer.isPresent()) {
+			event.get(0).getVolunteers().add(volunteer.get());
+			eventRepository.saveAndFlush(event.get(0));
 		}
 		
 	}
