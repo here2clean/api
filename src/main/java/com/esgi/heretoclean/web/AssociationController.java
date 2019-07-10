@@ -137,5 +137,21 @@ public class AssociationController {
 
 	}
 
+	
+	@GetMapping("/findById")
+	public ResponseEntity findById(@RequestParam("id") String id) throws HereToCleanException {
+
+		if(StringUtil.isNullOrEmpty(id)  ) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Veuillez renseigner l'email de votre association");
+		}
+
+		Optional<Association> asso = Optional.of(associationService.findById(Long.parseLong("1")));
+		
+		if(!asso.isPresent()) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association n'a pas été retrouvé");
+		}
+		return ResponseEntity.ok(asso.get());
+
+	}
 
 }

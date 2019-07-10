@@ -89,4 +89,10 @@ public class AssociationServiceImpl implements AssociationService{
 	}
 
 
+	@Override
+	public Association findById(Long id) {
+		return assoRepository.getOne(id);
+	}
+
+
 }

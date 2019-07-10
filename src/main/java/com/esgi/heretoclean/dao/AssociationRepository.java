@@ -15,6 +15,7 @@ public interface AssociationRepository extends JpaRepository<Association, Long> 
 	Optional<Association> findByEmail(String email);
 	List<Association> findByNameContaining(String name);
 	
+	
 	void deleteByName(String name);
 	void deleteByEmail(String email);
 }

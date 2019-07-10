@@ -18,6 +18,8 @@ public interface AssociationService {
 	 
 	List<Association> findAllAssociation();
 	
+	Association findById(Long id);
+	
 	 void deleteAssociationByName(String name);
 	
 	 Association updateAssociation(Association asso);

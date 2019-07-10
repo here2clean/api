@@ -101,6 +101,20 @@ public class ProductController {
 		return ResponseEntity.ok().build();
 	}
 	
+	@GetMapping("/findById")
+	public ResponseEntity findById(@RequestParam("id") String id) throws HereToCleanException {
+		
+		if(StringUtil.isNullOrEmpty(id)) {
+			throw new HereToCleanException(HttpStatus.BAD_REQUEST.value(),"Renseignez l'id du produit svp");
+		}
+		
+		Optional<Product> product = Optional.of(productService.findById(Long.parseLong(id)));
 	
+		
+		if(!product.isPresent()) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Produit non trouvé");
+		}
+		return ResponseEntity.ok(product.get());
+	}
 	
 }
