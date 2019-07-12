@@ -63,6 +63,7 @@ public class ProductDTO {
 		productDTO.setId(p.getId());
 		productDTO.setName(p.getName());
 		productDTO.setPrice(p.getPrice());
+		productDTO.setDescription(p.getDescription());
 		
 		AssociationDTO associationDTO = AssociationDTO.AssociationToAssociationDTO(p.getAssociation());
 		
