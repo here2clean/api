@@ -36,20 +36,7 @@ public class AssociationServiceImpl implements AssociationService{
 
 	@Override
 	public Association registerAssociation(Association asso) throws HereToCleanException {
-
-		String assosJson = "{\"email\":\""+asso.getEmail()+"\",\"password\":\""+asso.getPassword()+"\",\"returnSecureToken\":true}";
-		Client client = ClientBuilder.newClient();
-		Response response = client
-				.target(props.getUrlBase()+"/5")
-				.request(MediaType.APPLICATION_JSON_VALUE)
-				.post(Entity.json(new Gson().toJson(assosJson)));
-
-		if(response.getStatus()>=200) {
-
-			return assoRepository.save(asso);
-		}else {
-			throw new HereToCleanException("L'enregistrement a échoué");
-		}
+		return assoRepository.save(asso);
 	}
 
 

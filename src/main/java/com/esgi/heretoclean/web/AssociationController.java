@@ -46,21 +46,24 @@ public class AssociationController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity  registerAssociation(@RequestBody @Valid Association asso) throws HereToCleanException {
+	public ResponseEntity  registerAssociation(@RequestBody @Valid Association asso) {
 		try {
-			associationService.registerAssociation(asso);
 			String fullName = asso.getName();
 			CreateRequest request = new CreateRequest()
 					.setEmail(asso.getEmail())
 				    .setPassword(asso.getPassword())
 				    .setDisplayName(fullName);
 			UserRecord userRecord = auth.createUser(request);
+			
+			if(userRecord != null) {
+				associationService.registerAssociation(asso);
+			}
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new HereToCleanException(HttpStatus.BAD_REQUEST.value() , "L'association n'a pas été enregistré");
 		}
+		return null;
 	}
 
 	@GetMapping("/all")

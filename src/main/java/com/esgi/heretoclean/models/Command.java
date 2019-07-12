@@ -1,21 +1,9 @@
 package com.esgi.heretoclean.models;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @Transactional
@@ -24,10 +12,6 @@ public class Command {
 	@Id
 	@GeneratedValue
 	private Long id;
-	
-	@Column(name="orderStatus")
-	@NotNull
-	private String orderStatus;
 	
 	@Column(name="dateCommand")
 	@NotNull
@@ -38,17 +22,16 @@ public class Command {
 	@NotNull
 	private Volunteer volunteer ;
 	
-	@ManyToMany(targetEntity=Product.class)
-	private List<Product> products = new ArrayList<Product>();
+	@Column(name="quantity")
+	private float quantity;
 	
 	@Column(name="amount")
 	private double amount;
 	
-//    @OneToMany(mappedBy = "command")
-//	private List<CommandCompo> commandCompos = new ArrayList<CommandCompo>();
-//	@ElementCollection
-//    @Column(name="Compo")
-//    private Map<Product,Integer> compoCommand = new HashMap<Product, Integer>();
+	@ManyToOne
+	@NotNull
+	@JoinColumn
+	private Product product;
     
     public Command() {}
 
@@ -58,14 +41,6 @@ public class Command {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getOrderStatus() {
-		return orderStatus;
-	}
-
-	public void setOrderStatus(String orderStatus) {
-		this.orderStatus = orderStatus;
 	}
 
 	public Date getDateCommand() {
@@ -84,18 +59,6 @@ public class Command {
 		this.volunteer = volunteer;
 	}
 
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
-//	public Map<Product, Integer> getCompoCommand() {
-//		return compoCommand;
-//	}
-
 	public double getAmount() {
 		return amount;
 	}
@@ -104,24 +67,19 @@ public class Command {
 		this.amount = amount;
 	}
 
-//	public void setCompoCommand(Map<Product, Integer> compoCommand) {
-//		this.compoCommand = compoCommand;
-//	}
-	
-	
-	
+	public float getQuantity() {
+		return quantity;
+	}
 
-//	public List<CommandCompo> getCommandCompos() {
-//		return commandCompos;
-//	}
-//
-//	public void setCommandCompos(List<CommandCompo> commandCompos) {
-//		this.commandCompos = commandCompos;
-//	}
-	
-	
-    
-    
-	
+	public void setQuantity(float quantity) {
+		this.quantity = quantity;
+	}
 
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 }

@@ -102,19 +102,34 @@ public class ProductController {
 	}
 	
 	@GetMapping("/findById")
-	public ResponseEntity findById(@RequestParam("id") String id) throws HereToCleanException {
+	public ResponseEntity findById(@RequestParam("id") Long id) throws HereToCleanException {
 		
-		if(StringUtil.isNullOrEmpty(id)) {
+		if(id == null) {
 			throw new HereToCleanException(HttpStatus.BAD_REQUEST.value(),"Renseignez l'id du produit svp");
 		}
 		
-		Optional<Product> product = Optional.of(productService.findById(Long.parseLong(id)));
+		Optional<Product> product = Optional.of(productService.findById(id));
 	
 		
-		if(!product.isPresent()) {
+		if(!product.isPresent() || product.get().getId() == null) {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Produit non trouvé");
 		}
 		return ResponseEntity.ok(product.get());
 	}
 	
+	@GetMapping("/findByAssociationId")
+	public ResponseEntity findByAssociationId(@RequestParam("id") Long id) throws HereToCleanException {
+		
+		if(id == null) {
+			throw new HereToCleanException(HttpStatus.BAD_REQUEST.value(),"Renseignez l'id de l'association svp");
+		}
+		
+		Optional<List<Product>> products = Optional.of(productService.findAllByAssociationId(id));
+	
+		
+		if(!products.isPresent()) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Il n'y a aucun produit");
+		}
+		return ResponseEntity.ok(products.get());
+	}	
 }

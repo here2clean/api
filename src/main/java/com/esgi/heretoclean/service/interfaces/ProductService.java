@@ -17,6 +17,7 @@ public interface ProductService {
 	Product update(Long id, Product p);
 	List<Product> findAll();
 	List<Product> findAllByAssociation(String name) throws Exception;
+	List<Product> findAllByAssociationId(Long id);
 	void addAssociation(String name , String emailAsso) throws Exception;
 	void addCommand(String nameProduct, Long idCommand) throws Exception;
 	Product findById(Long id);

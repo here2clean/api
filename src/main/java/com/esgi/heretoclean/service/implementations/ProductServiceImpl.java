@@ -95,7 +95,6 @@ public class ProductServiceImpl implements ProductService{
 		}
 		Command c = commandOp.get();
 		Product p = productOp.get();
-		p.setCommand(c);
 		productRepo.saveAndFlush(p);
 	}
 
@@ -121,6 +120,20 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public Product findById(Long id) {
 		return productRepo.getOne(id);
+	}
+
+	@Override
+	public List<Product> findAllByAssociationId(Long id) {
+
+		
+		Optional<Association> asso = assoRepo.findById(id);
+		
+		if(asso.isPresent()) {
+			List<Product> products = asso.get().getProducts();
+			return products;
+		}
+		
+		return null;
 	}
 
 

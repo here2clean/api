@@ -40,14 +40,6 @@ public class Product {
 	@NotNull
 	private Association association;
 	
-	@ManyToOne
-	@JoinColumn
-	@NotNull
-	private Command command;
-	
-	@ManyToMany(mappedBy = "products")
-	private List<Command> commands = new ArrayList<Command>();
-	
     public Product() {
     }
 
@@ -90,24 +82,4 @@ public class Product {
 	public void setAssociation(Association association) {
 		this.association = association;
 	}
-
-	public Command getCommand() {
-		return command;
-	}
-
-	public void setCommand(Command command) {
-		this.command = command;
-	}
-
-	public List<Command> getCommands() {
-		return commands;
-	}
-
-	public void setCommands(List<Command> commands) {
-		this.commands = commands;
-	}
-
-	
-    
-    
 }

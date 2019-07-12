@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esgi.heretoclean.dao.CommandRepository;
+import com.esgi.heretoclean.dao.ProductRepository;
 import com.esgi.heretoclean.dao.VolunteerRepository;
 import com.esgi.heretoclean.models.Command;
 import com.esgi.heretoclean.models.Product;
+import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.interfaces.CommandService;
 
 @Service
@@ -26,14 +28,29 @@ public class CommandServiceImpl implements CommandService{
 	
 	private final VolunteerRepository volunteerRepo;
 	
+	private final ProductRepository productRepo;
+	
 	@Autowired
-	public CommandServiceImpl(CommandRepository commandRepo, VolunteerRepository volunteerRepo) {
+	public CommandServiceImpl(CommandRepository commandRepo, VolunteerRepository volunteerRepo,ProductRepository productRepo) {
 		this.commandRepo = commandRepo;
 		this.volunteerRepo = volunteerRepo;
+		this.productRepo = productRepo;
 	}
 
 	@Override
-	public Command createCommand(Command c) {
+	public Command createCommand(Command c,Long idProduct, Long idVolunteer) {
+		Optional<Product> product = productRepo.findById(idProduct);
+		Optional<Volunteer> volunteer = volunteerRepo.findById(idVolunteer);
+		
+		if(!product.isPresent() && product.get().getId() == null ) {
+			return null;
+		}
+		c.setProduct(product.get());
+		
+		if(!volunteer.isPresent() && volunteer.get().getId() == null ) {
+			return null;
+		}
+		c.setVolunteer(volunteer.get());
 		return commandRepo.save(c);
 	}
 

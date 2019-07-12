@@ -62,12 +62,6 @@ public class Association {
 	public Association() {
 	}
 
-	public Association(Long id, String name, @Email String email, int numberRna) {
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.numberRna = numberRna;
-	}
 
 	public Long getId() {
 		return id;
