@@ -67,20 +67,6 @@ public class CommandServiceImpl implements CommandService{
 	}
 
 	@Override
-	public void addPanier(Long id,Product p, int quantity) {
-		Optional<Command> command = Optional.of(commandRepo.getOne(id));
-		
-//		if(command.isPresent()) {
-//			Map m = command.get().getCompoCommand();
-//			m.put(p, quantity);
-//			command.get().setCompoCommand(m);
-//			commandRepo.saveAndFlush(command.get());
-//		}
-	}
-	
-	
-
-	@Override
 	public List<Command> findByVolunteer(String name) {
 		// TODO Auto-generated method stub
 		return null;

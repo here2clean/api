@@ -30,7 +30,6 @@ public class Command {
 	
 	@ManyToOne
 	@NotNull
-	@JoinColumn
 	private Product product;
     
     public Command() {}

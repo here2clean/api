@@ -13,8 +13,9 @@ public interface CommandService {
 	Command createCommand(Command c,Long idProduct,Long idVolunteer);
 	List<Command> findByDateCommand(Date d);
 	Command findById(Long id);
-	void addPanier(Long id,Product p,int quantity);
 	List<Command> findByVolunteer(String name);
+	
+	
 	double getAmount(Long id);
 	
 }
