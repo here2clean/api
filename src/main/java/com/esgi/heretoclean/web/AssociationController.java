@@ -1,6 +1,7 @@
 package com.esgi.heretoclean.web;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.esgi.heretoclean.DTO.AssociationDTO;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Association;
 import com.esgi.heretoclean.service.interfaces.AssociationService;
@@ -46,35 +48,40 @@ public class AssociationController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity  registerAssociation(@RequestBody @Valid Association asso) {
+	public ResponseEntity  registerAssociation(@RequestBody @Valid Association asso) throws HereToCleanException {
 		try {
+			associationService.registerAssociation(asso);
 			String fullName = asso.getName();
 			CreateRequest request = new CreateRequest()
 					.setEmail(asso.getEmail())
 				    .setPassword(asso.getPassword())
 				    .setDisplayName(fullName);
 			UserRecord userRecord = auth.createUser(request);
-			
-			if(userRecord != null) {
-				associationService.registerAssociation(asso);
-			}
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new HereToCleanException(HttpStatus.BAD_REQUEST.value() , "L'association n'a pas été enregistré");
 		}
-		return null;
 	}
 
 	@GetMapping("/all")
 	public ResponseEntity  getAssociations() throws HereToCleanException {
 
 		List<Association> associations =   associationService.findAllAssociation();
+		
+		List<AssociationDTO> associationDTOs = new ArrayList<AssociationDTO>();
+		
+		for(Association a : associations) {
+			
+			AssociationDTO assoDTO = AssociationDTO.AssociationToAssociationDTO(a);
+			associationDTOs.add(assoDTO);
+		}
 
 		if(associations.isEmpty()) {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value() , "Associations non trouvé");
 		}
-		return ResponseEntity.ok(associations);
+		return ResponseEntity.ok(associationDTOs);
 	}
 
 	@GetMapping("/research/email")
@@ -140,21 +147,5 @@ public class AssociationController {
 
 	}
 
-	
-	@GetMapping("/findById")
-	public ResponseEntity findById(@RequestParam("id") String id) throws HereToCleanException {
-
-		if(StringUtil.isNullOrEmpty(id)  ) {
-			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Veuillez renseigner l'email de votre association");
-		}
-
-		Optional<Association> asso = Optional.of(associationService.findById(Long.parseLong("1")));
-		
-		if(!asso.isPresent()) {
-			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association n'a pas été retrouvé");
-		}
-		return ResponseEntity.ok(asso.get());
-
-	}
 
 }
