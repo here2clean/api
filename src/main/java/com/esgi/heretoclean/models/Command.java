@@ -1,6 +1,10 @@
 package com.esgi.heretoclean.models;
 
 import java.util.Date;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
@@ -28,11 +32,20 @@ public class Command {
 	@Column(name="amount")
 	private double amount;
 	
-	@ManyToOne
-	@NotNull
-	private Product product;
+	@ManyToMany
+	@JoinTable(name = "CompoCommand"
+	,joinColumns = @JoinColumn(name="product_id", referencedColumnName="id")
+	,inverseJoinColumns = @JoinColumn(name="command_id",referencedColumnName="id"))
+	private Set<Product> products;
     
     public Command() {}
+    
+    public Command(float quantity,double amount,Product...products) {
+    	this.quantity = quantity;
+    	this.amount = amount;
+    	this.products = Stream.of(products).collect(Collectors.toSet());
+    	this.products.forEach(x->x.getCommands().add(this));
+    }
 
 	public Long getId() {
 		return id;
@@ -74,11 +87,14 @@ public class Command {
 		this.quantity = quantity;
 	}
 
-	public Product getProduct() {
-		return product;
+	public Set<Product> getProducts() {
+		return products;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
+	
+	
+
 }

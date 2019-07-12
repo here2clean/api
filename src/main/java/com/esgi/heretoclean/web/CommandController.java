@@ -1,6 +1,8 @@
 package com.esgi.heretoclean.web;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Command;
+import com.esgi.heretoclean.models.Product;
 import com.esgi.heretoclean.service.interfaces.CommandService;
 
 @RestController
@@ -27,11 +30,11 @@ public class CommandController {
 	public CommandController(CommandService commandService) {
 		this.commandService = commandService;
 	}
-	
+	/*	
 	@PostMapping("/addProduct")
 	public ResponseEntity addProductInCommand(@RequestBody @Valid Command command, @RequestParam("product_id") Long idProduct , @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
 		
-		Optional<Command> c = Optional.ofNullable(commandService.createCommand(command, idProduct, idVolunteer));
+	Optional<Command> c = Optional.ofNullable(commandService.createCommand(command, idProduct, idVolunteer));
 		
 		
 		if(!c.isPresent() || c.get().getId() == null ) {
@@ -39,14 +42,16 @@ public class CommandController {
 		}
 		
 		return ResponseEntity.status(HttpStatus.CREATED.value()).build();
+		
+	
 	}
+	*/
 	
-	
-	@GetMapping
+	@GetMapping("/compoCommand")
 	public ResponseEntity getCompoCommand(@RequestParam("command_id") Long idCommand) {
 		
+		Optional<Set<Product>> command = Optional.ofNullable(commandService.getCompoCommand(idCommand));
 		
-		
-		return null;
+		return ResponseEntity.ok(command.get());
 	}
 }

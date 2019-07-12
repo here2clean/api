@@ -9,12 +9,14 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esgi.heretoclean.dao.CommandRepository;
 import com.esgi.heretoclean.dao.ProductRepository;
 import com.esgi.heretoclean.dao.VolunteerRepository;
+import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Command;
 import com.esgi.heretoclean.models.Product;
 import com.esgi.heretoclean.models.Volunteer;
@@ -38,14 +40,8 @@ public class CommandServiceImpl implements CommandService{
 	}
 
 	@Override
-	public Command createCommand(Command c,Long idProduct, Long idVolunteer) {
-		Optional<Product> product = productRepo.findById(idProduct);
+	public Command createCommand(Command c, Long idVolunteer) {
 		Optional<Volunteer> volunteer = volunteerRepo.findById(idVolunteer);
-		
-		if(!product.isPresent() && product.get().getId() == null ) {
-			return null;
-		}
-		c.setProduct(product.get());
 		
 		if(!volunteer.isPresent() && volunteer.get().getId() == null ) {
 			return null;
@@ -67,9 +63,9 @@ public class CommandServiceImpl implements CommandService{
 	}
 
 	@Override
-	public List<Command> findByVolunteer(String name) {
+	public Set<Product> getCompoCommand(Long idCommand) {
 		// TODO Auto-generated method stub
-		return null;
+		return commandRepo.findById(idCommand).get().getProducts();
 	}
 
 	@Override
@@ -94,6 +90,17 @@ public class CommandServiceImpl implements CommandService{
 //		}
 		
 		return 0;
+	}
+
+	@Override
+	public void addProductInCommand(Long idProduct) throws HereToCleanException {
+		
+		Optional<Product> product = productRepo.findById(idProduct);
+		
+		if(!product.isPresent() || product.get().getId() == null ) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Le produit n'a pas été trouvé") ;
+		}
+		
 	}
 
 }

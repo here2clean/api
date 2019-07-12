@@ -12,6 +12,6 @@ import com.esgi.heretoclean.models.Command;
 public interface CommandRepository extends JpaRepository<Command, Long> {
 	
 	List<Command> findByDateCommand(Date command);
-	
+	List<Command> findByVolunteerId(Long volunteer_id);
 
 }

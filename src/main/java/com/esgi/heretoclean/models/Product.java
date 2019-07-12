@@ -1,13 +1,16 @@
 package com.esgi.heretoclean.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
@@ -37,6 +40,9 @@ public class Product {
 	@JoinColumn
 	@NotNull
 	private Association association;
+	
+	@ManyToMany(mappedBy="products")
+	private Set<Command> commands = new HashSet<>();
 	
     public Product() {
     }
@@ -80,4 +86,14 @@ public class Product {
 	public void setAssociation(Association association) {
 		this.association = association;
 	}
+
+	public Set<Command> getCommands() {
+		return commands;
+	}
+
+	public void setCommands(Set<Command> commands) {
+		this.commands = commands;
+	}
+	
+	
 }
