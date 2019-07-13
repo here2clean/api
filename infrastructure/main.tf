@@ -4,7 +4,6 @@ provider "aws" {
 
 resource "aws_key_pair" "aws-webserv-keypair"{
     key_name = "aws-webserv"
-    #public_key ="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDi8GtJQwaVV1qECgECWY8U0Ctu6rHzt7eJFl6cNGsNFBswRySFOQTilMNsLP2ydWw3I/VCBbGOjGRVu+3bzdAa1ooKkZuNEjZVG23JZYcwL5+eoHU3ebgSzFeNetGVSyRurWJpcTBXsYXP3FttyvcpZ4W2nPfeqLnA9A79blPdqfJOBuDEALIoUU2pb1g9uPfmhknTicYzBHnCww/7moysMYoVtw/JsnHDcuALVyy6RzzrmE9nRgeaxKMwPJYqltaBvMNxwIXdwZw1MEqJvNJ8R8rtA76VDuJONSZGTH/RLRTLPuJdyFla0taSsez/4OWzh31HnaKb4kR2SzReNRfH ubu@ubuntu"
     public_key = "${file("/root/.aws/aws-web-serv.pub")}"
 }
 
@@ -109,7 +108,6 @@ resource "aws_db_instance" "aws-rds-mysql-instance" {
   name                 = "heretoclean"
   username             = "root"
   password             = "${file("/home/dbpwd")}"
-  #password = "lemdptoutçatoutça"
   parameter_group_name = "default.mysql5.7"
   port                 =  3306
   skip_final_snapshot  = true
