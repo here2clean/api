@@ -79,7 +79,7 @@ public class Volunteer {
 	@OneToMany(mappedBy = "volunteer")
 	private List<AssociationVolunteer> associationVolunteers;
 	
-	@JsonManagedReference
+	@JsonBackReference
 	@ManyToMany(mappedBy="volunteers")
 	private List<Event> events = new ArrayList<Event>();
 	

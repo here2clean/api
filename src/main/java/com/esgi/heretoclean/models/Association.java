@@ -57,7 +57,7 @@ public class Association {
     @OneToMany(mappedBy = "association")
 	private List<Gift> gifts = new ArrayList<Gift>();
 
-    @JsonBackReference
+    @JsonManagedReference
     @OneToMany(mappedBy = "association")
 	private List<AssociationVolunteer> associationVolunteers;
     
