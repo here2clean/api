@@ -34,15 +34,12 @@ public class Product {
 	
 	@Column(name="price")
 	@NotNull
-	private float price;
+	private double price;
 	
 	@ManyToOne
 	@JoinColumn
 	@NotNull
 	private Association association;
-	
-	@ManyToMany(mappedBy="products")
-	private Set<Command> commands = new HashSet<>();
 	
     public Product() {
     }
@@ -71,11 +68,11 @@ public class Product {
 		this.description = description;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -87,13 +84,5 @@ public class Product {
 		this.association = association;
 	}
 
-	public Set<Command> getCommands() {
-		return commands;
-	}
-
-	public void setCommands(Set<Command> commands) {
-		this.commands = commands;
-	}
-	
 	
 }

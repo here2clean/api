@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 
 @Entity
@@ -23,10 +25,12 @@ public class Gift {
 	@NotNull
 	private float amount;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn
 	private Volunteer volunteer;
 	
+	@JsonBackReference
 	@ManyToOne
     @JoinColumn
     private Association association;

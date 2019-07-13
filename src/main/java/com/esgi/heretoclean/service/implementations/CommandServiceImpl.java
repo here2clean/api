@@ -1,5 +1,6 @@
 package com.esgi.heretoclean.service.implementations;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -25,13 +26,13 @@ import com.esgi.heretoclean.service.interfaces.CommandService;
 @Service
 @Transactional
 public class CommandServiceImpl implements CommandService{
-	
+
 	private final CommandRepository commandRepo;
-	
+
 	private final VolunteerRepository volunteerRepo;
-	
+
 	private final ProductRepository productRepo;
-	
+
 	@Autowired
 	public CommandServiceImpl(CommandRepository commandRepo, VolunteerRepository volunteerRepo,ProductRepository productRepo) {
 		this.commandRepo = commandRepo;
@@ -42,11 +43,12 @@ public class CommandServiceImpl implements CommandService{
 	@Override
 	public Command createCommand(Command c, Long idVolunteer) {
 		Optional<Volunteer> volunteer = volunteerRepo.findById(idVolunteer);
-		
+
 		if(!volunteer.isPresent() && volunteer.get().getId() == null ) {
 			return null;
 		}
 		c.setVolunteer(volunteer.get());
+		c.setDateCommand(LocalDate.now());
 		return commandRepo.save(c);
 	}
 
@@ -61,46 +63,34 @@ public class CommandServiceImpl implements CommandService{
 	public Command findById(Long id) {
 		return commandRepo.getOne(id);
 	}
+	//
+	//	@Override
+	//	public Set<Product> getCompoCommand(Long idCommand) {
+	//		// TODO Auto-generated method stub
+	//		return commandRepo.findById(idCommand).get().getProducts();
+	//	}
 
-	@Override
-	public Set<Product> getCompoCommand(Long idCommand) {
-		// TODO Auto-generated method stub
-		return commandRepo.findById(idCommand).get().getProducts();
-	}
-
-	@Override
-	public double getAmount(Long id) {
-		
-	Optional<Command> command = Optional.of(commandRepo.getOne(id));
-		
-//		if(command.isPresent()) {
-//			double amount = command.get().getAmount();
-//
-//			Map m = command.get().getCompoCommand();
-//			
-//		      Set<Entry<Product, Integer>> setHm = m.entrySet();
-//		      Iterator<Entry<Product, Integer>> it = setHm.iterator();
-//		      
-//		      while(it.hasNext()) {
-//		    	  Entry<Product, Integer> e = it.next();
-//		    	  amount = amount + e.getKey().getPrice() * e.getValue();
-//		      }
-//		      
-//		      return amount;
-//		}
-		
-		return 0;
-	}
 
 	@Override
 	public void addProductInCommand(Long idProduct) throws HereToCleanException {
-		
+
 		Optional<Product> product = productRepo.findById(idProduct);
-		
+
 		if(!product.isPresent() || product.get().getId() == null ) {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Le produit n'a pas été trouvé") ;
 		}
-		
+
+	}
+
+	@Override
+	public void updateCommand(Command command) {
+		this.commandRepo.save(command);		
+	}
+
+	@Override
+	public Set<Product> getCompoCommand(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

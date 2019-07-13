@@ -18,6 +18,10 @@ public interface CommandService {
 	Set<Product> getCompoCommand(Long id);
 	void addProductInCommand(Long idProduct) throws HereToCleanException;
 	
-	double getAmount(Long id);
+	
+	
+	//
+	void updateCommand(Command command);
+	
 	
 }

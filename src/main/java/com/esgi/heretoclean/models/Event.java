@@ -20,7 +20,9 @@ import javax.validation.constraints.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -62,7 +64,7 @@ public class Event {
 	@NotNull
 	private String urlImage;
 	
-	
+	@JsonManagedReference
 	@ManyToMany
 	@JoinTable(name="event_volunteers")
 	private List<Volunteer> volunteers = new ArrayList<Volunteer>();

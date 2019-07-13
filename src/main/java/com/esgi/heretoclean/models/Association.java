@@ -16,6 +16,9 @@ import javax.transaction.Transactional;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,12 +53,15 @@ public class Association {
 	@Column(name="description")
 	private String description;
 	
+	@JsonManagedReference
     @OneToMany(mappedBy = "association")
 	private List<Gift> gifts = new ArrayList<Gift>();
 
+    @JsonBackReference
     @OneToMany(mappedBy = "association")
 	private List<AssociationVolunteer> associationVolunteers;
     
+    @JsonManagedReference
 	@OneToMany(mappedBy="association")
 	private List<Product> products = new ArrayList<Product>();
 	

@@ -1,5 +1,6 @@
 package com.esgi.heretoclean.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -20,15 +21,18 @@ import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Command;
 import com.esgi.heretoclean.models.Product;
 import com.esgi.heretoclean.service.interfaces.CommandService;
+import com.esgi.heretoclean.service.interfaces.ProductService;
 
 @RestController
 @RequestMapping("/api/command")
 public class CommandController {
 	
 	private final CommandService commandService;
+	private final ProductService productService;
 
-	public CommandController(CommandService commandService) {
+	public CommandController(CommandService commandService,ProductService productService) {
 		this.commandService = commandService;
+		this.productService = productService;
 	}
 	/*	
 	@PostMapping("/addProduct")
@@ -46,6 +50,26 @@ public class CommandController {
 	
 	}
 	*/
+	
+	@PostMapping("/create")
+	public ResponseEntity create(@RequestParam("volunteer_id") Long idVolunteer,@RequestParam("product_id") Long...idsProduct) {
+
+		List<Product> products = new ArrayList<Product>();
+		
+		
+		for(Long idProduct : idsProduct) {
+			Optional<Product> product = Optional.of(productService.findById(idProduct));
+			
+			if(!product.isPresent() || product.get().getId() == null) {
+				continue;
+			}
+			
+			products.add(product.get());
+		}
+		
+		return ResponseEntity.ok(products);
+		
+	}
 	
 	@GetMapping("/compoCommand")
 	public ResponseEntity getCompoCommand(@RequestParam("command_id") Long idCommand) {

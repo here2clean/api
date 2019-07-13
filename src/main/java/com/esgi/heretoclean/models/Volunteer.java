@@ -21,7 +21,9 @@ import javax.validation.constraints.NotNull;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -65,16 +67,19 @@ public class Volunteer {
 	@Transient
 	private String password;
 
-
+	@JsonManagedReference
 	@OneToMany(mappedBy="volunteer")
 	private List<Command> commands = new ArrayList<Command>();
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="volunteer")
 	private List<Gift> gifts = new ArrayList<Gift>();
 	
+	@JsonBackReference
 	@OneToMany(mappedBy = "volunteer")
 	private List<AssociationVolunteer> associationVolunteers;
 	
+	@JsonManagedReference
 	@ManyToMany(mappedBy="volunteers")
 	private List<Event> events = new ArrayList<Event>();
 	

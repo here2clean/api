@@ -1,13 +1,15 @@
 package com.esgi.heretoclean.models;
 
-import java.util.Date;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Transactional
@@ -18,35 +20,42 @@ public class Command {
 	private Long id;
 	
 	@Column(name="dateCommand")
-	@NotNull
-	private Date dateCommand; 
+	@JsonFormat(pattern="dd/MM/yyyy")
+	private LocalDate dateCommand; 
 	
 	@ManyToOne
 	@JoinColumn
 	@NotNull
 	private Volunteer volunteer ;
 	
-	@Column(name="quantity")
-	private float quantity;
 	
-	@Column(name="amount")
-	private double amount;
-	
-	@ManyToMany
-	@JoinTable(name = "CompoCommand"
-	,joinColumns = @JoinColumn(name="product_id", referencedColumnName="id")
-	,inverseJoinColumns = @JoinColumn(name="command_id",referencedColumnName="id"))
-	private Set<Product> products;
-    
-    public Command() {}
-    
-    public Command(float quantity,double amount,Product...products) {
-    	this.quantity = quantity;
-    	this.amount = amount;
-    	this.products = Stream.of(products).collect(Collectors.toSet());
-    	this.products.forEach(x->x.getCommands().add(this));
-    }
+	@JsonManagedReference
 
+	@OneToMany
+//	@OneToMany(mappedBy="pk.command")
+//	@Valid
+	private List<CommandProduct> commandProducts = new ArrayList<CommandProduct>();
+    
+	
+	@Transient
+	public double getTotalOrderPrice() {
+		double res = 0;
+		List<CommandProduct> commandProducts = getCommandProducts();
+		for(CommandProduct cp: commandProducts) {
+			res += cp.getTotalPrice();
+		}
+		
+		return res;
+	}
+	
+	
+	@Transient
+	public int getNumberOfProducts() {
+		return this.commandProducts.size();
+	}
+	
+	public Command() {}
+    
 	public Long getId() {
 		return id;
 	}
@@ -55,13 +64,6 @@ public class Command {
 		this.id = id;
 	}
 
-	public Date getDateCommand() {
-		return dateCommand;
-	}
-
-	public void setDateCommand(Date dateCommand) {
-		this.dateCommand = dateCommand;
-	}
 
 	public Volunteer getVolunteer() {
 		return volunteer;
@@ -71,30 +73,24 @@ public class Command {
 		this.volunteer = volunteer;
 	}
 
-	public double getAmount() {
-		return amount;
+	public LocalDate getDateCommand() {
+		return dateCommand;
 	}
 
-	public void setAmount(double amount) {
-		this.amount = amount;
+	public void setDateCommand(LocalDate dateCommand) {
+		this.dateCommand = dateCommand;
 	}
 
-	public float getQuantity() {
-		return quantity;
+	public List<CommandProduct> getCommandProducts() {
+		return commandProducts;
 	}
 
-	public void setQuantity(float quantity) {
-		this.quantity = quantity;
+	public void setCommandProducts(List<CommandProduct> commandProducts) {
+		this.commandProducts = commandProducts;
 	}
 
-	public Set<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Set<Product> products) {
-		this.products = products;
-	}
 	
 	
 
+	
 }

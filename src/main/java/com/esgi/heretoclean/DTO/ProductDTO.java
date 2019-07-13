@@ -10,7 +10,7 @@ public class ProductDTO {
 	
 	private String description;
 	
-	private float price;
+	private double price;
 	
 	private AssociationDTO associationDTO;
 	
@@ -41,11 +41,11 @@ public class ProductDTO {
 		this.description = description;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
