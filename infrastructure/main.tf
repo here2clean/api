@@ -126,3 +126,8 @@ resource "aws_db_instance" "aws-rds-mysql-instance" {
 output "output-mysql-address" {
   value = "${aws_db_instance.aws-rds-mysql-instance.address}"
 }
+output "pub" {
+  value = "${aws_key_pair.aws-webserv-keypair.public_key}"
+}
+
+
