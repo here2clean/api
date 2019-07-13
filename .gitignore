@@ -1,6 +1,7 @@
 HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+infrastructure/.terraform/**
 
 ### STS ###
 .apt_generated
