@@ -79,10 +79,10 @@ resource "aws_elb" "aws-loadbalancer" {
       health_check {
         healthy_threshold   = 2
         unhealthy_threshold = 10
-        timeout             = 30
+        timeout             = 29
         target              = "TCP:8085"
         interval            = 30
-        
+
     }
 
     instances = ["${aws_instance.aws-webserv.*.id}"]
