@@ -79,9 +79,9 @@ resource "aws_elb" "aws-loadbalancer" {
       health_check {
         healthy_threshold   = 2
         unhealthy_threshold = 10
-        timeout             = 58
+        timeout             = 19
         target              = "HTTP:8085/api/association/all"
-        interval            = 59
+        interval            = 20
         
 
     }
@@ -95,7 +95,7 @@ resource "aws_instance" "aws-webserv" {
     ami = "ami-03bca18cb3dc173c9"
     instance_type = "t2.micro"
     key_name = "${aws_key_pair.aws-webserv-keypair.key_name}"
-    security_groups = ["${aws_security_group.aws-secgrp-allow-ssh.name}","${aws_security_group.aws-secgrp-allow-8085.name}"]
+    security_groups = ["${aws_security_group.aws-secgrp-allow-ssh.id}","${aws_security_group.aws-secgrp-allow-8085.id}"]
     count = 2
 
 }

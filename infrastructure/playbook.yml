@@ -34,4 +34,4 @@
     
     - name: run
       become: yes
-      shell: java -jar /home/heretoclean-0.0.1-SNAPSHOT.jar 
+      shell: nohup java -jar /home/heretoclean-0.0.1-SNAPSHOT.jar &
