@@ -32,7 +32,7 @@
     - name: Copy using inline content
       become: yes
       copy:
-        content: ../target/heretoclean-0.0.1-SNAPSHOT.jar
+        src: ../target/heretoclean-0.0.1-SNAPSHOT.jar
         dest: /home/heretoclean-0.0.1-SNAPSHOT.jar
     
     - name: run
