@@ -137,8 +137,8 @@ resource "aws_route_53_record" "heretoclean" {
   type = "A"
 
   alias{
-    name = "${resource.aws_elb.aws_loadbalancer.name}"
-    zone_id = "${resource.aws_elb.aws_loadbalancer.zone_id}"
+    name = "${aws_elb.aws_loadbalancer.name}"
+    zone_id = "${aws_elb.aws_loadbalancer.zone_id}"
     evaluate_target_health = true
   }
 }
