@@ -79,9 +79,9 @@ resource "aws_elb" "aws-loadbalancer" {
       health_check {
         healthy_threshold   = 2
         unhealthy_threshold = 10
-        timeout             = 28
+        timeout             = 58
         target              = "HTTP:8085/api/association/all"
-        interval            = 30
+        interval            = 59
         
 
     }
