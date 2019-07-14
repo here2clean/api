@@ -127,7 +127,7 @@ output "output-mysql-address" {
   value = "${aws_db_instance.aws-rds-mysql-instance.address}"
 }
 
-data "aws_route_53_zone" "cambarredns" {
+data "aws_route_53_zone" "cambar.re." {
   name = "cambar.re"
 }
 
