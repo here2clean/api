@@ -126,8 +126,22 @@ resource "aws_db_instance" "aws-rds-mysql-instance" {
 output "output-mysql-address" {
   value = "${aws_db_instance.aws-rds-mysql-instance.address}"
 }
-output "pub" {
-  value = "${aws_key_pair.aws-webserv-keypair.public_key}"
+
+data "aws_route_53_zone" "cambarredns" {
+  name = "cambar.re"
 }
+
+resource "aws_route_53_record" "heretoclean" {
+  zone_id ="${data.route_53_zone.cambarredns.id}"
+  name = "heretoclean"
+  type = "A"
+
+  alias{
+    name = "${resource.aws_elb.aws_loadbalancer.name}"
+    zone_id = "${resource.aws_elb.aws_loadbalancer.zone_id}"
+    evaluate_target_health = true
+  }
+}
+
 
 
