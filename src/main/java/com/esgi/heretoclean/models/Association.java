@@ -55,6 +55,9 @@ public class Association {
 	@Column(name="description")
 	private String description;
 	
+	@Column(name="image")
+	private String urlImage;
+	
 	@JsonManagedReference
     @OneToMany(mappedBy = "association")
 	private List<Gift> gifts = new ArrayList<Gift>();
@@ -145,6 +148,18 @@ public class Association {
 	public void setVolunteers(List<Volunteer> volunteers) {
 		this.volunteers = volunteers;
 	}
+
+
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
+	}
+	
+	
 
 }
 

@@ -107,9 +107,21 @@ public class AssociationServiceImpl implements AssociationService{
 
 
 	@Override
-	public void removeVolunteer(Long idAssociation, Long idVolunteer) {
-		// TODO Auto-generated method stub
-		
+	public void removeVolunteer(Long idAssociation, Long idVolunteer) throws HereToCleanException {
+		Optional<Association> asso = Optional.ofNullable(assoRepository.getOne(idAssociation));
+    	Optional<Volunteer> volunteer = Optional.ofNullable(volunteerRepo.getOne(idVolunteer));
+    	
+    	if(!asso.isPresent() || asso.get().getId() == null ) {
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Association non trouvé");
+    	}
+    	
+    	if(!volunteer.isPresent() || volunteer.get().getId() == null ) {
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Bénévole non trouvé");
+    	}
+    	
+    	asso.get().getVolunteers().remove(volunteer.get());
+    	
+    	assoRepository.save(asso.get());		
 	}
 
 

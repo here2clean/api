@@ -33,7 +33,7 @@ public interface AssociationService {
 	 
 	 void addVolunteer(Long idAssociation,Long idVolunteer) throws HereToCleanException;
 	 
-	 void removeVolunteer(Long idAssociation,Long idVolunteer);
+	 void removeVolunteer(Long idAssociation,Long idVolunteer) throws HereToCleanException;
 	
 	 
 }

@@ -146,6 +146,27 @@ public class AssociationController {
 		return ResponseEntity.ok().build();
 
 	}
+	
+	@PostMapping("/addVolunteer")
+    public ResponseEntity addVolunteer(@RequestParam("association_id") Long idAsso, @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
+    	
+    	if(idAsso == null || idVolunteer == null ) {
+    		throw new HereToCleanException("La requête est incomplète");
+    	}
+    	associationService.addVolunteer(idAsso, idVolunteer);
+    	return ResponseEntity.ok().build();
+    }
+    
+    
+    @PostMapping("/removeVolunteer")
+    public ResponseEntity removeVolunteer(@RequestParam("association_id") Long idAsso, @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
+    	
+    	if(idAsso == null || idVolunteer == null ) {
+    		throw new HereToCleanException("La requête est incomplète");
+    	}
+    	associationService.removeVolunteer(idAsso, idVolunteer);
+    	return ResponseEntity.ok().build();
+    }
 
 
 }
