@@ -132,7 +132,7 @@ data "aws_route_53_zone" "cambar" {
 }
 
 resource "aws_route_53_record" "heretoclean" {
-  zone_id ="${data.aws_route_53_zone.cambar}"
+  zone_id ="${data.aws_route_53_zone.cambar.id}"
   name = "heretoclean"
   type = "A"
 
