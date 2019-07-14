@@ -127,12 +127,12 @@ output "output-mysql-address" {
   value = "${aws_db_instance.aws-rds-mysql-instance.address}"
 }
 
-data "aws_route_53_zone" "cambar" {
+data "aws_route53_zone" "cambar" {
   name = "cambar.re."
 }
 
-resource "aws_route_53_record" "heretoclean" {
-  zone_id ="${data.aws_route_53_zone.cambar.id}"
+resource "aws_route53_record" "heretoclean" {
+  zone_id ="${data.aws_route53_zone.cambar.id}"
   name = "heretoclean"
   type = "A"
 
