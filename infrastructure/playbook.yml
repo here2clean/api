@@ -5,8 +5,8 @@
     ansible_python_interpreter: /usr/bin/python3.6
   
   environment:
-      DATABASE_PASSWORD: {{lookup('file', '/home/dbpwd') }}
-      DATABASE_URL: {{lookup('file', 'mysql_url.txt') }}
+      DATABASE_PASSWORD: "{{lookup('file', '/home/dbpwd')}}"
+      DATABASE_URL: "{{lookup('file', 'mysql_url.txt') }}"
 
   tasks: 
     - name: Install add-apt-repostory
