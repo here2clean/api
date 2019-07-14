@@ -71,17 +71,18 @@ resource "aws_elb" "aws-loadbalancer" {
 
     listener{
         instance_port = 8085
-        instance_protocol = "tcp"
+        instance_protocol = "http"
         lb_port=80
-        lb_protocol = "tcp"
+        lb_protocol = "http"
     }
 
       health_check {
         healthy_threshold   = 2
         unhealthy_threshold = 10
         timeout             = 58
-        target              = "TCP:8085"
+        target              = "HTTP:8085/api/association/all"
         interval            = 59
+        
 
     }
 
