@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -57,9 +59,10 @@ public class Association {
     @OneToMany(mappedBy = "association")
 	private List<Gift> gifts = new ArrayList<Gift>();
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "association")
-	private List<AssociationVolunteer> associationVolunteers;
+	@JsonManagedReference
+	@ManyToMany
+	@JoinTable(name="association_volunteers")
+	private List<Volunteer> volunteers = new ArrayList<Volunteer>();
     
     @JsonManagedReference
 	@OneToMany(mappedBy="association")
@@ -117,14 +120,6 @@ public class Association {
 		this.gifts = gifts;
 	}
 
-	public List<AssociationVolunteer> getAssociationVolunteers() {
-		return associationVolunteers;
-	}
-
-	public void setAssociationVolunteers(List<AssociationVolunteer> associationVolunteers) {
-		this.associationVolunteers = associationVolunteers;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -139,6 +134,16 @@ public class Association {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+
+	public List<Volunteer> getVolunteers() {
+		return volunteers;
+	}
+
+
+	public void setVolunteers(List<Volunteer> volunteers) {
+		this.volunteers = volunteers;
 	}
 
 }

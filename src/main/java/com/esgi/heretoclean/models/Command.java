@@ -29,32 +29,38 @@ public class Command {
 	private Volunteer volunteer ;
 	
 	
-	@JsonManagedReference
-
-	@OneToMany
+	@OneToMany(mappedBy="command")
+	private List<CompoCommand> compoCommand = new ArrayList<CompoCommand>();
+	
+//	@JsonManagedReference
+//
+//	@OneToMany
 //	@OneToMany(mappedBy="pk.command")
 //	@Valid
-	private List<CommandProduct> commandProducts = new ArrayList<CommandProduct>();
+//	private List<CommandProduct> commandProducts = new ArrayList<CommandProduct>();
     
 	
-	@Transient
-	public double getTotalOrderPrice() {
-		double res = 0;
-		List<CommandProduct> commandProducts = getCommandProducts();
-		for(CommandProduct cp: commandProducts) {
-			res += cp.getTotalPrice();
-		}
+//	@Transient
+//	public double getTotalOrderPrice() {
+//		double res = 0;
+//		List<CommandProduct> commandProducts = getCommandProducts();
+//		for(CommandProduct cp: commandProducts) {
+//			res += cp.getTotalPrice();
+//		}
+//		
+//		return res;
+//	}
+	
+	
+//	@Transient
+//	public int getNumberOfProducts() {
+//		return this.commandProducts.size();
+//	}
+	
+	public Command() {
 		
-		return res;
+		this.dateCommand = LocalDate.now();
 	}
-	
-	
-	@Transient
-	public int getNumberOfProducts() {
-		return this.commandProducts.size();
-	}
-	
-	public Command() {}
     
 	public Long getId() {
 		return id;
@@ -81,13 +87,21 @@ public class Command {
 		this.dateCommand = dateCommand;
 	}
 
-	public List<CommandProduct> getCommandProducts() {
-		return commandProducts;
+	public List<CompoCommand> getCompoCommand() {
+		return compoCommand;
 	}
 
-	public void setCommandProducts(List<CommandProduct> commandProducts) {
-		this.commandProducts = commandProducts;
+	public void setCompoCommand(List<CompoCommand> compoCommand) {
+		this.compoCommand = compoCommand;
 	}
+
+//	public List<CommandProduct> getCommandProducts() {
+//		return commandProducts;
+//	}
+//
+//	public void setCommandProducts(List<CommandProduct> commandProducts) {
+//		this.commandProducts = commandProducts;
+//	}
 
 	
 	

@@ -100,7 +100,7 @@ public class EventServiceImpl implements EventService {
     	}
     	
     	if(!volunteer.isPresent() || volunteer.get().getId() == null ) {
-    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Évènement non trouvé");
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Bénévole non trouvé");
     	}
     	
     	
@@ -121,12 +121,10 @@ public class EventServiceImpl implements EventService {
     	}
     	
     	if(!volunteer.isPresent() || volunteer.get().getId() == null ) {
-    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Évènement non trouvé");
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Bénévole non trouvé");
     	}
     	
     	event.get().getVolunteers().remove(volunteer.get());
-
-		
 	}
 
 }

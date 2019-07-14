@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Command;
+import com.esgi.heretoclean.models.CompoCommandJson;
 import com.esgi.heretoclean.models.Product;
 
 @Service
 public interface CommandService {
-	Command createCommand(Command c,Long idVolunteer);
+	Command createCommand(Long idVolunteer,CompoCommandJson[] compoJson) throws HereToCleanException;
 	List<Command> findByDateCommand(Date d);
 	Command findById(Long id);
 	Set<Product> getCompoCommand(Long id);

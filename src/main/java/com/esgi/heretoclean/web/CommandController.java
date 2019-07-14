@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Command;
+import com.esgi.heretoclean.models.CompoCommandJson;
 import com.esgi.heretoclean.models.Product;
 import com.esgi.heretoclean.service.interfaces.CommandService;
 import com.esgi.heretoclean.service.interfaces.ProductService;
@@ -34,22 +35,22 @@ public class CommandController {
 		this.commandService = commandService;
 		this.productService = productService;
 	}
-	/*	
-	@PostMapping("/addProduct")
-	public ResponseEntity addProductInCommand(@RequestBody @Valid Command command, @RequestParam("product_id") Long idProduct , @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
 		
-	Optional<Command> c = Optional.ofNullable(commandService.createCommand(command, idProduct, idVolunteer));
+	@PostMapping("/newCommand")
+	public ResponseEntity addProductInCommand(@RequestParam("volunteer_id") Long idVolunteer,@RequestBody @Valid CompoCommandJson[] command ) throws HereToCleanException {
 		
 		
-		if(!c.isPresent() || c.get().getId() == null ) {
-			throw new HereToCleanException("L'ajout du produit à une commande a échouché");
+		if(idVolunteer == null ) {
+			throw new HereToCleanException("Il manque un paramètre dans la requête");
 		}
+		
+		commandService.createCommand(idVolunteer, command);
 		
 		return ResponseEntity.status(HttpStatus.CREATED.value()).build();
 		
 	
 	}
-	*/
+	
 	
 	@PostMapping("/create")
 	public ResponseEntity create(@RequestParam("volunteer_id") Long idVolunteer,@RequestParam("product_id") Long...idsProduct) {

@@ -1,11 +1,7 @@
 package com.esgi.heretoclean.service.implementations;
 
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 
@@ -15,17 +11,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esgi.heretoclean.dao.CommandRepository;
+import com.esgi.heretoclean.dao.CompoCommandRepository;
 import com.esgi.heretoclean.dao.ProductRepository;
 import com.esgi.heretoclean.dao.VolunteerRepository;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Command;
+import com.esgi.heretoclean.models.CompoCommand;
+import com.esgi.heretoclean.models.CompoCommandJson;
 import com.esgi.heretoclean.models.Product;
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.interfaces.CommandService;
 
 @Service
 @Transactional
-public class CommandServiceImpl implements CommandService{
+public class CommandServiceImpl implements CommandService {
 
 	private final CommandRepository commandRepo;
 
@@ -33,24 +32,57 @@ public class CommandServiceImpl implements CommandService{
 
 	private final ProductRepository productRepo;
 
+	private final CompoCommandRepository compoCommandRepo;
+
 	@Autowired
-	public CommandServiceImpl(CommandRepository commandRepo, VolunteerRepository volunteerRepo,ProductRepository productRepo) {
+	public CommandServiceImpl(CommandRepository commandRepo, VolunteerRepository volunteerRepo,ProductRepository productRepo, CompoCommandRepository compoCommandRepo) {
 		this.commandRepo = commandRepo;
 		this.volunteerRepo = volunteerRepo;
 		this.productRepo = productRepo;
+		this.compoCommandRepo = compoCommandRepo;
 	}
+
 
 	@Override
-	public Command createCommand(Command c, Long idVolunteer) {
+	public Command createCommand(Long idVolunteer, CompoCommandJson[] compoJson) throws HereToCleanException {
+
+		if(idVolunteer == null) {
+			throw new HereToCleanException("Produit non trouvé");
+		}
+		
 		Optional<Volunteer> volunteer = volunteerRepo.findById(idVolunteer);
 
-		if(!volunteer.isPresent() && volunteer.get().getId() == null ) {
-			return null;
+		if(!volunteer.isPresent() || volunteer.get().getId() == null) {
+			throw new HereToCleanException("Bénévole non trouvé");
 		}
+
+		Command c = new Command();
 		c.setVolunteer(volunteer.get());
-		c.setDateCommand(LocalDate.now());
-		return commandRepo.save(c);
+		c = commandRepo.save(c);
+		CompoCommand compo = new CompoCommand();
+
+		compo.setCommand(c);
+		for(CompoCommandJson cJson : compoJson){
+			Optional<Product> product = productRepo.findById(cJson.getIdProduct());
+
+			if(!product.isPresent() || product.get().getId() == null ) {
+				throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Produit non trouvé");
+			}
+
+			compo.setProduct(product.get());
+			compo.setQuantity(cJson.getQuantity());
+			//			compo.setCommand(command);
+			
+			compoCommandRepo.save(compo);
+
+		}
+
+
+
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 
 	@Override
 	@Transactional(readOnly = true)
@@ -92,5 +124,7 @@ public class CommandServiceImpl implements CommandService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }

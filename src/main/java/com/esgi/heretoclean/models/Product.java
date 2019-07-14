@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
@@ -40,6 +41,10 @@ public class Product {
 	@JoinColumn
 	@NotNull
 	private Association association;
+	
+	
+	@OneToMany(mappedBy="product")
+	private List<CompoCommand> compoCommand = new ArrayList<CompoCommand>();
 	
     public Product() {
     }

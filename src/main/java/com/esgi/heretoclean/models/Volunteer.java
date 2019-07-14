@@ -70,8 +70,8 @@ public class Volunteer {
 	private List<Gift> gifts = new ArrayList<Gift>();
 	
 	@JsonBackReference
-	@OneToMany(mappedBy = "volunteer")
-	private List<AssociationVolunteer> associationVolunteers;
+	@ManyToMany(mappedBy="volunteers")
+	private List<Association> associations = new ArrayList<Association>();
 	
 	@JsonBackReference
 	@ManyToMany(mappedBy="volunteers")
@@ -101,14 +101,6 @@ public class Volunteer {
 
 	public void setGifts(List<Gift> gifts) {
 		this.gifts = gifts;
-	}
-
-	public List<AssociationVolunteer> getAssociationVolunteers() {
-		return associationVolunteers;
-	}
-
-	public void setAssociationVolunteers(List<AssociationVolunteer> associationVolunteers) {
-		this.associationVolunteers = associationVolunteers;
 	}
 
 	public List<Event> getEvents() {
@@ -182,6 +174,13 @@ public class Volunteer {
 	public void setCityCode(int cityCode) {
 		this.cityCode = cityCode;
 	}
-	
+
+	public List<Association> getAssociations() {
+		return associations;
+	}
+
+	public void setAssociations(List<Association> associations) {
+		this.associations = associations;
+	}
 	
 }
