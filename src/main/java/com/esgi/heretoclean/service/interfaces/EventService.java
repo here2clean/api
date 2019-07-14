@@ -33,5 +33,7 @@ public interface EventService {
 	void delete(String email);
 	
 	void addVolunteer(Long idEvent,Long idVolunteer) throws HereToCleanException;
+	
+	void removeVolunteer(Long idEvent,Long idVolunteer) throws HereToCleanException;
 
 }

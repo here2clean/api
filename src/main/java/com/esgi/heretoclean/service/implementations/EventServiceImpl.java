@@ -109,4 +109,24 @@ public class EventServiceImpl implements EventService {
     	eventRepository.save(event.get());
 	}
 
+
+	@Override
+	public void removeVolunteer(Long idEvent, Long idVolunteer) throws HereToCleanException {
+		
+		Optional<Event> event = Optional.ofNullable(eventRepository.getOne(idEvent));
+    	Optional<Volunteer> volunteer = Optional.ofNullable(volunteerRepo.getOne(idVolunteer));
+    	
+    	if(!event.isPresent() || event.get().getId() == null ) {
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Évènement non trouvé");
+    	}
+    	
+    	if(!volunteer.isPresent() || volunteer.get().getId() == null ) {
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Évènement non trouvé");
+    	}
+    	
+    	event.get().getVolunteers().remove(volunteer.get());
+
+		
+	}
+
 }

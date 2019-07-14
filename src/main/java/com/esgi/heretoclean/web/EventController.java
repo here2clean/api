@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,20 +87,21 @@ public class EventController {
     @PostMapping("/addVolunteer")
     public ResponseEntity addVolunteer(@RequestParam("event_id") Long idEvent, @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
     	
-    	if(idEvent == null) {
+    	if(idEvent == null || idVolunteer == null ) {
     		throw new HereToCleanException("La requête est incomplète");
     	}
-    	
-    	if(idVolunteer == null) {
-    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Évènement non trouvé");
-    	}
-    	
-    	
     	eventService.addVolunteer(idEvent, idVolunteer);
-    	
-    	
     	return ResponseEntity.ok().build();
     }
     
     
+    @PostMapping("/removeVolunteer")
+    public ResponseEntity removeVolunteer(@RequestParam("event_id") Long idEvent, @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
+    	
+    	if(idEvent == null || idVolunteer == null ) {
+    		throw new HereToCleanException("La requête est incomplète");
+    	}
+    	eventService.removeVolunteer(idEvent, idVolunteer);
+    	return ResponseEntity.ok().build();
+    }
 }
