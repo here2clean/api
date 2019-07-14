@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esgi.heretoclean.HeretocleanApplication;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Event;
+import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.interfaces.EventService;
+import com.esgi.heretoclean.service.interfaces.VolunteerService;
+import com.google.api.client.http.HttpRequest;
 
 import io.netty.util.internal.StringUtil;
 
@@ -30,10 +33,12 @@ import io.netty.util.internal.StringUtil;
 public class EventController {
     
     private final EventService eventService;
+    private final VolunteerService volunteerService;
     
     @Autowired
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService,VolunteerService volunteerService) {
 		this.eventService = eventService;
+		this.volunteerService = volunteerService;
 	}
 
 	@PostMapping("/register")
@@ -76,6 +81,24 @@ public class EventController {
     public ResponseEntity deleteEvent(@RequestParam("name") String name) {
     	eventService.delete(name);
     	return ResponseEntity.status(HttpStatus.OK.value()).build();
+    }
+    
+    @PostMapping("/addVolunteer")
+    public ResponseEntity addVolunteer(@RequestParam("event_id") Long idEvent, @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
+    	
+    	if(idEvent == null) {
+    		throw new HereToCleanException("La requête est incomplète");
+    	}
+    	
+    	if(idVolunteer == null) {
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Évènement non trouvé");
+    	}
+    	
+    	
+    	eventService.addVolunteer(idEvent, idVolunteer);
+    	
+    	
+    	return ResponseEntity.ok().build();
     }
     
     

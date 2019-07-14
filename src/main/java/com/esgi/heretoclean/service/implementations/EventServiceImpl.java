@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.userdetails.User;
 import com.esgi.heretoclean.dao.EventRepository;
 import com.esgi.heretoclean.dao.VolunteerRepository;
+import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.interfaces.EventService;
@@ -87,19 +89,24 @@ public class EventServiceImpl implements EventService {
 
 
 	@Override
-	public void addVolunteer(String nameEvent) {
+	public void addVolunteer(Long idEvent,Long idVolunteer) throws HereToCleanException {
 		// TODO Auto-generated method stub
 		
-		List<Event> event = eventRepository.findByNameContaining(nameEvent).get();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User principal = (User) auth.getPrincipal();
-		Optional<Volunteer> volunteer = volunteerRepo.findOneByEmailIgnoreCase(principal.getUsername());
-		
-		if(!event.isEmpty() && volunteer.isPresent()) {
-			event.get(0).getVolunteers().add(volunteer.get());
-			eventRepository.saveAndFlush(event.get(0));
-		}
-		
+		Optional<Event> event = Optional.ofNullable(eventRepository.getOne(idEvent));
+    	Optional<Volunteer> volunteer = Optional.ofNullable(volunteerRepo.getOne(idVolunteer));
+    	
+    	if(!event.isPresent() || event.get().getId() == null ) {
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Évènement non trouvé");
+    	}
+    	
+    	if(!volunteer.isPresent() || volunteer.get().getId() == null ) {
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Évènement non trouvé");
+    	}
+    	
+    	
+    	event.get().getVolunteers().add(volunteer.get());
+    	
+    	eventRepository.save(event.get());
 	}
 
 }

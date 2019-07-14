@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Association;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.models.Volunteer;
@@ -31,6 +32,6 @@ public interface EventService {
 	
 	void delete(String email);
 	
-	void addVolunteer(String nameEvent);
+	void addVolunteer(Long idEvent,Long idVolunteer) throws HereToCleanException;
 
 }
