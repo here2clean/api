@@ -3,6 +3,10 @@
   remote_user: ubuntu
   vars:
     ansible_python_interpreter: /usr/bin/python3.6
+  
+  environment:
+      DATABASE_PASSWORD: {{lookup('file', '/home/dbpwd') }}
+      DATABASE_URL: {{lookup('file', 'mysql_url.txt') }}
 
   tasks: 
     - name: Install add-apt-repostory
@@ -12,14 +16,7 @@
     - name: Add Openjdk repo
       become: yes
       apt_repository: repo='ppa:openjdk-r/ppa'
-    
-    - name: Put db password env
-      become: yes
-      shell: export DATABASE_PASSWORD={{lookup('file', '/home/dbpwd') }}
-    
-    - name: Put db adress url
-      become: yes
-      shell: export DATABASE_URL={{lookup('file', 'mysql_url.txt') }}
+      
 
     - name: Install openjdk 8 p1
       become: yes
