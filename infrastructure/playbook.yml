@@ -27,7 +27,7 @@
     
     - name: echo
       become: yes
-      shell: java -version
+      shell: echo {{lookup('file', 'mysql_url.txt') }}
     
     - name: Copy using inline content
       become: yes
