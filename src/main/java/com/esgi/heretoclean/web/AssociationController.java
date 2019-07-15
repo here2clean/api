@@ -70,18 +70,18 @@ public class AssociationController {
 
 		List<Association> associations =   associationService.findAllAssociation();
 		
-		List<AssociationDTO> associationDTOs = new ArrayList<AssociationDTO>();
-		
+		//List<AssociationDTO> associationDTOs = new ArrayList<AssociationDTO>();
+		/*
 		for(Association a : associations) {
 			
 			AssociationDTO assoDTO = AssociationDTO.AssociationToAssociationDTO(a);
 			associationDTOs.add(assoDTO);
-		}
+		}*/
 
 		if(associations.isEmpty()) {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value() , "Associations non trouvé");
 		}
-		return ResponseEntity.ok(associationDTOs);
+		return ResponseEntity.ok(associations);
 	}
 
 	@GetMapping("/research/email")

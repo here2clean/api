@@ -18,7 +18,6 @@ public class AssociationDTO {
 
 	private int numberRna;
 	
-	@Transient
 	private String password;
 	
 	private String description;
