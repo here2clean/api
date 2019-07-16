@@ -78,7 +78,7 @@ public class EventController {
     }
     
     @PutMapping("/update")
-    public ResponseEntity updateEvent(@RequestParam("name") String name, @RequestBody Event event){
+    public ResponseEntity updateEvent(@RequestBody Event event){
     	return ResponseEntity.status(HttpStatus.OK.value()).body(eventService.updateEvent(event));
     }
     
