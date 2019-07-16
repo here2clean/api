@@ -23,6 +23,7 @@ import com.esgi.heretoclean.HeretocleanApplication;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.models.Volunteer;
+import com.esgi.heretoclean.service.interfaces.AssociationService;
 import com.esgi.heretoclean.service.interfaces.EventService;
 import com.esgi.heretoclean.service.interfaces.VolunteerService;
 import com.google.api.client.http.HttpRequest;
@@ -35,11 +36,14 @@ public class EventController {
     
     private final EventService eventService;
     private final VolunteerService volunteerService;
+    private final AssociationService assoService;
     
     @Autowired
-    public EventController(EventService eventService,VolunteerService volunteerService) {
+    public EventController(EventService eventService,VolunteerService volunteerService,AssociationService assoService) {
 		this.eventService = eventService;
 		this.volunteerService = volunteerService;
+		this.assoService = assoService;
+		
 	}
 
 	@PostMapping("/register")
@@ -103,5 +107,23 @@ public class EventController {
     	}
     	eventService.removeVolunteer(idEvent, idVolunteer);
     	return ResponseEntity.ok().build();
+    }
+    
+    
+    @GetMapping("allByAssocation")
+    public ResponseEntity getAllByAssociation(@RequestParam("association_id") Long idAsso) throws HereToCleanException {
+
+    	if(idAsso == null  ) {
+    		throw new HereToCleanException("La requête est incomplète");
+    	}
+    	
+    	Optional<List<Event>> events = Optional.ofNullable(assoService.getEvents(idAsso));
+    	
+    	if(!events.isPresent() || events.get().isEmpty()) {
+    		throw new HereToCleanException("Il n'y a pas d'évènement pour cette association");
+
+    	}
+    	
+    	return ResponseEntity.ok(events.get());
     }
 }

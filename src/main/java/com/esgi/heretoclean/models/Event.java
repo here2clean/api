@@ -1,37 +1,26 @@
 package com.esgi.heretoclean.models;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
 @Entity
-@Transactional
 public class Event {
 	
 	@Id
@@ -43,8 +32,8 @@ public class Event {
 	private String name;
 	
 	@Column(name="beginDate")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
 	@NotNull
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
 	private Date beginDate;
 	
 	@Column(name="endDate")
@@ -68,6 +57,10 @@ public class Event {
 	@ManyToMany
 	@JoinTable(name="event_volunteers")
 	private List<Volunteer> volunteers = new ArrayList<Volunteer>();
+	
+	@ManyToOne
+	@JoinColumn
+	private Association association;
 	
 	public Event() {
 	}
@@ -140,14 +133,12 @@ public class Event {
 		return volunteers.size();
 	}
 
-	@Override
-	public String toString() {
-		return "Event [id=" + id + ", name=" + name + ", beginDate=" + beginDate + ", endDate=" + endDate
-				+ ", description=" + description + ", location=" + location + ", urlImage=" + urlImage + ", volunteers="
-				+ volunteers +" Nombre de participant="+ volunteers.size() +"]";
+	public Association getAssociation() {
+		return association;
 	}
-	
-	
 
-	
+	public void setAssociation(Association association) {
+		this.association = association;
+	}
+
 }

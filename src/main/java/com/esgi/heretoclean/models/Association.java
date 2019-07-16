@@ -70,6 +70,9 @@ public class Association {
     @JsonManagedReference
 	@OneToMany(mappedBy="association")
 	private List<Product> products = new ArrayList<Product>();
+    
+    @OneToMany(mappedBy="association")
+    private List<Event> events = new ArrayList<Event>();
 	
 	public Association() {
 	}
@@ -157,6 +160,16 @@ public class Association {
 
 	public void setUrlImage(String urlImage) {
 		this.urlImage = urlImage;
+	}
+
+
+	public List<Event> getEvents() {
+		return events;
+	}
+
+
+	public void setEvents(List<Event> events) {
+		this.events = events;
 	}
 	
 	

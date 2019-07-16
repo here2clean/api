@@ -125,4 +125,16 @@ public class AssociationServiceImpl implements AssociationService{
 	}
 
 
+	@Override
+	public List<Event> getEvents(Long id) throws HereToCleanException {
+		
+		Optional<Association> asso = Optional.ofNullable(assoRepository.getOne(id));
+		if(!asso.isPresent() || asso.get().getId() == null ) {
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Association non trouvé");
+    	}
+		
+		return asso.get().getEvents();
+	}
+
+
 }

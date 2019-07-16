@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Association;
+import com.esgi.heretoclean.models.Event;
 
 @Service
 public interface AssociationService {
@@ -34,6 +35,8 @@ public interface AssociationService {
 	 void addVolunteer(Long idAssociation,Long idVolunteer) throws HereToCleanException;
 	 
 	 void removeVolunteer(Long idAssociation,Long idVolunteer) throws HereToCleanException;
+	 
+	 List<Event> getEvents(Long id) throws HereToCleanException;
 	
 	 
 }

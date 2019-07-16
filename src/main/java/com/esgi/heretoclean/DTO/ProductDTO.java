@@ -1,5 +1,5 @@
 package com.esgi.heretoclean.DTO;
-
+/*
 import com.esgi.heretoclean.models.Product;
 
 public class ProductDTO {
@@ -73,3 +73,4 @@ public class ProductDTO {
 	}
 	
 }
+*/

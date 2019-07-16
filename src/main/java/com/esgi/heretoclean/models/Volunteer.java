@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
-@Transactional
 public class Volunteer {
 	
 	@Id

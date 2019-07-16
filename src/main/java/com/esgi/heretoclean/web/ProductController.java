@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.esgi.heretoclean.DTO.ProductDTO;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Product;
 import com.esgi.heretoclean.service.interfaces.ProductService;
@@ -129,7 +128,7 @@ public class ProductController {
 		}
 		
 		Optional<List<Product>> products = Optional.of(productService.findAllByAssociationId(id));
-		
+		/*
 		List<ProductDTO> productDTOs = new ArrayList<ProductDTO>();
 		
 		for(Product p : products.get()) {
@@ -141,7 +140,10 @@ public class ProductController {
 		
 		if(!products.isPresent() && productDTOs.isEmpty()) {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Il n'y a aucun produit");
-		}
-		return ResponseEntity.ok(productDTOs);
+		}*/
+//		return ResponseEntity.ok(productDTOs);
+		return ResponseEntity.ok(products);
+		
+		
 	}	
 }

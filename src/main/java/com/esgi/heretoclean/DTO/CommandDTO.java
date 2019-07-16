@@ -1,5 +1,5 @@
 package com.esgi.heretoclean.DTO;
-
+/*
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -23,3 +23,4 @@ public class CommandDTO {
 	private Product product;
 
 }
+*/

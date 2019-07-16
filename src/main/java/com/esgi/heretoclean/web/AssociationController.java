@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esgi.heretoclean.DTO.AssociationDTO;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Association;
+import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.service.interfaces.AssociationService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
@@ -166,6 +166,24 @@ public class AssociationController {
     	}
     	associationService.removeVolunteer(idAsso, idVolunteer);
     	return ResponseEntity.ok().build();
+    }
+    
+    @GetMapping("/allEvent")
+    public ResponseEntity findEvents(@RequestParam("association_id") Long idAsso) throws HereToCleanException {
+    	
+
+    	if(idAsso == null  ) {
+    		throw new HereToCleanException("La requête est incomplète");
+    	}
+    	
+    	Optional<List<Event>> events = Optional.ofNullable(associationService.getEvents(idAsso));
+    	
+    	if(!events.isPresent() || events.get().isEmpty()) {
+    		throw new HereToCleanException("Il n'y a pas d'évènement pour cette association");
+
+    	}
+    	
+    	return ResponseEntity.ok(events.get());
     }
 
 

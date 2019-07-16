@@ -1,5 +1,5 @@
 package com.esgi.heretoclean.DTO;
-
+/*
 
 import javax.persistence.Column;
 import javax.persistence.Transient;
@@ -90,3 +90,5 @@ public class AssociationDTO {
 	}
 	
 }
+
+*/

@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Transactional
 public class Command {
 	
 	@Id
@@ -20,7 +19,7 @@ public class Command {
 	private Long id;
 	
 	@Column(name="dateCommand")
-	@JsonFormat(pattern="dd/MM/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
 	private LocalDate dateCommand; 
 	
 	@ManyToOne
@@ -32,30 +31,6 @@ public class Command {
 	@OneToMany(mappedBy="command")
 	private List<CompoCommand> compoCommand = new ArrayList<CompoCommand>();
 	
-//	@JsonManagedReference
-//
-//	@OneToMany
-//	@OneToMany(mappedBy="pk.command")
-//	@Valid
-//	private List<CommandProduct> commandProducts = new ArrayList<CommandProduct>();
-    
-	
-//	@Transient
-//	public double getTotalOrderPrice() {
-//		double res = 0;
-//		List<CommandProduct> commandProducts = getCommandProducts();
-//		for(CommandProduct cp: commandProducts) {
-//			res += cp.getTotalPrice();
-//		}
-//		
-//		return res;
-//	}
-	
-	
-//	@Transient
-//	public int getNumberOfProducts() {
-//		return this.commandProducts.size();
-//	}
 	
 	public Command() {
 		
