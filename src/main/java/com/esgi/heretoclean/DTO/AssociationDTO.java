@@ -146,6 +146,15 @@ public class AssociationDTO {
 		assoDTO.setPassword(asso.getPassword());
 		assoDTO.setDescription(asso.getDescription());
 		assoDTO.setUrlImage(asso.getUrlImage());
+		
+		List<VolunteerDTO> volunteerDTOs = new ArrayList<VolunteerDTO>();
+		for(Volunteer v : asso.getVolunteers() ) {
+			
+			VolunteerDTO vDTO = VolunteerDTO.VolunteerToVolunteerDTO(v);
+			volunteerDTOs.add(vDTO);
+		}
+		assoDTO.setVolunteerDTOs(volunteerDTOs);
+		
 //		assoDTO.setEventDTOs(eventDTOs);
 //		assoDTO.setVolunteerDTOs(volunteerDTOs);
 //		assoDTO.setGiftDTOs(giftDTOs);

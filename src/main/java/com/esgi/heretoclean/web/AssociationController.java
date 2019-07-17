@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.esgi.heretoclean.DTO.AssociationDTO;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Association;
 import com.esgi.heretoclean.models.Event;
@@ -70,18 +71,18 @@ public class AssociationController {
 
 		List<Association> associations =   associationService.findAllAssociation();
 		
-		//List<AssociationDTO> associationDTOs = new ArrayList<AssociationDTO>();
-		/*
+		List<AssociationDTO> associationDTOs = new ArrayList<AssociationDTO>();
+		
 		for(Association a : associations) {
 			
 			AssociationDTO assoDTO = AssociationDTO.AssociationToAssociationDTO(a);
 			associationDTOs.add(assoDTO);
-		}*/
+		}
 
 		if(associations.isEmpty()) {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value() , "Associations non trouvé");
 		}
-		return ResponseEntity.ok(associations);
+		return ResponseEntity.ok(associationDTOs);
 	}
 
 	@GetMapping("/research/email")
@@ -100,6 +101,25 @@ public class AssociationController {
 
 		return ResponseEntity.ok(asso.get());
 	}
+	
+	@GetMapping("/research/id")
+	public ResponseEntity getAssociationById(@RequestParam("id") Long id) throws HereToCleanException {
+
+		if(id == null ) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "Il manque un paramètre");
+		}
+
+		Optional<Association> asso = Optional.ofNullable(associationService.findById(id));
+
+		if(!asso.isPresent() || asso.get().getId() == null) {
+			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association ayant comme id : " + id + " n'a pas été trouvé");
+
+		}
+		
+		AssociationDTO assoDTO = AssociationDTO.AssociationToAssociationDTO(asso.get());
+
+		return ResponseEntity.ok(assoDTO);
+	}
 
 	@GetMapping("/research/name")
 	public ResponseEntity getAssociationBynalme(@RequestParam("name") String name)throws HereToCleanException {
@@ -115,7 +135,15 @@ public class AssociationController {
 		if(asso.isEmpty()) {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association " + name + " n'a pas été trouvé");
 		}
-		return ResponseEntity.ok(asso);
+		
+		List<AssociationDTO> assoDTOs = new ArrayList<AssociationDTO>();
+		
+		for(Association a : asso) {
+			AssociationDTO assoDTO = AssociationDTO.AssociationToAssociationDTO(a);
+			assoDTOs.add(assoDTO);
+		}
+
+		return ResponseEntity.ok(assoDTOs);
 	}
 
 	@PostMapping("/update")

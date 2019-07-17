@@ -1,6 +1,7 @@
 package com.esgi.heretoclean.web;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,14 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.esgi.heretoclean.HeretocleanApplication;
+import com.esgi.heretoclean.DTO.EventDTO;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Event;
-import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.interfaces.AssociationService;
 import com.esgi.heretoclean.service.interfaces.EventService;
 import com.esgi.heretoclean.service.interfaces.VolunteerService;
-import com.google.api.client.http.HttpRequest;
 
 import io.netty.util.internal.StringUtil;
 
@@ -59,7 +58,14 @@ public class EventController {
     
     @GetMapping("/all")
     public ResponseEntity getEvents() {
-        return ResponseEntity.status(HttpStatus.OK.value()).body(eventService.findAllEvent());
+    	List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
+    	
+    	for(Event e : eventService.findAllEvent()) {
+    		EventDTO eventDTO = EventDTO.EventToEventDTO(e);
+    		eventDTOs.add(eventDTO);
+    	}
+    	
+        return ResponseEntity.ok(eventDTOs); 
     }
     
     @GetMapping("/research/name")

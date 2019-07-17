@@ -3,8 +3,10 @@ package com.esgi.heretoclean.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -57,23 +59,19 @@ public class Association {
 	@Column(name="image")
 	private String urlImage;
 
-	@JsonBackReference
-	@OneToMany(mappedBy = "association")
+	@OneToMany(mappedBy = "association",fetch=FetchType.LAZY)
 	private List<Gift> gifts = new ArrayList<Gift>();
 
-	@JsonManagedReference
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinTable(name = "association_volunteer",
 	joinColumns = @JoinColumn(name = "volunteer_id", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(name = "association_id", referencedColumnName = "id"))
 	private List<Volunteer> volunteers = new ArrayList<Volunteer>();
 
-	@JsonManagedReference
-	@OneToMany(mappedBy="association")
+	@OneToMany(mappedBy="association",fetch=FetchType.LAZY)
 	private List<Product> products = new ArrayList<Product>();
 
-	@OneToMany(mappedBy="association")
-	@JsonManagedReference
+	@OneToMany(mappedBy="association",fetch=FetchType.LAZY)
 	private List<Event> events = new ArrayList<Event>();
 
 	public Association() {

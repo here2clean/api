@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -59,21 +60,16 @@ public class Volunteer {
 	@Transient
 	private String password;
 
-	@JsonBackReference
-	@OneToMany(mappedBy="volunteer")
+	@OneToMany(mappedBy="volunteer",fetch=FetchType.LAZY)
 	private List<Command> commands = new ArrayList<Command>();
 	
-	@JsonBackReference
-	@OneToMany(mappedBy="volunteer")
+	@OneToMany(mappedBy="volunteer",fetch=FetchType.LAZY)
 	private List<Gift> gifts = new ArrayList<Gift>();
 	
-	@JsonBackReference
-//	@JsonManagedReference
-	@ManyToMany(mappedBy="volunteers")
+	@ManyToMany(mappedBy="volunteers",fetch=FetchType.LAZY)
 	private List<Association> associations = new ArrayList<Association>();
 	
-//	@JsonBackReference
-	@ManyToMany(mappedBy="volunteers")
+	@ManyToMany(mappedBy="volunteers",fetch=FetchType.LAZY)
 	private List<Event> events = new ArrayList<Event>();
 	
 	public Volunteer() {}

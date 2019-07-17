@@ -23,15 +23,13 @@ public class Command {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
 	private LocalDate dateCommand; 
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn
 	@NotNull
-	@JsonManagedReference
 	private Volunteer volunteer ;
 	
 	
-	@OneToMany(mappedBy="command")
-	@JsonBackReference
+	@OneToMany(mappedBy="command",fetch=FetchType.LAZY)
 	private List<CompoCommand> compoCommand = new ArrayList<CompoCommand>();
 	
 	

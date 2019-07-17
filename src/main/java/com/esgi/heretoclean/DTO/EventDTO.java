@@ -1,5 +1,6 @@
 package com.esgi.heretoclean.DTO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,13 +13,14 @@ public class EventDTO {
 	
 	private Long id;
 	private String name;
-	private Date beginDate;
-	private Date endDate;
+	private LocalDate beginDate;
+	private LocalDate endDate;
 	private String description;
 	private String location;
 	private String urlImage;
 	private List<VolunteerDTO> volunteerDTOs = new ArrayList<VolunteerDTO>();
 	private AssociationDTO associationDTO;
+	private int nbVolunteer;
 	
 	public EventDTO() {
 	}
@@ -39,19 +41,19 @@ public class EventDTO {
 		this.name = name;
 	}
 
-	public Date getBeginDate() {
+	public LocalDate getBeginDate() {
 		return beginDate;
 	}
 
-	public void setBeginDate(Date beginDate) {
+	public void setBeginDate(LocalDate beginDate) {
 		this.beginDate = beginDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 
@@ -97,6 +99,15 @@ public class EventDTO {
 	
 	
 	
+	
+	public int getNbVolunteer() {
+		return nbVolunteer;
+	}
+
+	public void setNbVolunteer(int nbVolunteer) {
+		this.nbVolunteer = nbVolunteer;
+	}
+
 	public static EventDTO EventToEventDTO(Event e) {
 		EventDTO eventDTO = new EventDTO();
 		
@@ -107,6 +118,7 @@ public class EventDTO {
 		eventDTO.setEndDate(e.getEndDate());
 		eventDTO.setUrlImage(e.getUrlImage());
 		eventDTO.setDescription(e.getDescription());
+		eventDTO.setNbVolunteer(e.getVolunteers().size());
 		
 //		eventDTO.associationDTO(e.getAssociation());
 //		eventDTO.setVolunteerDTOs(volunteerDTOs);

@@ -1,11 +1,13 @@
 package com.esgi.heretoclean.models;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -34,12 +36,12 @@ public class Event {
 	@Column(name="beginDate")
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
-	private Date beginDate;
+	private LocalDate beginDate;
 
 	@Column(name="endDate")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
 	@NotNull
-	private Date endDate;
+	private LocalDate endDate;
 
 	@Column(name="description")
 	@NotNull
@@ -53,16 +55,14 @@ public class Event {
 	@NotNull
 	private String urlImage;
 
-	@JsonBackReference
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "event_volunteer",
 	joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(name = "volunteer_id", referencedColumnName = "id"))
 	private List<Volunteer> volunteers = new ArrayList<Volunteer>();
 
-	@ManyToOne
 	@JoinColumn
-	@JsonBackReference
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Association association;
 
 	public Event() {
@@ -84,19 +84,19 @@ public class Event {
 		this.name = name;
 	}
 
-	public Date getBeginDate() {
+	public LocalDate getBeginDate() {
 		return beginDate;
 	}
 
-	public void setBeginDate(Date beginDate) {
+	public void setBeginDate(LocalDate beginDate) {
 		this.beginDate = beginDate;
 	}
 
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(LocalDate endDate) {
 		this.endDate = endDate;
 	}
 

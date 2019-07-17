@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -39,15 +40,13 @@ public class Product {
 	@NotNull
 	private double price;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn
 	@NotNull
-	@JsonBackReference
 	private Association association;
 	
 	
-	@OneToMany(mappedBy="product")
-	@JsonBackReference
+	@OneToMany(mappedBy="product",fetch=FetchType.LAZY)
 	private List<CompoCommand> compoCommand = new ArrayList<CompoCommand>();
 	
     public Product() {

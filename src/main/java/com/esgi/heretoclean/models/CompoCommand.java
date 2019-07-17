@@ -1,14 +1,12 @@
 package com.esgi.heretoclean.models;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class CompoCommand {
@@ -17,14 +15,12 @@ public class CompoCommand {
 	@GeneratedValue
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "command_id")
-	@JsonManagedReference 
 	private Command command;
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "product_id")
-	@JsonManagedReference
 	private Product product;
 	
 	private int quantity;

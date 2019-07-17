@@ -2,6 +2,7 @@ package com.esgi.heretoclean.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -23,13 +24,12 @@ public class Gift {
 	@NotNull
 	private float amount;
 	
-	@JsonBackReference
-	@ManyToOne
+	
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn
 	private Volunteer volunteer;
 	
-	@JsonBackReference
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn
     private Association association;
 	
