@@ -138,7 +138,13 @@ public class EventController {
 			throw new HereToCleanException("Il n'y a pas d'évènement pour cette association");
 
 		}
+		
+		List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
+		
+		for(Event e : events.get()) {
+			eventDTOs.add(EventDTO.EventToEventDTO(e));
+		}
 
-		return ResponseEntity.ok(events.get());
+		return ResponseEntity.ok(eventDTOs);
 	}
 }
