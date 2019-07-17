@@ -145,7 +145,7 @@ public class ProductController {
 
 		for(Product p : products.get()) {
 			ProductDTO productDTO = ProductDTO.ProductToPooductDTO(p);
-
+ 
 			productDTOs.add(productDTO);
 		}
 
@@ -154,8 +154,6 @@ public class ProductController {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Il n'y a aucun produit");
 		}
 		return ResponseEntity.ok(productDTOs);
-		//		return ResponseEntity.ok(products);
-
 
 	}	
 }

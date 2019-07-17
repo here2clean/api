@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.CompoCommandJson;
 import com.esgi.heretoclean.models.Product;
+import com.esgi.heretoclean.service.interfaces.CommandService;
 import com.esgi.heretoclean.service.interfaces.ProductService;
-/*
+
 @RestController
 @RequestMapping("/api/command")
 public class CommandController {
@@ -80,4 +81,3 @@ public class CommandController {
 	
 	
 }
-*/

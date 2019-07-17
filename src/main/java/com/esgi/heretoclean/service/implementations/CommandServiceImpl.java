@@ -59,10 +59,10 @@ public class CommandServiceImpl implements CommandService {
 		Command c = new Command();
 		c.setVolunteer(volunteer.get());
 		c = commandRepo.save(c);
-		CompoCommand compo = new CompoCommand();
 
-		compo.setCommand(c);
 		for(CompoCommandJson cJson : compoJson){
+			CompoCommand compo = new CompoCommand();
+			compo.setCommand(c);
 			Optional<Product> product = productRepo.findById(cJson.getIdProduct());
 
 			if(!product.isPresent() || product.get().getId() == null ) {
@@ -71,7 +71,7 @@ public class CommandServiceImpl implements CommandService {
 
 			compo.setProduct(product.get());
 			compo.setQuantity(cJson.getQuantity());
-			//			compo.setCommand(command);
+//			compo.setCommand(command);
 			
 			compoCommandRepo.save(compo);
 
@@ -79,7 +79,6 @@ public class CommandServiceImpl implements CommandService {
 
 
 
-		// TODO Auto-generated method stub
 		return null;
 	}
 
