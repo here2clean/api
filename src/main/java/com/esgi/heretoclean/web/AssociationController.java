@@ -98,8 +98,10 @@ public class AssociationController {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association ayant comme email : " + email + " n'a pas été trouvé");
 
 		}
+		
+		AssociationDTO assoDTO = AssociationDTO.AssociationToAssociationDTO(asso.get());
 
-		return ResponseEntity.ok(asso.get());
+		return ResponseEntity.ok(assoDTO);
 	}
 	
 	@GetMapping("/research/id")
