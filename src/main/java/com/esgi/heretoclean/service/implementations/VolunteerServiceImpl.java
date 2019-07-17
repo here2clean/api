@@ -61,20 +61,17 @@ public class VolunteerServiceImpl implements VolunteerService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Gift> findAllGift(String email) {
-//		return 	volunteerRepo.findOneByEmailIgnoreCase(email).get().getGifts();
-		return null;
+		return 	volunteerRepo.findOneByEmailIgnoreCase(email).get().getGifts();
 	}
 
 	@Override
 	public List<Association> findAllAssociation(String email) {
-//		return volunteerRepo.findOneByEmailIgnoreCase(email).get().getAssociationVolunteers();
-		return null;
+		return volunteerRepo.findOneByEmailIgnoreCase(email).get().getAssociations();
 	}
 
 	@Override
 	public List<Event> findAllEvent(String email) {
-//		return volunteerRepo.findOneByEmailIgnoreCase(email).get().getEvents();
-		return null;
+		return volunteerRepo.findOneByEmailIgnoreCase(email).get().getEvents();
 	}
 
 }
