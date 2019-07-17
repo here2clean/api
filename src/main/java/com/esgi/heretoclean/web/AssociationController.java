@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esgi.heretoclean.DTO.AssociationDTO;
+import com.esgi.heretoclean.DTO.EventDTO;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Association;
 import com.esgi.heretoclean.models.Event;
@@ -162,7 +163,7 @@ public class AssociationController {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(), "L'association n'a pas été mis à jour");
 
 		}
-		return ResponseEntity.ok(associationService.updateAssociation(asso));
+		return ResponseEntity.ok().build();
 	}
 
 	@DeleteMapping("/delete")
@@ -212,7 +213,13 @@ public class AssociationController {
     		throw new HereToCleanException("Il n'y a pas d'évènement pour cette association");
     	}
     	
-    	return ResponseEntity.ok(events.get());
+    	List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
+    	
+    	for(Event e : events.get()) {
+    		eventDTOs.add(EventDTO.EventToEventDTO(e));
+    	}
+    	
+    	return ResponseEntity.ok(eventDTOs);
     }
 
 

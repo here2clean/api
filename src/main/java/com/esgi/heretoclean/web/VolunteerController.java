@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.*;
 
 import com.esgi.heretoclean.DTO.AssociationDTO;
 import com.esgi.heretoclean.DTO.EventDTO;
+import com.esgi.heretoclean.DTO.GiftDTO;
 import com.esgi.heretoclean.DTO.VolunteerDTO;
 import com.esgi.heretoclean.models.Association;
 import com.esgi.heretoclean.models.Event;
+import com.esgi.heretoclean.models.Gift;
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.implementations.VolunteerServiceImpl;
 import com.google.firebase.auth.FirebaseAuth;
@@ -62,7 +64,7 @@ public class VolunteerController {
 	@PutMapping("/update")
 	public ResponseEntity update(@RequestParam("email") String email , @Valid @RequestBody Volunteer volunteer){
 		volunteerService.update(email,volunteer);
-		return ResponseEntity.status(HttpStatus.OK.value()).build();
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/allEvent")
@@ -105,8 +107,14 @@ public class VolunteerController {
 		if(volunteerService.findAllGift(emailVolunteer) == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
+		
+		List<GiftDTO> giftDTOs = new ArrayList<GiftDTO>();
+		
+		for(Gift g : volunteerService.findAllGift(emailVolunteer)) {
+			giftDTOs.add(GiftDTO.GiftToGiftDTO(g));
+		}
 
-		return ResponseEntity.status(HttpStatus.FOUND).body(volunteerService.findAllGift(emailVolunteer));
+		return ResponseEntity.ok(giftDTOs);
 	}
 
 	@DeleteMapping("/delete")
@@ -127,14 +135,5 @@ public class VolunteerController {
 		return ResponseEntity.ok(volunteerDTO);
 	}
 
-	//    private FirebaseAuth initFirebase() throws IOException {
-	//    	FileInputStream serviceAccount = new FileInputStream(new File("D://jeand/Documents/Cours2018-2019/S2/PA/API/heretoclean/src/main/resources/heretoclean-config.json"));
-	//		FirebaseOptions options = new FirebaseOptions.Builder()
-	//				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-	//				.setDatabaseUrl("https://heretoclean-876f4.firebaseio.com")
-	//				.build();
-	//		FirebaseApp app = FirebaseApp.initializeApp(options);
-	//		return FirebaseAuth.getInstance(app);
-	//    }
 
 }

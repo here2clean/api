@@ -98,8 +98,8 @@ public class EventController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity deleteEvent(@RequestParam("name") String name) {
-		eventService.delete(name);
+	public ResponseEntity deleteEvent(@RequestParam("id") Long id) {
+		eventService.deleteById(id);
 		return ResponseEntity.status(HttpStatus.OK.value()).build();
 	}
 
