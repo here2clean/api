@@ -55,7 +55,6 @@ public class Event {
 	private String location;
 
 	@Column(name="urlImage")
-	@NotNull
 	private String urlImage;
 
 	@ManyToMany(fetch=FetchType.LAZY)
