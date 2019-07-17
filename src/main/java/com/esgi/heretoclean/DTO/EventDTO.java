@@ -120,6 +120,16 @@ public class EventDTO {
 		eventDTO.setDescription(e.getDescription());
 		eventDTO.setNbVolunteer(e.getVolunteers().size());
 		
+		List<VolunteerDTO> volunteerDTOs = new ArrayList<VolunteerDTO>();
+		
+		for(Volunteer v : e.getVolunteers()) {
+			VolunteerDTO vDTO = VolunteerDTO.VolunteerToVolunteerDTO(v);
+			volunteerDTOs.add(vDTO);
+		}
+		
+		eventDTO.setVolunteerDTOs(volunteerDTOs);
+		
+		
 //		eventDTO.associationDTO(e.getAssociation());
 //		eventDTO.setVolunteerDTOs(volunteerDTOs);
 		return eventDTO;
