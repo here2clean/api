@@ -160,18 +160,18 @@ public class VolunteerDTO {
 		List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
 		List<AssociationDTO> associationDTOs = new ArrayList<AssociationDTO>();
 		
-		
-		for(Event e: v.getEvents()) {
-			EventDTO eventDTO = EventDTO.EventToEventDTO(e);
-			eventDTOs.add(eventDTO);
-		}
+//		
+//		for(Event e: v.getEvents()) {
+//			EventDTO eventDTO = EventDTO.EventToEventDTO(e);
+//			eventDTOs.add(eventDTO);
+//		}
 		
 //		
 //		for(Association a: v.getAssociations()) {
 //			AssociationDTO assoDTO = AssociationDTO.AssociationToAssociationDTO(a);
 //			associationDTOs.add(assoDTO);
 //		}
-		volunteerDTO.setEvents(eventDTOs);
+//		volunteerDTO.setEvents(eventDTOs);
 //		volunteerDTO.setAssociations(associationDTOs); 
 		
 		return volunteerDTO;
