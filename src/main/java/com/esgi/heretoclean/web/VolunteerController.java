@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.esgi.heretoclean.DTO.VolunteerDTO;
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.implementations.VolunteerServiceImpl;
 import com.google.firebase.auth.FirebaseAuth;
@@ -97,7 +98,9 @@ public class VolunteerController {
     		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     	}
     	
-    	return ResponseEntity.status(HttpStatus.FOUND).body(volunteerOptional.get());
+    	VolunteerDTO volunteerDTO = VolunteerDTO.VolunteerToVolunteerDTO(volunteerOptional.get());
+    	
+    	return ResponseEntity.ok(volunteerDTO);
     }
     
 //    private FirebaseAuth initFirebase() throws IOException {

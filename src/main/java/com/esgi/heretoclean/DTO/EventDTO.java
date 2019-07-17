@@ -122,10 +122,10 @@ public class EventDTO {
 		
 		List<VolunteerDTO> volunteerDTOs = new ArrayList<VolunteerDTO>();
 		
-		for(Volunteer v : e.getVolunteers()) {
-			VolunteerDTO vDTO = VolunteerDTO.VolunteerToVolunteerDTO(v);
-			volunteerDTOs.add(vDTO);
-		}
+//		for(Volunteer v : e.getVolunteers()) {
+//			VolunteerDTO vDTO = VolunteerDTO.VolunteerToVolunteerDTO(v);
+//			volunteerDTOs.add(vDTO);
+//		}
 		
 		eventDTO.setVolunteerDTOs(volunteerDTOs);
 		

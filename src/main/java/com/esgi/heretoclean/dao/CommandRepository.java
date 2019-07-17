@@ -6,8 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.esgi.heretoclean.models.Command;
-
+/*
 @Repository
 public interface CommandRepository extends JpaRepository<Command, Long> {
 	
@@ -15,3 +14,4 @@ public interface CommandRepository extends JpaRepository<Command, Long> {
 	List<Command> findByVolunteerId(Long volunteer_id);
 
 }
+*/

@@ -14,7 +14,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 import com.esgi.heretoclean.models.Association;
-import com.esgi.heretoclean.models.Command;
+//import com.esgi.heretoclean.models.Command;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.models.Gift;
 import com.esgi.heretoclean.models.Volunteer;
@@ -31,10 +31,10 @@ public class VolunteerDTO {
 	private int cityCode;
 	private String email;
 	private String password;
-	private List<Command> commands = new ArrayList<Command>();
-	private List<Gift> gifts = new ArrayList<Gift>();
-	private List<Association> associations = new ArrayList<Association>();
-	private List<Event> events = new ArrayList<Event>();
+//	private List<CommandDTO> commands = new ArrayList<CommandDTO>();
+	private List<GiftDTO> gifts = new ArrayList<GiftDTO>();
+	private List<AssociationDTO> associations = new ArrayList<AssociationDTO>();
+	private List<EventDTO> events = new ArrayList<EventDTO>();
 	
 	public VolunteerDTO() {	}
 
@@ -110,38 +110,39 @@ public class VolunteerDTO {
 		this.password = password;
 	}
 
-	public List<Command> getCommands() {
-		return commands;
-	}
+	
+//	public List<CommandDTO> getCommands() {
+//		return commands;
+//	}
+//
+//	public void setCommands(List<CommandDTO> commands) {
+//		this.commands = commands;
+//	}
 
-	public void setCommands(List<Command> commands) {
-		this.commands = commands;
-	}
-
-	public List<Gift> getGifts() {
+	public List<GiftDTO> getGifts() {
 		return gifts;
 	}
 
-	public void setGifts(List<Gift> gifts) {
+	public void setGifts(List<GiftDTO> gifts) {
 		this.gifts = gifts;
 	}
 
-	public List<Association> getAssociations() {
+	public List<AssociationDTO> getAssociations() {
 		return associations;
 	}
 
-	public void setAssociations(List<Association> associations) {
+	public void setAssociations(List<AssociationDTO> associations) {
 		this.associations = associations;
 	}
 
-	public List<Event> getEvents() {
+	public List<EventDTO> getEvents() {
 		return events;
 	}
 
-	public void setEvents(List<Event> events) {
+	public void setEvents(List<EventDTO> events) {
 		this.events = events;
 	}
-	
+
 	public static VolunteerDTO VolunteerToVolunteerDTO(Volunteer v) {
 		VolunteerDTO volunteerDTO = new VolunteerDTO();
 		
@@ -155,7 +156,23 @@ public class VolunteerDTO {
 //		volunteerDTO.setEvents(v.getEvents());
 		volunteerDTO.setPassword(v.getPassword());
 		volunteerDTO.setLastName(v.getLastName());
-//		volunteerDTO.
+		
+		List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
+		List<AssociationDTO> associationDTOs = new ArrayList<AssociationDTO>();
+		
+		
+		for(Event e: v.getEvents()) {
+			EventDTO eventDTO = EventDTO.EventToEventDTO(e);
+			eventDTOs.add(eventDTO);
+		}
+		
+//		
+//		for(Association a: v.getAssociations()) {
+//			AssociationDTO assoDTO = AssociationDTO.AssociationToAssociationDTO(a);
+//			associationDTOs.add(assoDTO);
+//		}
+		volunteerDTO.setEvents(eventDTOs);
+//		volunteerDTO.setAssociations(associationDTOs); 
 		
 		return volunteerDTO;
 		

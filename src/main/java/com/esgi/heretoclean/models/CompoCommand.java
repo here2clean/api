@@ -15,9 +15,9 @@ public class CompoCommand {
 	@GeneratedValue
 	private Long id;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name = "command_id")
-	private Command command;
+//	@ManyToOne(fetch=FetchType.LAZY)
+//	@JoinColumn(name = "command_id")
+//	private Command command;
 
 	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -39,13 +39,13 @@ public class CompoCommand {
 	}
 
 
-	public Command getCommand() {
-		return command;
-	}
-
-	public void setCommand(Command command) {
-		this.command = command;
-	}
+//	public Command getCommand() {
+//		return command;
+//	}
+//
+//	public void setCommand(Command command) {
+//		this.command = command;
+//	}
 
 	public Product getProduct() {
 		return product;

@@ -57,6 +57,9 @@ public class ProductController {
       if(products.isEmpty()) {
     	  throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Il n'y a pas de produit ");
       }
+      
+//      List<>
+      
 		return ResponseEntity.ok(products);
 	}
 

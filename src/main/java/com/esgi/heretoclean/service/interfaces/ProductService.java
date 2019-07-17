@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.esgi.heretoclean.models.Association;
-import com.esgi.heretoclean.models.Command;
 import com.esgi.heretoclean.models.Product;
 
 @Service
@@ -19,6 +18,6 @@ public interface ProductService {
 	List<Product> findAllByAssociation(String name) throws Exception;
 	List<Product> findAllByAssociationId(Long id);
 	void addAssociation(String name , String emailAsso) throws Exception;
-	void addCommand(String nameProduct, Long idCommand) throws Exception;
+//	void addCommand(String nameProduct, Long idCommand) throws Exception;
 	Product findById(Long id);
 }

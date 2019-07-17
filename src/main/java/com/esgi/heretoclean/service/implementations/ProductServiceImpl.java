@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esgi.heretoclean.dao.AssociationRepository;
-import com.esgi.heretoclean.dao.CommandRepository;
 import com.esgi.heretoclean.dao.ProductRepository;
 import com.esgi.heretoclean.models.Association;
-import com.esgi.heretoclean.models.Command;
 import com.esgi.heretoclean.models.Product;
 import com.esgi.heretoclean.service.interfaces.ProductService;
 
@@ -23,14 +21,12 @@ public class ProductServiceImpl implements ProductService{
 	
 	private final AssociationRepository assoRepo;
 	
-	private final CommandRepository commandRepo;
+//	private final CommandRepository commandRepo;
 	
 	@Autowired
-	public ProductServiceImpl(ProductRepository productRepo, AssociationRepository assoRepo,
-			CommandRepository commandRepo) {
+	public ProductServiceImpl(ProductRepository productRepo, AssociationRepository assoRepo) {
 		this.productRepo = productRepo;
 		this.assoRepo = assoRepo;
-		this.commandRepo = commandRepo;
 	}
 
 	@Override
@@ -78,7 +74,7 @@ public class ProductServiceImpl implements ProductService{
 		productRepo.saveAndFlush(p);
 		
 	}
-
+/*
 	@Override
 	public void addCommand(String nameProduct, Long idCommand) throws Exception {
 		Optional<Command> commandOp = commandRepo.findById(idCommand);
@@ -96,7 +92,7 @@ public class ProductServiceImpl implements ProductService{
 		Command c = commandOp.get();
 		Product p = productOp.get();
 		productRepo.saveAndFlush(p);
-	}
+	}*/
 
 	@Override
 	@Transactional(readOnly = true)
@@ -135,7 +131,6 @@ public class ProductServiceImpl implements ProductService{
 		
 		return null;
 	}
-
 
 
 }

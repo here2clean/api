@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
+/*
 @Entity
 public class Command {
 	
@@ -77,3 +77,4 @@ public class Command {
 
 	
 }
+*/
