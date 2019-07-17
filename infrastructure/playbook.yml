@@ -1,0 +1,37 @@
+---
+- hosts: all
+  remote_user: ubuntu
+  vars:
+    ansible_python_interpreter: /usr/bin/python3.6
+  
+  environment:
+      DATABASE_PASSWORD: "{{lookup('file', '/home/dbpwd')}}"
+      DATABASE_URL: "{{lookup('file', 'mysql_url.txt') }}"
+
+  tasks: 
+    - name: Install add-apt-repostory
+      become: yes
+      apt: name=software-properties-common state=latest
+
+    - name: Add Openjdk repo
+      become: yes
+      apt_repository: repo='ppa:openjdk-r/ppa'
+      
+
+    - name: Install openjdk 8 p1
+      become: yes
+      apt: name=openjdk-8-jre
+    
+    - name: echo
+      become: yes
+      shell: echo $DATABASE_URL
+    
+    - name: Copy using inline content
+      become: yes
+      copy:
+        src: ../target/heretoclean-0.0.1-SNAPSHOT.jar
+        dest: /home/heretoclean-0.0.1-SNAPSHOT.jar
+    
+    - name: run
+      become: yes
+      shell: nohup java -jar /home/heretoclean-0.0.1-SNAPSHOT.jar &
