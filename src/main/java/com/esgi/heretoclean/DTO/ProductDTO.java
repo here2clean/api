@@ -12,7 +12,7 @@ public class ProductDTO {
 	
 	private double price;
 	
-	private AssociationDTO associationDTO;
+//	private AssociationDTO associationDTO;
 	
 	public ProductDTO() {
 	}
@@ -49,13 +49,13 @@ public class ProductDTO {
 		this.price = price;
 	}
 
-	public AssociationDTO getAssociationDTO() {
-		return associationDTO;
-	}
-
-	public void setAssociationDTO(AssociationDTO associationDTO) {
-		this.associationDTO = associationDTO;
-	}
+//	public AssociationDTO getAssociationDTO() {
+//		return associationDTO;
+//	}
+//
+//	public void setAssociationDTO(AssociationDTO associationDTO) {
+//		this.associationDTO = associationDTO;
+//	}
 	
 	
 	public static ProductDTO ProductToPooductDTO(Product p) {
@@ -65,9 +65,9 @@ public class ProductDTO {
 		productDTO.setPrice(p.getPrice());
 		productDTO.setDescription(p.getDescription());
 		
-		AssociationDTO associationDTO = AssociationDTO.AssociationToAssociationDTO(p.getAssociation());
+//		AssociationDTO associationDTO = AssociationDTO.AssociationToAssociationDTO(p.getAssociation());
 		
-		productDTO.setAssociationDTO(associationDTO);
+//		productDTO.setAssociationDTO(associationDTO);
 		
 		return productDTO;
 	}

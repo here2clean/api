@@ -1,7 +1,9 @@
 package com.esgi.heretoclean.DTO;
 
 import java.time.LocalDate;
-/*
+
+import com.esgi.heretoclean.models.Command;
+
 public class CommandDTO {
 
 	private Long id;
@@ -48,4 +50,4 @@ public class CommandDTO {
 	}
 
 }
-*/
+

@@ -7,9 +7,10 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.esgi.heretoclean.exception.HereToCleanException;
+import com.esgi.heretoclean.models.Command;
 import com.esgi.heretoclean.models.CompoCommandJson;
 import com.esgi.heretoclean.models.Product;
-/*
+
 @Service
 public interface CommandService {
 	
@@ -18,12 +19,8 @@ public interface CommandService {
 	Command findById(Long id);
 	Set<Product> getCompoCommand(Long id);
 	void addProductInCommand(Long idProduct) throws HereToCleanException;
-	
-	
-	
 	//
 	void updateCommand(Command command);
 	
 	
 }
-*/

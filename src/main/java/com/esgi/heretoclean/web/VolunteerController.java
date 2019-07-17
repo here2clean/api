@@ -14,8 +14,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.esgi.heretoclean.DTO.AssociationDTO;
 import com.esgi.heretoclean.DTO.EventDTO;
 import com.esgi.heretoclean.DTO.VolunteerDTO;
+import com.esgi.heretoclean.models.Association;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.implementations.VolunteerServiceImpl;
@@ -87,7 +89,14 @@ public class VolunteerController {
 		if(volunteerService.findAllAssociation(emailVolunteer) == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND).body(volunteerService.findAllAssociation(emailVolunteer));
+		
+		List<AssociationDTO> associationDTOs = new ArrayList<AssociationDTO>();
+		
+		for(Association a : volunteerService.findAllAssociation(emailVolunteer) ) {
+			associationDTOs.add(AssociationDTO.AssociationToAssociationDTO(a));
+		}
+		
+		return ResponseEntity.status(HttpStatus.FOUND).body(associationDTOs);
 	}
 
 	@GetMapping("/allGift")

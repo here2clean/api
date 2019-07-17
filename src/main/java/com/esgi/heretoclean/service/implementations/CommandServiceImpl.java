@@ -10,15 +10,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esgi.heretoclean.dao.CommandRepository;
 import com.esgi.heretoclean.dao.CompoCommandRepository;
 import com.esgi.heretoclean.dao.ProductRepository;
 import com.esgi.heretoclean.dao.VolunteerRepository;
 import com.esgi.heretoclean.exception.HereToCleanException;
+import com.esgi.heretoclean.models.Command;
 import com.esgi.heretoclean.models.CompoCommand;
 import com.esgi.heretoclean.models.CompoCommandJson;
 import com.esgi.heretoclean.models.Product;
 import com.esgi.heretoclean.models.Volunteer;
-/*
+import com.esgi.heretoclean.service.interfaces.CommandService;
+
 @Service
 @Transactional
 public class CommandServiceImpl implements CommandService {
@@ -125,4 +128,3 @@ public class CommandServiceImpl implements CommandService {
 
 
 }
-*/
