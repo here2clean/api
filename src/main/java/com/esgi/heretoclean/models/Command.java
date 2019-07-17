@@ -70,13 +70,6 @@ public class Command {
 		this.compoCommand = compoCommand;
 	}
 
-//	public List<CommandProduct> getCommandProducts() {
-//		return commandProducts;
-//	}
-//
-//	public void setCommandProducts(List<CommandProduct> commandProducts) {
-//		this.commandProducts = commandProducts;
-//	}
 
 	
 	

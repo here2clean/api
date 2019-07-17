@@ -28,7 +28,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Transactional
 public class Association {
 
 	@Id
@@ -47,33 +46,35 @@ public class Association {
 	@Column(name="numberRna")
 	@NotNull
 	private int numberRna;
-	
+
 	@Transient
 	private String password;
-	
+
 	@NotNull
 	@Column(name="description")
 	private String description;
-	
+
 	@Column(name="image")
 	private String urlImage;
-	
-	@JsonManagedReference
-    @OneToMany(mappedBy = "association")
+
+//	@JsonManagedReference
+	@OneToMany(mappedBy = "association")
 	private List<Gift> gifts = new ArrayList<Gift>();
 
-	@JsonManagedReference
+	@JsonBackReference
 	@ManyToMany
-	@JoinTable(name="association_volunteers")
+	@JoinTable(name = "association_volunteer",
+	joinColumns = @JoinColumn(name = "volunteer_id", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name = "association_id", referencedColumnName = "id"))
 	private List<Volunteer> volunteers = new ArrayList<Volunteer>();
-    
-    @JsonManagedReference
+
+//	@JsonManagedReference
 	@OneToMany(mappedBy="association")
 	private List<Product> products = new ArrayList<Product>();
-    
-    @OneToMany(mappedBy="association")
-    private List<Event> events = new ArrayList<Event>();
-	
+
+	@OneToMany(mappedBy="association")
+	private List<Event> events = new ArrayList<Event>();
+
 	public Association() {
 	}
 
@@ -171,8 +172,8 @@ public class Association {
 	public void setEvents(List<Event> events) {
 		this.events = events;
 	}
-	
-	
+
+
 
 }
 

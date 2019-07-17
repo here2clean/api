@@ -16,9 +16,10 @@ import javax.persistence.OneToMany;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
-@Transactional
 public class Product {
 
 	@Id
@@ -40,6 +41,7 @@ public class Product {
 	@ManyToOne
 	@JoinColumn
 	@NotNull
+//	@JsonBackReference
 	private Association association;
 	
 	

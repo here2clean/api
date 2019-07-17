@@ -180,7 +180,6 @@ public class AssociationController {
     	
     	if(!events.isPresent() || events.get().isEmpty()) {
     		throw new HereToCleanException("Il n'y a pas d'évènement pour cette association");
-
     	}
     	
     	return ResponseEntity.ok(events.get());

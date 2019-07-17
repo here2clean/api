@@ -25,12 +25,12 @@ public class Gift {
 	@NotNull
 	private float amount;
 	
-	@JsonBackReference
+//	@JsonBackReference
 	@ManyToOne
 	@JoinColumn
 	private Volunteer volunteer;
 	
-	@JsonBackReference
+//	@JsonBackReference
 	@ManyToOne
     @JoinColumn
     private Association association;

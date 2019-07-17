@@ -22,46 +22,48 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Event {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@Column(name="name")
 	@NotNull
 	private String name;
-	
+
 	@Column(name="beginDate")
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
 	private Date beginDate;
-	
+
 	@Column(name="endDate")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
 	@NotNull
 	private Date endDate;
-	
+
 	@Column(name="description")
 	@NotNull
 	private String description;
-	
+
 	@Column(name="location")
 	@NotNull
 	private String location;
-	
+
 	@Column(name="urlImage")
 	@NotNull
 	private String urlImage;
-	
-	@JsonManagedReference
+
+//	@JsonManagedReference
 	@ManyToMany
-	@JoinTable(name="event_volunteers")
+	@JoinTable(name = "event_volunteer",
+	joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name = "volunteer_id", referencedColumnName = "id"))
 	private List<Volunteer> volunteers = new ArrayList<Volunteer>();
-	
+
 	@ManyToOne
 	@JoinColumn
 	private Association association;
-	
+
 	public Event() {
 	}
 
@@ -128,7 +130,7 @@ public class Event {
 	public void setVolunteers(List<Volunteer> volunteers) {
 		this.volunteers = volunteers;
 	}
-	
+
 	public int getNumberOfParticipant() {
 		return volunteers.size();
 	}

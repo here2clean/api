@@ -19,7 +19,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-
 @Entity
 public class Volunteer {
 	
@@ -60,19 +59,19 @@ public class Volunteer {
 	@Transient
 	private String password;
 
-	@JsonManagedReference
+//	@JsonManagedReference
 	@OneToMany(mappedBy="volunteer")
 	private List<Command> commands = new ArrayList<Command>();
 	
-	@JsonManagedReference
+//	@JsonManagedReference
 	@OneToMany(mappedBy="volunteer")
 	private List<Gift> gifts = new ArrayList<Gift>();
 	
-	@JsonBackReference
+//	@JsonManagedReference
 	@ManyToMany(mappedBy="volunteers")
 	private List<Association> associations = new ArrayList<Association>();
 	
-	@JsonBackReference
+//	@JsonBackReference
 	@ManyToMany(mappedBy="volunteers")
 	private List<Event> events = new ArrayList<Event>();
 	
