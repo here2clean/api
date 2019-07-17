@@ -125,7 +125,7 @@ public class EventController {
 	}
 
 
-	@GetMapping("allByAssocation")
+	@GetMapping("/allByAssociation")
 	public ResponseEntity getAllByAssociation(@RequestParam("association_id") Long idAsso) throws HereToCleanException {
 
 		if(idAsso == null  ) {
