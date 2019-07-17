@@ -13,8 +13,8 @@ public class EventDTO {
 	
 	private Long id;
 	private String name;
-	private LocalDate beginDate;
-	private LocalDate endDate;
+	private Date beginDate;
+	private Date endDate;
 	private String description;
 	private String location;
 	private String urlImage;
@@ -41,19 +41,19 @@ public class EventDTO {
 		this.name = name;
 	}
 
-	public LocalDate getBeginDate() {
+	public Date getBeginDate() {
 		return beginDate;
 	}
 
-	public void setBeginDate(LocalDate beginDate) {
+	public void setBeginDate(Date beginDate) {
 		this.beginDate = beginDate;
 	}
 
-	public LocalDate getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDate endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

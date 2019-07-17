@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.esgi.heretoclean.DTO.EventDTO;
 import com.esgi.heretoclean.exception.HereToCleanException;
+import com.esgi.heretoclean.models.Association;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.service.interfaces.AssociationService;
 import com.esgi.heretoclean.service.interfaces.EventService;
@@ -30,104 +31,114 @@ import io.netty.util.internal.StringUtil;
 @RestController
 @RequestMapping("/api/event")
 public class EventController {
-    
-    private final EventService eventService;
-    private final VolunteerService volunteerService;
-    private final AssociationService assoService;
-    
-    @Autowired
-    public EventController(EventService eventService,VolunteerService volunteerService,AssociationService assoService) {
+
+	private final EventService eventService;
+	private final VolunteerService volunteerService;
+	private final AssociationService assoService;
+
+	@Autowired
+	public EventController(EventService eventService,VolunteerService volunteerService,AssociationService assoService) {
 		this.eventService = eventService;
 		this.volunteerService = volunteerService;
 		this.assoService = assoService;
-		
+
 	}
 
 	@PostMapping("/register")
-    public ResponseEntity registerEvent(@RequestBody @Valid Event event) throws HereToCleanException {
-    	int eventCode = eventService.registerEvent(event);
-    	
-    	if(eventCode == 200) {
-    		return ResponseEntity.status(HttpStatus.CREATED.value()).build();    		
-    	}
-    	
-    	throw new HereToCleanException("Évènement non créé");
-    }
-    
-    @GetMapping("/all")
-    public ResponseEntity getEvents() {
-    	List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
-    	
-    	for(Event e : eventService.findAllEvent()) {
-    		EventDTO eventDTO = EventDTO.EventToEventDTO(e);
-    		eventDTOs.add(eventDTO);
-    	}
-    	
-        return ResponseEntity.ok(eventDTOs); 
-    }
-    
-    @GetMapping("/research/name")
-    public ResponseEntity getEventByName(@RequestParam("name") String name)throws HereToCleanException {
-    	
-    	if(StringUtil.isNullOrEmpty(name)) {
-    		throw new HereToCleanException(HttpStatus.BAD_GATEWAY.value(),"Il manque un paramètre");
-    	}
-    	
-    	
-    	Optional<List<Event>> optionalEvent = eventService.findByName(name);
-    	if(!optionalEvent.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
-    	}
-    	return ResponseEntity.status(HttpStatus.FOUND.value()).body(optionalEvent);
-    }
-    
-    @PutMapping("/update")
-    public ResponseEntity updateEvent(@RequestBody Event event){
-    	return ResponseEntity.status(HttpStatus.OK.value()).body(eventService.updateEvent(event));
-    }
-    
-    @DeleteMapping("/delete")
-    public ResponseEntity deleteEvent(@RequestParam("name") String name) {
-    	eventService.delete(name);
-    	return ResponseEntity.status(HttpStatus.OK.value()).build();
-    }
-    
-    @PostMapping("/addVolunteer")
-    public ResponseEntity addVolunteer(@RequestParam("event_id") Long idEvent, @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
-    	
-    	if(idEvent == null || idVolunteer == null ) {
-    		throw new HereToCleanException("La requête est incomplète");
-    	}
-    	eventService.addVolunteer(idEvent, idVolunteer);
-    	return ResponseEntity.ok().build();
-    }
-    
-    
-    @PostMapping("/removeVolunteer")
-    public ResponseEntity removeVolunteer(@RequestParam("event_id") Long idEvent, @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
-    	
-    	if(idEvent == null || idVolunteer == null ) {
-    		throw new HereToCleanException("La requête est incomplète");
-    	}
-    	eventService.removeVolunteer(idEvent, idVolunteer);
-    	return ResponseEntity.ok().build();
-    }
-    
-    
-    @GetMapping("allByAssocation")
-    public ResponseEntity getAllByAssociation(@RequestParam("association_id") Long idAsso) throws HereToCleanException {
+	public ResponseEntity registerEvent(@RequestBody @Valid Event event, @RequestParam("association_id") Long id) throws HereToCleanException {
 
-    	if(idAsso == null  ) {
-    		throw new HereToCleanException("La requête est incomplète");
-    	}
-    	
-    	Optional<List<Event>> events = Optional.ofNullable(assoService.getEvents(idAsso));
-    	
-    	if(!events.isPresent() || events.get().isEmpty()) {
-    		throw new HereToCleanException("Il n'y a pas d'évènement pour cette association");
+		if(id == null) {
+			throw new HereToCleanException("La requête est incomplète");
+		}
 
-    	}
-    	
-    	return ResponseEntity.ok(events.get());
-    }
+		Optional<Association> asso = Optional.ofNullable(assoService.findById(id));
+
+		if(!asso.isPresent() || asso.get().getId() == null) {
+			throw new HereToCleanException("L'association n'existe pas");
+		}
+		event.setAssociation(asso.get());
+		eventService.registerEvent(event);
+
+
+		return ResponseEntity.ok().build();   		
+
+
+	}
+
+	@GetMapping("/all")
+	public ResponseEntity getEvents() {
+		List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
+
+		for(Event e : eventService.findAllEvent()) {
+			EventDTO eventDTO = EventDTO.EventToEventDTO(e);
+			eventDTOs.add(eventDTO);
+		}
+
+		return ResponseEntity.ok(eventDTOs); 
+	}
+
+	@GetMapping("/research/name")
+	public ResponseEntity getEventByName(@RequestParam("name") String name)throws HereToCleanException {
+
+		if(StringUtil.isNullOrEmpty(name)) {
+			throw new HereToCleanException(HttpStatus.BAD_GATEWAY.value(),"Il manque un paramètre");
+		}
+
+
+		Optional<List<Event>> optionalEvent = eventService.findByName(name);
+		if(!optionalEvent.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
+		}
+		return ResponseEntity.status(HttpStatus.FOUND.value()).body(optionalEvent);
+	}
+
+	@PutMapping("/update")
+	public ResponseEntity updateEvent(@RequestBody Event event){
+		return ResponseEntity.status(HttpStatus.OK.value()).body(eventService.updateEvent(event));
+	}
+
+	@DeleteMapping("/delete")
+	public ResponseEntity deleteEvent(@RequestParam("name") String name) {
+		eventService.delete(name);
+		return ResponseEntity.status(HttpStatus.OK.value()).build();
+	}
+
+	@PostMapping("/addVolunteer")
+	public ResponseEntity addVolunteer(@RequestParam("event_id") Long idEvent, @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
+
+		if(idEvent == null || idVolunteer == null ) {
+			throw new HereToCleanException("La requête est incomplète");
+		}
+		eventService.addVolunteer(idEvent, idVolunteer);
+		return ResponseEntity.ok().build();
+	}
+
+
+	@PostMapping("/removeVolunteer")
+	public ResponseEntity removeVolunteer(@RequestParam("event_id") Long idEvent, @RequestParam("volunteer_id") Long idVolunteer ) throws HereToCleanException {
+
+		if(idEvent == null || idVolunteer == null ) {
+			throw new HereToCleanException("La requête est incomplète");
+		}
+		eventService.removeVolunteer(idEvent, idVolunteer);
+		return ResponseEntity.ok().build();
+	}
+
+
+	@GetMapping("allByAssocation")
+	public ResponseEntity getAllByAssociation(@RequestParam("association_id") Long idAsso) throws HereToCleanException {
+
+		if(idAsso == null  ) {
+			throw new HereToCleanException("La requête est incomplète");
+		}
+
+		Optional<List<Event>> events = Optional.ofNullable(assoService.getEvents(idAsso));
+
+		if(!events.isPresent() || events.get().isEmpty()) {
+			throw new HereToCleanException("Il n'y a pas d'évènement pour cette association");
+
+		}
+
+		return ResponseEntity.ok(events.get());
+	}
 }

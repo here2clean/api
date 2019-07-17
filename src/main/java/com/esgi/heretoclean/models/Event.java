@@ -1,6 +1,7 @@
 package com.esgi.heretoclean.models;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -34,14 +36,15 @@ public class Event {
 	private String name;
 
 	@Column(name="beginDate")
+//	@DateTimeFormat(iso = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
 	@NotNull
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
-	private LocalDate beginDate;
+	private Date beginDate;
 
 	@Column(name="endDate")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
 	@NotNull
-	private LocalDate endDate;
+	private Date endDate;
 
 	@Column(name="description")
 	@NotNull
@@ -84,19 +87,19 @@ public class Event {
 		this.name = name;
 	}
 
-	public LocalDate getBeginDate() {
+	public Date getBeginDate() {
 		return beginDate;
 	}
 
-	public void setBeginDate(LocalDate beginDate) {
+	public void setBeginDate(Date beginDate) {
 		this.beginDate = beginDate;
 	}
 
-	public LocalDate getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDate endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
