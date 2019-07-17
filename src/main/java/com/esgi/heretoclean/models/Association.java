@@ -57,22 +57,23 @@ public class Association {
 	@Column(name="image")
 	private String urlImage;
 
-//	@JsonManagedReference
+	@JsonBackReference
 	@OneToMany(mappedBy = "association")
 	private List<Gift> gifts = new ArrayList<Gift>();
 
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToMany
 	@JoinTable(name = "association_volunteer",
 	joinColumns = @JoinColumn(name = "volunteer_id", referencedColumnName = "id"),
 	inverseJoinColumns = @JoinColumn(name = "association_id", referencedColumnName = "id"))
 	private List<Volunteer> volunteers = new ArrayList<Volunteer>();
 
-//	@JsonManagedReference
+	@JsonManagedReference
 	@OneToMany(mappedBy="association")
 	private List<Product> products = new ArrayList<Product>();
 
 	@OneToMany(mappedBy="association")
+	@JsonManagedReference
 	private List<Event> events = new ArrayList<Event>();
 
 	public Association() {

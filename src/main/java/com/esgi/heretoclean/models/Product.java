@@ -17,6 +17,7 @@ import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -41,11 +42,12 @@ public class Product {
 	@ManyToOne
 	@JoinColumn
 	@NotNull
-//	@JsonBackReference
+	@JsonBackReference
 	private Association association;
 	
 	
 	@OneToMany(mappedBy="product")
+	@JsonBackReference
 	private List<CompoCommand> compoCommand = new ArrayList<CompoCommand>();
 	
     public Product() {

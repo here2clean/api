@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class CompoCommand {
 
@@ -17,10 +19,12 @@ public class CompoCommand {
 
 	@ManyToOne
 	@JoinColumn(name = "command_id")
+	@JsonManagedReference 
 	private Command command;
 
 	@ManyToOne
     @JoinColumn(name = "product_id")
+	@JsonManagedReference
 	private Product product;
 	
 	private int quantity;

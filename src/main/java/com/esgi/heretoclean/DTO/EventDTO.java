@@ -1,0 +1,118 @@
+package com.esgi.heretoclean.DTO;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.esgi.heretoclean.models.Association;
+import com.esgi.heretoclean.models.Event;
+import com.esgi.heretoclean.models.Volunteer;
+
+public class EventDTO {
+	
+	private Long id;
+	private String name;
+	private Date beginDate;
+	private Date endDate;
+	private String description;
+	private String location;
+	private String urlImage;
+	private List<VolunteerDTO> volunteerDTOs = new ArrayList<VolunteerDTO>();
+	private AssociationDTO associationDTO;
+	
+	public EventDTO() {
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getBeginDate() {
+		return beginDate;
+	}
+
+	public void setBeginDate(Date beginDate) {
+		this.beginDate = beginDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
+	}
+
+	public List<VolunteerDTO> getVolunteerDTOs() {
+		return volunteerDTOs;
+	}
+
+	public void setVolunteerDTOs(List<VolunteerDTO> volunteerDTOs) {
+		this.volunteerDTOs = volunteerDTOs;
+	}
+
+	public AssociationDTO getAssociationDTO() {
+		return associationDTO;
+	}
+
+	public void setAssociationDTO(AssociationDTO associationDTO) {
+		this.associationDTO = associationDTO;
+	}
+	
+	
+	
+	public static EventDTO EventToEventDTO(Event e) {
+		EventDTO eventDTO = new EventDTO();
+		
+		eventDTO.setId(e.getId());
+		eventDTO.setLocation(e.getLocation());
+		eventDTO.setName(e.getName());
+		eventDTO.setBeginDate(e.getBeginDate());
+		eventDTO.setEndDate(e.getEndDate());
+		eventDTO.setUrlImage(e.getUrlImage());
+		eventDTO.setDescription(e.getDescription());
+		
+//		eventDTO.associationDTO(e.getAssociation());
+//		eventDTO.setVolunteerDTOs(volunteerDTOs);
+		return eventDTO;
+	}
+	
+	
+
+}

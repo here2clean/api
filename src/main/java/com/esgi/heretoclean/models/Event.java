@@ -53,7 +53,7 @@ public class Event {
 	@NotNull
 	private String urlImage;
 
-//	@JsonManagedReference
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(name = "event_volunteer",
 	joinColumns = @JoinColumn(name = "event_id", referencedColumnName = "id"),
@@ -62,6 +62,7 @@ public class Event {
 
 	@ManyToOne
 	@JoinColumn
+	@JsonBackReference
 	private Association association;
 
 	public Event() {

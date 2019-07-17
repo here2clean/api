@@ -10,11 +10,9 @@ import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-@Transactional
 public class Gift {
 
 	@Id
@@ -25,12 +23,12 @@ public class Gift {
 	@NotNull
 	private float amount;
 	
-//	@JsonBackReference
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn
 	private Volunteer volunteer;
 	
-//	@JsonBackReference
+	@JsonBackReference
 	@ManyToOne
     @JoinColumn
     private Association association;

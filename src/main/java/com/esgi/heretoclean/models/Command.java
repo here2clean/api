@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -25,10 +26,12 @@ public class Command {
 	@ManyToOne
 	@JoinColumn
 	@NotNull
+	@JsonManagedReference
 	private Volunteer volunteer ;
 	
 	
 	@OneToMany(mappedBy="command")
+	@JsonBackReference
 	private List<CompoCommand> compoCommand = new ArrayList<CompoCommand>();
 	
 	
