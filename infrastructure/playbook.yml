@@ -26,11 +26,18 @@
       become: yes
       shell: echo $DATABASE_URL
     
-    - name: Copy using inline content
+    - name: Copy jar
       become: yes
       copy:
         src: ../target/heretoclean-0.0.1-SNAPSHOT.jar
         dest: /home/heretoclean-0.0.1-SNAPSHOT.jar
+      
+    - name: Copy config
+      become: yes
+      copy:
+        src: /home/heretoclean-config.json
+        dest: /home/heretoclean-config.json
+        
     
     - name: run
       become: yes
