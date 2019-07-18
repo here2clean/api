@@ -42,7 +42,6 @@ public class Product {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn
-	@NotNull
 	private Association association;
 	
 	
