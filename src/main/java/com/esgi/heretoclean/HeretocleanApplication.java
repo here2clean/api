@@ -25,7 +25,7 @@ public class HeretocleanApplication {
 	public FirebaseAuth firebaseAuth() throws IOException {
 		
 		FileInputStream serviceAccount = new FileInputStream(
-				"D:\\jeand\\Documents\\Cours2018-2019\\S2\\PA\\API\\heretoclean\\src\\main\\resources\\heretoclean-config.json");
+				"/home/heretoclean-config.json");
 
 		FirebaseOptions options = new FirebaseOptions.Builder()
 				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
