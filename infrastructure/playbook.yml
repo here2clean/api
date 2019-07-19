@@ -38,7 +38,7 @@
     - name: run
       become: yes
       shell: nohup java -jar /home/heretoclean-0.0.1-SNAPSHOT.jar &
-        environment:
-          DATABASE_PASSWORD: "{{lookup('file', '/home/dbpwd')}}"
-          DATABASE_URL: "{{lookup('file', 'mysql_url.txt') }}"
+      environment:
+        DATABASE_PASSWORD: "{{lookup('file', '/home/dbpwd')}}"
+        DATABASE_URL: "{{lookup('file', 'mysql_url.txt') }}"
 
