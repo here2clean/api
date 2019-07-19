@@ -134,6 +134,13 @@ public class VolunteerController {
 
 		return ResponseEntity.ok(volunteerDTO);
 	}
+	
+	@GetMapping("/test")
+	public ResponseEntity test() {
+		
+		
+		return ResponseEntity.ok().build();
+	}
 
 
 }
