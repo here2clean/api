@@ -127,6 +127,15 @@ public class VolunteerController {
 		return ResponseEntity.ok(volunteerDTO);
 	}
 
+
+		
+	@GetMapping("/test")
+	public ResponseEntity test() {
+		
+		
+		return ResponseEntity.ok().build();
+	}
+
 	//    private FirebaseAuth initFirebase() throws IOException {
 	//    	FileInputStream serviceAccount = new FileInputStream(new File("D://jeand/Documents/Cours2018-2019/S2/PA/API/heretoclean/src/main/resources/heretoclean-config.json"));
 	//		FirebaseOptions options = new FirebaseOptions.Builder()
