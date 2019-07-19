@@ -37,10 +37,8 @@
       copy:
         src: /home/heretoclean-config.json
         dest: /home/heretoclean-config.json
-        
-    
+
     - name: run
       become: yes
-      #shell: nohup java -jar /home/heretoclean-0.0.1-SNAPSHOT.jar &
-      shell: java -jar /home/heretoclean-0.0.1-SNAPSHOT.jar 
+      shell: nohup java -jar /home/heretoclean-0.0.1-SNAPSHOT.jar &
 
