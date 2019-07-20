@@ -156,6 +156,7 @@ public class VolunteerDTO {
 //		volunteerDTO.setEvents(v.getEvents());
 		volunteerDTO.setPassword(v.getPassword());
 		volunteerDTO.setLastName(v.getLastName());
+		volunteerDTO.setFirstName(v.getFirstName());
 		
 		List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
 		List<AssociationDTO> associationDTOs = new ArrayList<AssociationDTO>();
