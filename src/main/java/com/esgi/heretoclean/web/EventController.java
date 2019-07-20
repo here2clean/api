@@ -89,7 +89,13 @@ public class EventController {
 		if(!optionalEvent.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND.value()).body(optionalEvent);
+		
+		List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
+		
+		for(Event e : optionalEvent.get()) {
+			eventDTOs.add(EventDTO.EventToEventDTO(e));
+		}
+		return ResponseEntity.ok(eventDTOs);
 	}
 
 	@PutMapping("/update")
