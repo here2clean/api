@@ -35,7 +35,7 @@ public class AssociationDTO {
 
 	private List<GiftDTO> giftDTOs = new ArrayList<GiftDTO>();
 
-	private List<VolunteerDTO> volunteerDTOs = new ArrayList<VolunteerDTO>();
+	private List<VolunteerDTO> volunteers = new ArrayList<VolunteerDTO>();
 
 	private List<ProductDTO> productDTOs = new ArrayList<ProductDTO>();
 
@@ -112,11 +112,11 @@ public class AssociationDTO {
 	}
 
 	public List<VolunteerDTO> getVolunteerDTOs() {
-		return volunteerDTOs;
+		return volunteers;
 	}
 
 	public void setVolunteerDTOs(List<VolunteerDTO> volunteerDTOs) {
-		this.volunteerDTOs = volunteerDTOs;
+		this.volunteers = volunteerDTOs;
 	}
 
 	public List<ProductDTO> getProductDTOs() {

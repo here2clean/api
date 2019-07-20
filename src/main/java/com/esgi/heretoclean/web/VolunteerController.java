@@ -15,14 +15,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.esgi.heretoclean.DTO.AssociationDTO;
+import com.esgi.heretoclean.DTO.CompoCommandDTO;
 import com.esgi.heretoclean.DTO.EventDTO;
 import com.esgi.heretoclean.DTO.GiftDTO;
 import com.esgi.heretoclean.DTO.VolunteerDTO;
 import com.esgi.heretoclean.models.Association;
+import com.esgi.heretoclean.models.Command;
+import com.esgi.heretoclean.models.CompoCommand;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.models.Gift;
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.implementations.VolunteerServiceImpl;
+import com.esgi.heretoclean.service.interfaces.CommandService;
+import com.esgi.heretoclean.service.interfaces.CompoCommandService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
@@ -34,6 +39,8 @@ public class VolunteerController {
 
 	private final VolunteerServiceImpl volunteerService;
 	private final FirebaseAuth auth;
+	@Autowired
+	private CommandService compoCommandService;
 
 	@Autowired
 	public VolunteerController(VolunteerServiceImpl volunteerService,FirebaseAuth auth) {
@@ -141,6 +148,36 @@ public class VolunteerController {
 		
 		return ResponseEntity.ok().build();
 	}
+	
+	
+	@GetMapping("/getCommand")
+	public ResponseEntity getCommand(@RequestParam("id") Long id) {
+		Optional<Volunteer> volunteerOptional = Optional.of(volunteerService.findVolunteerById(id));
+		if(!volunteerOptional.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		
+		List<CompoCommand> compoCommands = new ArrayList<CompoCommand>();
+		
+		List<CompoCommandDTO> compoCommandDTOs = new ArrayList<CompoCommandDTO>();
+		
+		for(Command c: volunteerOptional.get().getCommands()) {
+			compoCommands.addAll(compoCommandService.findByCommandId(c.getId()));
+		}
+		
+		for(CompoCommand compo : compoCommands) {
+			compoCommandDTOs.add(CompoCommandDTO.CompoCommandToCompoCommandDTO(compo));
+
+		}
+		
+		
+
+//		VolunteerDTO volunteerDTO = VolunteerDTO.VolunteerToVolunteerDTO(volunteerOptional.get());
+
+		return ResponseEntity.ok(compoCommandDTOs);
+	}
+	
+	
 
 
 }

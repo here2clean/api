@@ -2,6 +2,7 @@ package com.esgi.heretoclean.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -21,7 +22,7 @@ public class Command {
 	
 	@Column(name="dateCommand")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/mm/yyyy")
-	private LocalDate dateCommand; 
+	private Date dateCommand; 
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn
@@ -35,7 +36,7 @@ public class Command {
 	
 	public Command() {
 		
-		this.dateCommand = LocalDate.now();
+		this.dateCommand = new Date();
 	}
     
 	public Long getId() {
@@ -55,11 +56,11 @@ public class Command {
 		this.volunteer = volunteer;
 	}
 
-	public LocalDate getDateCommand() {
+	public Date getDateCommand() {
 		return dateCommand;
 	}
 
-	public void setDateCommand(LocalDate dateCommand) {
+	public void setDateCommand(Date dateCommand) {
 		this.dateCommand = dateCommand;
 	}
 

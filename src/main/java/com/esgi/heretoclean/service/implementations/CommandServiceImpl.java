@@ -125,5 +125,12 @@ public class CommandServiceImpl implements CommandService {
 	}
 
 
+	@Override
+	public List<CompoCommand> findByCommandId(Long idCommand) {
+		// TODO Auto-generated method stub
+		return compoCommandRepo.findAllCompoCommandByCommandId(idCommand);
+	}
+
+
 
 }
