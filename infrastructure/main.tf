@@ -13,7 +13,6 @@ resource "aws_security_group" "aws-secgrp-allow-ssh" {
   
   ingress{
       from_port =22 
-
       to_port = 22
       protocol ="tcp" 
       cidr_blocks =["0.0.0.0/0"]
@@ -80,7 +79,7 @@ resource "aws_elb" "aws-loadbalancer" {
         healthy_threshold   = 2
         unhealthy_threshold = 10
         timeout             = 18
-        target              = "HTTP:8085/api/association/all"
+        target              = "HTTP:8085/health"
         interval            = 20
         
 
