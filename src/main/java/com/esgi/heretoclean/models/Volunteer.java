@@ -60,8 +60,8 @@ public class Volunteer {
 	@Transient
 	private String password;
 
-//	@OneToMany(mappedBy="volunteer",fetch=FetchType.LAZY)
-//	private List<Command> commands = new ArrayList<Command>();
+	@OneToMany(mappedBy="volunteer",fetch=FetchType.LAZY)
+	private List<Command> commands = new ArrayList<Command>();
 	
 	@OneToMany(mappedBy="volunteer",fetch=FetchType.LAZY)
 	private List<Gift> gifts = new ArrayList<Gift>();
@@ -82,13 +82,13 @@ public class Volunteer {
 		this.password = password;
 	}
 	
-//	public List<Command> getCommands() {
-//		return commands;
-//	}
-//
-//	public void setCommands(List<Command> commands) {
-//		this.commands = commands;
-//	}
+	public List<Command> getCommands() {
+		return commands;
+	}
+
+	public void setCommands(List<Command> commands) {
+		this.commands = commands;
+	}
 
 	public List<Gift> getGifts() {
 		return gifts;

@@ -70,8 +70,8 @@ public class EventServiceImpl implements EventService {
 	}
 
 	@Override
-	public void delete(String name) {
-		eventRepository.deleteByName(name);
+	public void deleteById(Long id) {
+		eventRepository.deleteById(id);
 	}
 
 	@Transactional(readOnly = true)

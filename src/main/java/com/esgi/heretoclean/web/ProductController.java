@@ -84,7 +84,9 @@ public class ProductController {
 		if(!product.isPresent()) {
 			throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Produit non trouvé");
 		}
-		return ResponseEntity.ok(product.get());
+		ProductDTO productDTO = ProductDTO.ProductToPooductDTO(product.get());
+		
+		return ResponseEntity.ok(productDTO);
 	}
 
 	@DeleteMapping("/delete/name")

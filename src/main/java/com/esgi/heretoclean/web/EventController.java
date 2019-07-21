@@ -89,7 +89,13 @@ public class EventController {
 		if(!optionalEvent.isPresent()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).build();
 		}
-		return ResponseEntity.status(HttpStatus.FOUND.value()).body(optionalEvent);
+		
+		List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
+		
+		for(Event e : optionalEvent.get()) {
+			eventDTOs.add(EventDTO.EventToEventDTO(e));
+		}
+		return ResponseEntity.ok(eventDTOs);
 	}
 
 	@PutMapping("/update")
@@ -98,8 +104,8 @@ public class EventController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity deleteEvent(@RequestParam("name") String name) {
-		eventService.delete(name);
+	public ResponseEntity deleteEvent(@RequestParam("id") Long id) {
+		eventService.deleteById(id);
 		return ResponseEntity.status(HttpStatus.OK.value()).build();
 	}
 
@@ -125,7 +131,7 @@ public class EventController {
 	}
 
 
-	@GetMapping("allByAssocation")
+	@GetMapping("/allByAssociation")
 	public ResponseEntity getAllByAssociation(@RequestParam("association_id") Long idAsso) throws HereToCleanException {
 
 		if(idAsso == null  ) {
@@ -138,7 +144,13 @@ public class EventController {
 			throw new HereToCleanException("Il n'y a pas d'évènement pour cette association");
 
 		}
+		
+		List<EventDTO> eventDTOs = new ArrayList<EventDTO>();
+		
+		for(Event e : events.get()) {
+			eventDTOs.add(EventDTO.EventToEventDTO(e));
+		}
 
-		return ResponseEntity.ok(events.get());
+		return ResponseEntity.ok(eventDTOs);
 	}
 }

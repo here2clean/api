@@ -1,6 +1,7 @@
 package com.esgi.heretoclean.DTO;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 import com.esgi.heretoclean.models.Command;
 
@@ -8,7 +9,7 @@ public class CommandDTO {
 
 	private Long id;
 
-	private LocalDate dateCommand; 
+	private Date dateCommand; 
 	
 	private VolunteerDTO volunteerDTO;
 
@@ -20,11 +21,11 @@ public class CommandDTO {
 		this.id = id;
 	}
 
-	public LocalDate getDateCommand() {
+	public Date getDateCommand() {
 		return dateCommand;
 	}
 
-	public void setDateCommand(LocalDate dateCommand) {
+	public void setDateCommand(Date dateCommand) {
 		this.dateCommand = dateCommand;
 	}
 	

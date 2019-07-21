@@ -23,7 +23,7 @@ public class HeretocleanApplication {
 
 	@Bean
 	public FirebaseAuth firebaseAuth() throws IOException {
-		
+
 		FileInputStream serviceAccount = new FileInputStream("/home/heretoclean-config.json");
 
 		FirebaseOptions options = new FirebaseOptions.Builder()

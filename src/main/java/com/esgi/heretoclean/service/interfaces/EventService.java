@@ -30,10 +30,12 @@ public interface EventService {
 	
 	Optional<Event> findById(Long id);
 	
-	void delete(String email);
+	void deleteById(Long id);
 	
 	void addVolunteer(Long idEvent,Long idVolunteer) throws HereToCleanException;
 	
 	void removeVolunteer(Long idEvent,Long idVolunteer) throws HereToCleanException;
+	
+	
 
 }

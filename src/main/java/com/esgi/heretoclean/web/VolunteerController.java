@@ -15,12 +15,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.esgi.heretoclean.DTO.AssociationDTO;
+import com.esgi.heretoclean.DTO.CompoCommandDTO;
 import com.esgi.heretoclean.DTO.EventDTO;
+import com.esgi.heretoclean.DTO.GiftDTO;
 import com.esgi.heretoclean.DTO.VolunteerDTO;
 import com.esgi.heretoclean.models.Association;
+import com.esgi.heretoclean.models.Command;
+import com.esgi.heretoclean.models.CompoCommand;
 import com.esgi.heretoclean.models.Event;
+import com.esgi.heretoclean.models.Gift;
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.implementations.VolunteerServiceImpl;
+import com.esgi.heretoclean.service.interfaces.CommandService;
+import com.esgi.heretoclean.service.interfaces.CompoCommandService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
@@ -32,6 +39,8 @@ public class VolunteerController {
 
 	private final VolunteerServiceImpl volunteerService;
 	private final FirebaseAuth auth;
+	@Autowired
+	private CommandService compoCommandService;
 
 	@Autowired
 	public VolunteerController(VolunteerServiceImpl volunteerService,FirebaseAuth auth) {
@@ -62,7 +71,7 @@ public class VolunteerController {
 	@PutMapping("/update")
 	public ResponseEntity update(@RequestParam("email") String email , @Valid @RequestBody Volunteer volunteer){
 		volunteerService.update(email,volunteer);
-		return ResponseEntity.status(HttpStatus.OK.value()).build();
+		return ResponseEntity.ok().build();
 	}
 
 	@GetMapping("/allEvent")
@@ -105,8 +114,14 @@ public class VolunteerController {
 		if(volunteerService.findAllGift(emailVolunteer) == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
+		
+		List<GiftDTO> giftDTOs = new ArrayList<GiftDTO>();
+		
+		for(Gift g : volunteerService.findAllGift(emailVolunteer)) {
+			giftDTOs.add(GiftDTO.GiftToGiftDTO(g));
+		}
 
-		return ResponseEntity.status(HttpStatus.FOUND).body(volunteerService.findAllGift(emailVolunteer));
+		return ResponseEntity.ok(giftDTOs);
 	}
 
 	@DeleteMapping("/delete")
@@ -126,15 +141,43 @@ public class VolunteerController {
 
 		return ResponseEntity.ok(volunteerDTO);
 	}
+	
+	@GetMapping("/test")
+	public ResponseEntity test() {
+		
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	
+	@GetMapping("/getCommand")
+	public ResponseEntity getCommand(@RequestParam("id") Long id) {
+		Optional<Volunteer> volunteerOptional = Optional.of(volunteerService.findVolunteerById(id));
+		if(!volunteerOptional.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		
+		List<CompoCommand> compoCommands = new ArrayList<CompoCommand>();
+		
+		List<CompoCommandDTO> compoCommandDTOs = new ArrayList<CompoCommandDTO>();
+		
+		for(Command c: volunteerOptional.get().getCommands()) {
+			compoCommands.addAll(compoCommandService.findByCommandId(c.getId()));
+		}
+		
+		for(CompoCommand compo : compoCommands) {
+			compoCommandDTOs.add(CompoCommandDTO.CompoCommandToCompoCommandDTO(compo));
 
-	//    private FirebaseAuth initFirebase() throws IOException {
-	//    	FileInputStream serviceAccount = new FileInputStream(new File("D://jeand/Documents/Cours2018-2019/S2/PA/API/heretoclean/src/main/resources/heretoclean-config.json"));
-	//		FirebaseOptions options = new FirebaseOptions.Builder()
-	//				.setCredentials(GoogleCredentials.fromStream(serviceAccount))
-	//				.setDatabaseUrl("https://heretoclean-876f4.firebaseio.com")
-	//				.build();
-	//		FirebaseApp app = FirebaseApp.initializeApp(options);
-	//		return FirebaseAuth.getInstance(app);
-	//    }
+		}
+		
+		
+
+//		VolunteerDTO volunteerDTO = VolunteerDTO.VolunteerToVolunteerDTO(volunteerOptional.get());
+
+		return ResponseEntity.ok(compoCommandDTOs);
+	}
+	
+	
+
 
 }
