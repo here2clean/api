@@ -29,6 +29,8 @@ public class CompoCommand {
 	private Association association;
 	
 	private int quantity;
+	
+	private int isConfirmed = 0;
 
 	public CompoCommand() {
 	}
@@ -77,10 +79,15 @@ public class CompoCommand {
 	public void setAssociation(Association association) {
 		this.association = association;
 	}
-	
-	
-	
-	
-	
+
+
+	public int getIsConfirmed() {
+		return isConfirmed;
+	}
+
+
+	public void setIsConfirmed(int isConfirmed) {
+		this.isConfirmed = isConfirmed;
+	}
 
 }

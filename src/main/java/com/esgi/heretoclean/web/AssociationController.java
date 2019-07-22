@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -250,5 +251,24 @@ public class AssociationController {
 		return ResponseEntity.ok(compoCommandDTOs);
     }
     
+    
+    @PutMapping("/validateCommand")
+    public ResponseEntity validateCommand(@RequestParam("command") Long idCompoCommand) throws HereToCleanException {
+    	commandService.validateCommand(idCompoCommand);
+    	return ResponseEntity.ok().build();
+    }
+    
+    
+    @PutMapping("/passedCommand")
+    public ResponseEntity passedCommand(@RequestParam("command") Long idCompoCommand) throws HereToCleanException {
+    	commandService.commandPassed(idCompoCommand);
+    	return ResponseEntity.ok().build();
+    }
+    
+    @PutMapping("/receivedCommand")
+    public ResponseEntity receivedCommand(@RequestParam("command") Long idCompoCommand) throws HereToCleanException {
+    	commandService.commandReceive(idCompoCommand);
+    	return ResponseEntity.ok().build();
+    }
 
 }

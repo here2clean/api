@@ -26,6 +26,12 @@ public interface CommandService {
 	List<CompoCommand> findByCommandId(Long idCommand);
 	
 	List<CompoCommand> findCommandByAssociation(Long idAssociation);
+	
+	public void validateCommand(Long idCompoCommand);
+	
+	public void commandPassed(Long idCompo);	
+	
+	public void commandReceive(Long idCompo);
 
 	
 	

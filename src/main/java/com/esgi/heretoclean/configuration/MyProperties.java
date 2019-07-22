@@ -13,6 +13,11 @@ public class MyProperties {
 	private String apiKey;
 	private String secret;
 	
+	public static int COMMMAND_PASSED = 0;
+	public static int COMMMAND_VALIDED = 1;
+	public static int COMMMAND_RECEIVED = 2;
+	
+	
 	public MyProperties() {
 	}
 	

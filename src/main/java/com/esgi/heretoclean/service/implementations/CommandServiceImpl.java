@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esgi.heretoclean.configuration.MyProperties;
 import com.esgi.heretoclean.dao.CommandRepository;
 import com.esgi.heretoclean.dao.CompoCommandRepository;
 import com.esgi.heretoclean.dao.ProductRepository;
@@ -33,13 +34,16 @@ public class CommandServiceImpl implements CommandService {
 	private final ProductRepository productRepo;
 
 	private final CompoCommandRepository compoCommandRepo;
+	
+	private final MyProperties myProperties;
 
 	@Autowired
-	public CommandServiceImpl(CommandRepository commandRepo, VolunteerRepository volunteerRepo,ProductRepository productRepo, CompoCommandRepository compoCommandRepo) {
+	public CommandServiceImpl(CommandRepository commandRepo, VolunteerRepository volunteerRepo,ProductRepository productRepo, CompoCommandRepository compoCommandRepo,MyProperties myProperties) {
 		this.commandRepo = commandRepo;
 		this.volunteerRepo = volunteerRepo;
 		this.productRepo = productRepo;
 		this.compoCommandRepo = compoCommandRepo;
+		this.myProperties = myProperties;
 	}
 
 
@@ -136,6 +140,31 @@ public class CommandServiceImpl implements CommandService {
 	@Override
 	public List<CompoCommand> findCommandByAssociation(Long idAssociation) {
 		return compoCommandRepo.findAllCompoCommandByAssociationId(idAssociation);
+	}
+
+
+	@Override
+	public void validateCommand(Long idCompoCommand) {
+		CompoCommand compoCommand = compoCommandRepo.getOne(idCompoCommand);
+		compoCommand.setIsConfirmed(MyProperties.COMMMAND_VALIDED);
+		compoCommandRepo.saveAndFlush(compoCommand);
+	}
+
+
+
+	@Override
+	public void commandPassed(Long idCompo) {
+		CompoCommand compoCommand = compoCommandRepo.getOne(idCompo);
+		compoCommand.setIsConfirmed(MyProperties.COMMMAND_PASSED);
+		compoCommandRepo.saveAndFlush(compoCommand);		
+	}
+
+
+	@Override
+	public void commandReceive(Long idCompo) {
+		CompoCommand compoCommand = compoCommandRepo.getOne(idCompo);
+		compoCommand.setIsConfirmed(MyProperties.COMMMAND_RECEIVED);
+		compoCommandRepo.saveAndFlush(compoCommand);		
 	}
 	
 	

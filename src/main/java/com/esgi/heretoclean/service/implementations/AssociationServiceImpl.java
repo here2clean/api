@@ -147,10 +147,9 @@ public class AssociationServiceImpl implements AssociationService{
     		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Association non trouvé");
     	}
 		
-		
-		
 		return asso.get().getCompoCommand();
 	}
+	
 
 
 }
