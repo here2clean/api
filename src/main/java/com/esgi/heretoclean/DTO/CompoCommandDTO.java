@@ -17,6 +17,8 @@ public class CompoCommandDTO {
 	
 	private int quantity;
 	
+	private int isValided;
+	
 
 	public CompoCommandDTO() {
 	}
@@ -53,6 +55,16 @@ public class CompoCommandDTO {
 		this.quantity = quantity;
 	}
 	
+	
+	
+	public int getIsValided() {
+		return isValided;
+	}
+
+	public void setIsValided(int isValided) {
+		this.isValided = isValided;
+	}
+
 	public static CompoCommandDTO CompoCommandToCompoCommandDTO(CompoCommand c) {
 		CompoCommandDTO compoDTO = new CompoCommandDTO();
 		compoDTO.setId(c.getId());
@@ -60,6 +72,7 @@ public class CompoCommandDTO {
 		
 		compoDTO.setCommand(CommandDTO.CommandToCommandDTO(c.getCommand()));
 		compoDTO.setProduct(ProductDTO.ProductToPooductDTO(c.getProduct()));
+		compoDTO.setIsValided(c.getIsConfirmed());
 		
 		return compoDTO;
 	}
