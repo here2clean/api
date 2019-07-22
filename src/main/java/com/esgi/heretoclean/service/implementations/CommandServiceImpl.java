@@ -71,6 +71,7 @@ public class CommandServiceImpl implements CommandService {
 
 			compo.setProduct(product.get());
 			compo.setQuantity(cJson.getQuantity());
+			compo.setAssociation(product.get().getAssociation());
 //			compo.setCommand(command);
 			
 			compoCommandRepo.save(compo);
@@ -131,6 +132,15 @@ public class CommandServiceImpl implements CommandService {
 		return compoCommandRepo.findAllCompoCommandByCommandId(idCommand);
 	}
 
+
+	@Override
+	public List<CompoCommand> findCommandByAssociation(Long idAssociation) {
+		return compoCommandRepo.findAllCompoCommandByAssociationId(idAssociation);
+	}
+	
+	
+
+	
 
 
 }

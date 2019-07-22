@@ -25,5 +25,8 @@ public interface CommandService {
 	
 	List<CompoCommand> findByCommandId(Long idCommand);
 	
+	List<CompoCommand> findCommandByAssociation(Long idAssociation);
+
+	
 	
 }

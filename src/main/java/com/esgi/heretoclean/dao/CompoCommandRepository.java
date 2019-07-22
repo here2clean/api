@@ -9,6 +9,8 @@ import java.util.List;
 @Repository
 public interface CompoCommandRepository extends  JpaRepository<CompoCommand, Long> {
 	List<CompoCommand> findAllCompoCommandByCommandId(Long idCommand);
+	List<CompoCommand> findAllCompoCommandByAssociationId(Long idAssociation);
+
 }
 
 
