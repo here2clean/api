@@ -22,11 +22,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.esgi.heretoclean.DTO.AssociationDTO;
+import com.esgi.heretoclean.DTO.CompoCommandDTO;
 import com.esgi.heretoclean.DTO.EventDTO;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Association;
+import com.esgi.heretoclean.models.Command;
+import com.esgi.heretoclean.models.CompoCommand;
 import com.esgi.heretoclean.models.Event;
+import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.interfaces.AssociationService;
+import com.esgi.heretoclean.service.interfaces.CommandService;
+import com.esgi.heretoclean.service.interfaces.CompoCommandService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserRecord;
 import com.google.firebase.auth.UserRecord.CreateRequest;
@@ -42,11 +48,13 @@ public class AssociationController {
 
 	private final AssociationService associationService;
 	private final FirebaseAuth auth;
+	private final CommandService commandService;
 
 	@Autowired
-	public AssociationController(AssociationService associationService, FirebaseAuth auth) {
+	public AssociationController(AssociationService associationService, FirebaseAuth auth,CommandService commandService) {
 		this.associationService = associationService;
 		this.auth = auth;
+		this.commandService = commandService;
 	}
 
 	@PostMapping("/register")
@@ -222,5 +230,25 @@ public class AssociationController {
     	return ResponseEntity.ok(eventDTOs);
     }
 
+    @GetMapping("/allCommand")
+    public ResponseEntity findCommands(@RequestParam("association_id") Long idAsso) throws HereToCleanException {
+    	
+
+    	Optional<Association> asso = Optional.of(associationService.findById(idAsso));
+		if(!asso.isPresent()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		
+		List<CompoCommand> compoCommands = commandService.findCommandByAssociation(idAsso);
+		
+		List<CompoCommandDTO> compoCommandDTOs = new ArrayList<CompoCommandDTO>();
+		
+		for(CompoCommand compo : compoCommands) {
+			compoCommandDTOs.add(CompoCommandDTO.CompoCommandToCompoCommandDTO(compo));
+		}
+
+		return ResponseEntity.ok(compoCommandDTOs);
+    }
+    
 
 }

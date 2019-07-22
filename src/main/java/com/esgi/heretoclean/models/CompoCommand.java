@@ -23,6 +23,11 @@ public class CompoCommand {
     @JoinColumn(name = "product_id")
 	private Product product;
 	
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "association_id")
+	private Association association;
+	
 	private int quantity;
 
 	public CompoCommand() {
@@ -61,6 +66,16 @@ public class CompoCommand {
 
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+
+
+	public Association getAssociation() {
+		return association;
+	}
+
+
+	public void setAssociation(Association association) {
+		this.association = association;
 	}
 	
 	

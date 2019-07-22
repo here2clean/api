@@ -73,6 +73,10 @@ public class Association {
 
 	@OneToMany(mappedBy="association",fetch=FetchType.LAZY)
 	private List<Event> events = new ArrayList<Event>();
+	
+	
+	@OneToMany(mappedBy="association",fetch=FetchType.LAZY)
+	private List<CompoCommand> compoCommand = new ArrayList<CompoCommand>();
 
 	public Association() {
 	}
@@ -172,6 +176,15 @@ public class Association {
 		this.events = events;
 	}
 
+
+	public List<CompoCommand> getCompoCommand() {
+		return compoCommand;
+	}
+
+
+	public void setCompoCommand(List<CompoCommand> compoCommand) {
+		this.compoCommand = compoCommand;
+	}
 
 
 }

@@ -19,6 +19,7 @@ import com.esgi.heretoclean.dao.AssociationRepository;
 import com.esgi.heretoclean.dao.VolunteerRepository;
 import com.esgi.heretoclean.exception.HereToCleanException;
 import com.esgi.heretoclean.models.Association;
+import com.esgi.heretoclean.models.CompoCommand;
 import com.esgi.heretoclean.models.Event;
 import com.esgi.heretoclean.models.Volunteer;
 import com.esgi.heretoclean.service.interfaces.AssociationService;
@@ -134,6 +135,21 @@ public class AssociationServiceImpl implements AssociationService{
     	}
 		
 		return asso.get().getEvents();
+	}
+
+
+	@Override
+	public List<CompoCommand> getCommands(Long idAssociation) throws HereToCleanException {
+		// TODO Auto-generated method stub
+		
+		Optional<Association> asso = Optional.ofNullable(assoRepository.getOne(idAssociation));
+		if(!asso.isPresent() || asso.get().getId() == null ) {
+    		throw new HereToCleanException(HttpStatus.NOT_FOUND.value(),"Association non trouvé");
+    	}
+		
+		
+		
+		return asso.get().getCompoCommand();
 	}
 
 
