@@ -32,6 +32,8 @@ public class AssociationDTO {
 	private String description;
 	
 	private String urlImage;
+	
+	private int isValidated;
 
 	private List<GiftDTO> giftDTOs = new ArrayList<GiftDTO>();
 
@@ -134,6 +136,8 @@ public class AssociationDTO {
 	public void setEventDTOs(List<EventDTO> eventDTOs) {
 		this.eventDTOs = eventDTOs;
 	}
+	
+	
 
 	public static AssociationDTO AssociationToAssociationDTO(Association asso) {
 		

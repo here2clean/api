@@ -259,12 +259,6 @@ public class AssociationController {
     }
     
     
-    @PutMapping("/passedCommand")
-    public ResponseEntity passedCommand(@RequestParam("command") Long idCompoCommand) throws HereToCleanException {
-    	commandService.commandPassed(idCompoCommand);
-    	return ResponseEntity.ok().build();
-    }
-    
     @PutMapping("/receivedCommand")
     public ResponseEntity receivedCommand(@RequestParam("command") Long idCompoCommand) throws HereToCleanException {
     	commandService.commandReceive(idCompoCommand);

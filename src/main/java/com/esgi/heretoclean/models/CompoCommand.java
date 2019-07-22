@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.esgi.heretoclean.configuration.MyProperties;
+
 
 @Entity
 public class CompoCommand {
@@ -30,7 +32,7 @@ public class CompoCommand {
 	
 	private int quantity;
 	
-	private int isConfirmed = 0;
+	private int isConfirmed = MyProperties.COMMMAND_PASSED;
 
 	public CompoCommand() {
 	}

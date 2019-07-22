@@ -150,16 +150,6 @@ public class CommandServiceImpl implements CommandService {
 		compoCommandRepo.saveAndFlush(compoCommand);
 	}
 
-
-
-	@Override
-	public void commandPassed(Long idCompo) {
-		CompoCommand compoCommand = compoCommandRepo.getOne(idCompo);
-		compoCommand.setIsConfirmed(MyProperties.COMMMAND_PASSED);
-		compoCommandRepo.saveAndFlush(compoCommand);		
-	}
-
-
 	@Override
 	public void commandReceive(Long idCompo) {
 		CompoCommand compoCommand = compoCommandRepo.getOne(idCompo);
